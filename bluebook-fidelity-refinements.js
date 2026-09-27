@@ -223,3 +223,99 @@
   observer.observe(document.body, { childList: true, subtree: true });
   maintain();
 })();
+
+(() => {
+  'use strict';
+  const KEY = 'azm-exam-source-width-v1';
+  const MIN = 35;
+  const MAX = 65;
+  const clamp = (value) => Math.min(MAX, Math.max(MIN, Number(value) || 48));
+  const readRatio = () => {
+    try { const value = Number(localStorage.getItem(KEY)); return Number.isFinite(value) ? clamp(value) : 48; }
+    catch (_) { return 48; }
+  };
+  const writeRatio = (value) => {
+    try { localStorage.setItem(KEY, String(Math.round(clamp(value) * 10) / 10)); } catch (_) {}
+  };
+  const applyRatio = (main, value) => {
+    const ratio = clamp(value);
+    document.documentElement.style.setProperty('--azm-exam-source-width', ratio + '%');
+    main?.style.setProperty('--azm-exam-source-width', ratio + '%');
+    const splitter = document.getElementById('examSplitter');
+    if (splitter) {
+      splitter.setAttribute('aria-valuenow', String(Math.round(ratio)));
+      splitter.setAttribute('aria-valuetext', Math.round(ratio) + '% passage, ' + Math.round(100 - ratio) + '% question');
+    }
+  };
+  function bindExamSplitter() {
+    const main = document.querySelector('.test-main');
+    const splitter = document.getElementById('examSplitter');
+    if (!main || !splitter || splitter.dataset.examSplitterReady === '1') return;
+    splitter.dataset.examSplitterReady = '1';
+    applyRatio(main, readRatio());
+    let dragging = false;
+    let pointerId = null;
+    const ratioFromPointer = (clientX) => {
+      const rect = main.getBoundingClientRect();
+      return rect.width ? clamp(((clientX - rect.left) / rect.width) * 100) : readRatio();
+    };
+    const setDragging = (value) => {
+      dragging = value;
+      main.classList.toggle('is-resizing', value);
+      document.body.classList.toggle('exam-resizing', value);
+      if (!value) pointerId = null;
+    };
+    splitter.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      pointerId = event.pointerId;
+      try { splitter.setPointerCapture?.(pointerId); } catch (_) {}
+      setDragging(true);
+      applyRatio(main, ratioFromPointer(event.clientX));
+      event.preventDefault();
+    });
+    splitter.addEventListener('pointermove', (event) => {
+      if (!dragging || event.pointerId !== pointerId) return;
+      applyRatio(main, ratioFromPointer(event.clientX));
+      event.preventDefault();
+    });
+    const finishPointer = (event) => {
+      if (!dragging) return;
+      if (event?.pointerId != null && pointerId != null && event.pointerId !== pointerId) return;
+      const ratio = Number(getComputedStyle(document.documentElement).getPropertyValue('--azm-exam-source-width').replace('%', '')) || 48;
+      writeRatio(ratio);
+      try { splitter.releasePointerCapture?.(pointerId); } catch (_) {}
+      setDragging(false);
+    };
+    splitter.addEventListener('pointerup', finishPointer);
+    splitter.addEventListener('pointercancel', finishPointer);
+    splitter.addEventListener('lostpointercapture', () => {
+      if (!dragging) return;
+      const ratio = Number(getComputedStyle(document.documentElement).getPropertyValue('--azm-exam-source-width').replace('%', '')) || 48;
+      writeRatio(ratio);
+      setDragging(false);
+    });
+    splitter.addEventListener('keydown', (event) => {
+      const current = Number(getComputedStyle(document.documentElement).getPropertyValue('--azm-exam-source-width').replace('%', '')) || 48;
+      let next = current;
+      if (event.key === 'ArrowLeft') next -= 1;
+      else if (event.key === 'ArrowRight') next += 1;
+      else if (event.key === 'PageUp') next += 5;
+      else if (event.key === 'PageDown') next -= 5;
+      else if (event.key === 'Home') next = MIN;
+      else if (event.key === 'End') next = MAX;
+      else return;
+      event.preventDefault();
+      applyRatio(main, next);
+      writeRatio(next);
+    });
+  }
+  function observeExamSplitter() {
+    bindExamSplitter();
+    const app = document.getElementById('app');
+    if (app && !observeExamSplitter.bound) {
+      observeExamSplitter.bound = true;
+      new MutationObserver(bindExamSplitter).observe(app, { childList: true, subtree: true });
+    }
+  }
+  observeExamSplitter();
+})();
