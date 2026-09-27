@@ -29,3 +29,42 @@
    visibility or chrome height changes. */
 .test-shell{display:flex;flex-direction:column}
 .test-main{flex:1 1 auto;min-height:0;height:auto}
+
+/* ---------- Exam dash calibration, splitter surface and icon polish ---------- */
+:root {
+  --azm-exam-source-width: 48%;
+  --azm-exam-dash-pattern: repeating-linear-gradient(
+    90deg,
+    #4c4f55 0 17px,
+    transparent 17px 22px,
+    #f0d34f 22px 31px,
+    transparent 31px 37px,
+    #4c4f55 37px 54px,
+    transparent 54px 60px,
+    #55bfdc 60px 73px,
+    transparent 73px 79px,
+    #4c4f55 79px 95px,
+    transparent 95px 101px,
+    #7892d4 101px 113px,
+    transparent 113px 119px,
+    #4c4f55 119px 136px,
+    transparent 136px 142px
+  );
+}
+.test-dashrule { height: 3px; background-image: var(--azm-exam-dash-pattern); }
+.test-main { display: grid !important; grid-template-columns: minmax(0, var(--azm-exam-source-width)) 10px minmax(0, 1fr) !important; min-width: 0; }
+.source-panel, .question-panel { min-width: 0; }
+.source-panel { border-right: 0 !important; }
+.test-footer { position: relative; border-top: 0 !important; }
+.test-footer::before { content: ""; position: absolute; inset: -3px 0 auto; height: 3px; background-image: var(--azm-exam-dash-pattern); pointer-events: none; }
+.exam-splitter { position: relative; z-index: 4; width: 10px; min-width: 10px; height: 100%; cursor: col-resize; touch-action: none; background: #e2e5e8; border: 0; outline: 0; }
+.exam-splitter::before { content: ""; position: absolute; inset: 0 auto 0 4px; width: 2px; background: #c5cad0; }
+.exam-splitter::after { content: ""; position: absolute; top: 50%; left: 2px; width: 6px; height: 42px; transform: translateY(-50%); border-radius: 4px; background: repeating-linear-gradient(to bottom, #9ca2a9 0 3px, transparent 3px 7px); }
+.exam-splitter:hover, .exam-splitter:focus-visible, .test-main.is-resizing .exam-splitter { background: #d9dde1; }
+.exam-splitter:focus-visible { box-shadow: inset 0 0 0 2px #315bd0; }
+body.exam-resizing, body.exam-resizing * { cursor: col-resize !important; user-select: none !important; }
+.nav-tool { min-width: 64px; padding: 4px 7px 3px; gap: 4px; border-radius: 9px; transition: background-color .12s ease, transform .12s ease; }
+.nav-tool .ico-tool { width: 22px; height: 22px; display: block; }
+.nav-tool:hover, .nav-tool:focus-visible { background: rgba(255,255,255,.55); }
+.nav-tool:active { transform: translateY(1px); }
+@media(max-width:800px) { .test-main { grid-template-columns: 1fr !important; } .exam-splitter { display: none; } .source-panel { border-right: 0 !important; } }
