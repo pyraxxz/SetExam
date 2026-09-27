@@ -10,6 +10,7 @@ assert(app.includes('testDate:"Sat, Oct 3, 2026"'), 'admission ticket/test card 
 assert(app.includes('dob:""'), 'runtime state must retain date of birth');
 assert(app.includes('function formatDob('), 'ticket must format stored date of birth');
 assert(app.includes('id="setupDob"'), 'exam setup must collect date of birth for the admission ticket');
+assert(!app.includes('max="2015-12-31"'), 'DOB field must not impose an arbitrary age cutoff');
 assert(app.includes('Your SAT<br>Admission Ticket'), 'ticket must use the Bluebook-style title');
 assert(app.includes('aria-label="Admission ticket QR code"'), 'ticket QR must be explicitly labelled');
 assert(app.includes('ticket-masthead'), 'ticket must have a dedicated masthead');
