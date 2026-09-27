@@ -33,7 +33,7 @@ assert(css.includes('@media(max-width:460px){.ticket-main-head'), 'ticket must h
 assert(index.includes('styles.css?v=23'), 'canonical stylesheet must remain loaded');
 
 for (const marker of [
-  'SAT Admission Ticket',
+  'Your SAT\\s*Admission Ticket',
   'Sat, Oct 3, 2026',
   'Date of Birth',
   'Registration Number',
