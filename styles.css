@@ -174,11 +174,13 @@ body.access-active .app-shell{min-height:100vh}
 .ready-art{display:flex;justify-content:center;margin:24px 0 10px}
 .ready-art svg{width:220px;height:132px;color:var(--color-text)}
 .ready-sub{font-weight:800;text-align:center;font-size:1.1rem}
-.setup-step-6 .wiz-card{max-width:660px}
-.ticket-page-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
-.ticket-page-heading h1{margin:0 0 4px}
-.ticket-page-heading .btn-row{margin:0}
-.admit-ticket{border:1px solid var(--color-border-strong);border-radius:2px;background:var(--color-surface);margin:0 auto 8px;max-width:560px;box-shadow:0 1px 4px var(--shadow-soft);color:var(--color-text);overflow:hidden}
+.admission-ticket-page{min-height:100vh;max-width:980px;margin:0 auto;padding:42px 24px 56px;background:var(--color-surface)}
+.ticket-page-inner{max-width:620px;margin:0 auto}
+.ticket-page-heading{text-align:center;margin-bottom:18px}
+.ticket-page-heading h1{font-size:1.55rem;line-height:1.15;margin:0 0 6px}
+.ticket-page-heading p{margin:0}
+.ticket-page-heading .btn-row{justify-content:center;margin-top:16px}
+.admit-ticket{border:1px solid var(--color-border-strong);border-radius:2px;background:var(--color-surface);margin:0 auto;max-width:560px;box-shadow:0 1px 4px var(--shadow-soft);color:var(--color-text);overflow:hidden}
 .ticket-masthead{height:34px;display:flex;align-items:center;justify-content:flex-start;padding:0 16px}
 .ticket-brand-lockup{display:flex;align-items:stretch;height:34px}
 .college-board-mark{display:inline-flex;align-items:center;gap:7px;background:var(--color-text);color:var(--color-surface);padding:0 11px 0 9px;font-size:.68rem;font-weight:700;letter-spacing:.01em}
@@ -187,7 +189,7 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-sat-mark{display:inline-flex;align-items:center;background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-border-strong);border-left:0;padding:0 8px;font-size:.75rem;font-weight:900;letter-spacing:.04em}
 .ticket-main-head{display:grid;grid-template-columns:minmax(0,1fr) 136px;gap:18px;align-items:center;padding:18px 20px 14px}
 .ticket-main-head h2{font-size:1.55rem;line-height:1.04;margin:0;font-weight:800;letter-spacing:-.02em}
-.ticket-qr{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;color:var(--color-text-muted);font-size:.6rem;line-height:1.3}
+.ticket-qr{display:flex;align-items:center;justify-content:center}
 .ticket-qr-frame{width:112px;height:112px;background:var(--color-surface);padding:4px}
 .ticket-qr-img{display:block;width:100%;height:100%;image-rendering:pixelated}
 .ticket-divider{height:1px;background:var(--color-border-light);margin:0 20px}
@@ -203,8 +205,10 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-field strong small{display:block;font-size:.69rem;font-weight:600;color:var(--color-text);margin-top:2px;line-height:1.4}
 .ticket-comments{padding:12px 20px 16px}
 .ticket-comments strong{display:block;font-size:.69rem;line-height:1.4;font-weight:600;color:var(--color-text)}
-@media(max-width:720px){.setup-step-6 .wiz-card{max-width:640px}.ticket-main-head{grid-template-columns:minmax(0,1fr) 112px;gap:12px;padding:16px 16px 12px}.ticket-main-head h2{font-size:1.4rem}.ticket-qr-frame{width:96px;height:96px}.ticket-info,.ticket-comments{padding-left:16px;padding-right:16px}.ticket-divider{margin-left:16px;margin-right:16px}}
-@media(max-width:460px){.ticket-main-head{grid-template-columns:1fr;justify-items:start}.ticket-qr{justify-self:end;flex-direction:row;text-align:left}.ticket-qr-frame{width:92px;height:92px}.ticket-times{grid-template-columns:1fr;gap:12px}.ticket-masthead{padding-left:12px}.college-board-mark{padding-right:8px}.cb-word{font-size:.61rem}}
+.ticket-page-actions{display:flex;justify-content:flex-end;max-width:560px;margin:14px auto 0}
+@media(max-width:720px){.admission-ticket-page{padding:30px 16px 44px}.ticket-page-inner{max-width:620px}.ticket-page-heading h1{font-size:1.35rem}.ticket-main-head{grid-template-columns:minmax(0,1fr) 112px;gap:12px;padding:16px 16px 12px}.ticket-main-head h2{font-size:1.4rem}.ticket-qr-frame{width:96px;height:96px}.ticket-info,.ticket-comments{padding-left:16px;padding-right:16px}.ticket-divider{margin-left:16px;margin-right:16px}.ticket-page-actions{padding:0 0 0 0}}
+@media(max-width:460px){.admission-ticket-page{padding:24px 12px 36px}.ticket-main-head{grid-template-columns:1fr;justify-items:start}.ticket-qr{justify-self:end}.ticket-qr-frame{width:96px;height:96px}.ticket-times{grid-template-columns:1fr;gap:12px}.ticket-page-actions{justify-content:flex-end}.ticket-masthead{padding-left:12px}.college-board-mark{padding-right:8px}.cb-word{font-size:.61rem}}
+@media print{body.printing-ticket{background:var(--color-surface)!important;color:var(--color-text)!important}body.printing-ticket .app-shell,body.printing-ticket .wiz-head,body.printing-ticket .wiz-foot,body.printing-ticket .ticket-page-heading,body.printing-ticket .ticket-page-actions{display:none!important}body.printing-ticket .admission-ticket-page{display:block!important;max-width:none!important;width:auto!important;margin:0!important;padding:0!important}body.printing-ticket .ticket-page-inner{max-width:none!important;margin:0!important}body.printing-ticket .admit-ticket{display:block!important;max-width:560px!important;margin:0 auto!important;box-shadow:none!important;border:1px solid var(--color-border-strong)!important}body.printing-ticket .ticket-qr-frame{width:128px!important;height:128px!important}body.printing-ticket .ticket-field strong{color:var(--color-text)!important}body.printing-ticket .small,body.printing-ticket .muted{color:var(--color-text-muted)!important}}
 .prepare-block{margin-top:34px}
 .prepare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .prepare-item{border:1px solid var(--color-border);border-radius:8px;background:var(--color-surface);padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;cursor:pointer;color:var(--color-text)}
