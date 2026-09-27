@@ -21,7 +21,7 @@ assert(app.includes('toolsBtn")?.addEventListener("click",tools)'), 'Test Previe
 assert(app.includes('startFullLengthPractice'), 'dashboard Full-Length Practice must invoke the real practice flow');
 assert(previewNav >= 0 && bindStart > previewNav, 'navigation function must precede bind lifecycle');
 assert(previewBind >= bindStart && testBind > previewBind, 'preview event binding must live inside bind() before the test branch');
-assert(app.slice(previewNav, app.indexOf('function focusQ()', previewNav)).indexOf('if(s.screen==="testPreview")') === -1, 'navigation function must not contain preview event binding');
+assert(!app.slice(previewNav, app.indexOf('function focusQ()', previewNav)).includes('addEventListener'), 'navigation function must not contain preview event binding');
 assert(index.includes('tts-enhancement.js'), 'current preview must include embedded TTS support');
 
 console.log('Practice Preview and lifecycle contract passed.');
