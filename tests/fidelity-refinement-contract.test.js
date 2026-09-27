@@ -41,7 +41,7 @@ if (!finalizationJs.includes('isActualRuntime') || !finalizationJs.includes('mou
 if (!lineReaderJs.includes('state.cleanup') || !lineReaderJs.includes('removeEventListener')) throw new Error('Line Reader enhancement must clean up listeners across rerenders');
 if (!sw.includes('bluebook-fidelity-refinements.css') || !sw.includes('bluebook-exam-mode.js')) throw new Error('offline cache is missing fidelity assets');
 for (const asset of ['bluebook-break-fidelity.css','bluebook-break-fidelity.js','bluebook-module-transition.js','bluebook-mvp-runtime.js','bluebook-pixel-fidelity.css','line-reader-enhancement.js','bluebook-final-calibration.css','bluebook-final-calibration.js']) if (!sw.includes(asset)) throw new Error(`offline cache is missing MVP asset: ${asset}`);
-if (!sw.includes("const CACHE_NAME='azaman-bluebook-v22'")) throw new Error('offline cache version does not match current precache generation');
+if (!sw.includes("const CACHE_NAME='azaman-bluebook-v23'")) throw new Error('offline cache version does not match current precache generation');
 if (!sw.includes('caches.match(r).then(c=>')) throw new Error('service worker is not cache-first');
 if (sw.includes('fetch(request)')) throw new Error('exam service worker must not depend on a runtime network fallback');
 new Function(js);new Function(finalJs);new Function(examJs);new Function(finalizationJs);new Function(breakJs);new Function(mvpJs);new Function(transitionJs);new Function(lineReaderJs);
