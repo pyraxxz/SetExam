@@ -3,7 +3,8 @@
 
   const MOVE_LABELS = {
     calculatorPanel: 'Move calculator',
-    referencePanel: 'Move reference sheet'
+    referencePanel: 'Move reference sheet',
+    ttsPanel: 'Move Text-to-Speech'
   };
   const STEP = 24;
 
@@ -117,10 +118,11 @@
   const observer = new MutationObserver(() => {
     enhance(document.getElementById('calculatorPanel'));
     enhance(document.getElementById('referencePanel'));
+    enhance(document.getElementById('ttsPanel'));
   });
   observer.observe(document.body, { childList: true, subtree: true });
   window.addEventListener('resize', () => {
-    document.querySelectorAll('#calculatorPanel, #referencePanel').forEach((panel) => {
+    document.querySelectorAll('#calculatorPanel, #referencePanel, #ttsPanel').forEach((panel) => {
       if (panel.dataset.azmMovePosition !== '1') return;
       const rect = panel.getBoundingClientRect();
       setPosition(panel, rect.left, rect.top);
