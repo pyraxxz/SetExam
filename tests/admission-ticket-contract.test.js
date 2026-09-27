@@ -45,11 +45,12 @@ assert(index.includes('styles.css?v=23'), 'canonical stylesheet must remain load
 
 for (const marker of [
   'Your SAT\\s*Admission Ticket',
-  'Sat, Oct 3, 2026',
+  'October 3 date renders',
   'date of birth renders',
-  'Registration Number',
-  'International Community School, Pakyi No. 1, Kumasi, Ghana',
-  'Admission ticket QR code',
+  'registration number renders',
+  'location venue renders',
+  'location address renders',
+  'QR has substantial matrix',
   'ADMISSION TICKET SMOKE COMPLETE'
 ]) {
   assert(smoke.includes(marker), `ticket smoke coverage missing: ${marker}`);
