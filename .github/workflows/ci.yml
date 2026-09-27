@@ -134,6 +134,18 @@ jobs:
         run: node tests/qa-matrix-contract.test.js
       - name: Validate practice experience contract
         run: node tests/practice-experience-contract.test.js
+      - name: Validate admission ticket contract
+        run: node tests/admission-ticket-contract.test.js
+      - name: Run admission ticket browser smoke
+        run: |
+          set -eu
+          python3 -m http.server 8086 >/tmp/azaman-ticket-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          sleep 1
+          chromium --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage --window-size=1024,900 --virtual-time-budget=8000 --dump-dom http://127.0.0.1:8086/tests/admission-ticket-smoke.html > /tmp/azaman-ticket-smoke.html
+          cat /tmp/azaman-ticket-smoke.html
+          grep -q 'ADMISSION TICKET SMOKE COMPLETE' /tmp/azaman-ticket-smoke.html
       - name: Run accessibility contract checks
         run: node tests/accessibility-contract.test.js
       - name: Run session recovery edge-case tests
