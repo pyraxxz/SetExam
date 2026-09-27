@@ -134,6 +134,11 @@
   document.addEventListener('click', (event) => speakClicked(event.target), true);
   const observer = new MutationObserver(() => {
     installMenuItem();
+    const state = window.AZAMAN_APP?.getState?.();
+    if (state && !['test', 'testPreview'].includes(state.screen)) {
+      document.getElementById('ttsPanel')?.remove();
+      synth()?.cancel();
+    }
   });
   observer.observe(document.body, { childList: true, subtree: true });
   installMenuItem();
