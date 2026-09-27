@@ -23,52 +23,60 @@
   const checks = [];
   const check = (name, ok) => { checks.push((ok ? 'PASS ' : 'FAIL ') + name); if (!ok) throw new Error(name); };
 
-  let bootstrapped = false;
+  let phase = 'bootstrap';
   frame.addEventListener('load', async () => {
     try {
-      if (!bootstrapped) {
-        bootstrapped = true;
+      if (phase === 'bootstrap') {
+        phase = 'preview';
         frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(state));
         frame.contentWindow.location.reload();
         return;
       }
-      await wait(300);
-      let doc = frame.contentDocument;
-      check('dashboard renders', !!doc.querySelector('.yourtests-page'));
-      doc.getElementById('testPreviewBtn')?.click();
-      await wait(180);
-      doc = frame.contentDocument;
-      check('Test Preview opens', !!doc.querySelector('.azm-test-preview-shell'));
-      check('preview is untimed', doc.querySelector('.preview-untimed')?.textContent.trim() === 'Untimed');
-      check('preview has question 1 of 6', /Question 1 of 6/.test(doc.querySelector('.question-nav')?.textContent || ''));
-      check('preview has adjustable splitter', !!doc.getElementById('examSplitter'));
-      check('preview has More menu button', !!doc.getElementById('toolsBtn'));
-      doc.getElementById('toolsBtn')?.click();
-      await wait(80);
-      check('preview More menu opens', !!doc.getElementById('toolPopover'));
-      check('preview exposes Text-to-Speech', !!doc.getElementById('ttsTool'));
-      doc.getElementById('ttsTool')?.click();
-      await wait(80);
-      check('TTS panel opens', !!doc.getElementById('ttsPanel'));
-      check('TTS has shared Move control', !!doc.querySelector('#ttsPanel .azm-move-button'));
-      doc.getElementById('ttsClose')?.click();
-      await wait(30);
-      doc = frame.contentDocument;
-      doc.querySelector('[data-preview-answer]')?.click();
-      await wait(60);
-      const afterAnswer = JSON.parse(frame.contentWindow.localStorage.getItem(KEY));
-      check('preview answer persists', !!afterAnswer?.previewAnswers?.[0]);
-      doc.getElementById('previewNextBtn')?.click();
-      await wait(60);
-      check('preview advances', /Question 2 of 6/.test(frame.contentDocument.querySelector('.question-nav')?.textContent || ''));
-      const resetState = {...JSON.parse(frame.contentWindow.localStorage.getItem(KEY)),screen:'yourtests'};
-      frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(resetState));
-      frame.contentWindow.location.reload();
+
+      if (phase === 'preview') {
+        await wait(300);
+        let doc = frame.contentDocument;
+        check('dashboard renders', !!doc.querySelector('.yourtests-page'));
+        doc.getElementById('testPreviewBtn')?.click();
+        await wait(180);
+        doc = frame.contentDocument;
+        check('Test Preview opens', !!doc.querySelector('.azm-test-preview-shell'));
+        check('preview is untimed', doc.querySelector('.preview-untimed')?.textContent.trim() === 'Untimed');
+        check('preview has question 1 of 6', /Question 1 of 6/.test(doc.querySelector('.question-nav')?.textContent || ''));
+        check('preview has adjustable splitter', !!doc.getElementById('examSplitter'));
+        check('preview has More menu button', !!doc.getElementById('toolsBtn'));
+        doc.getElementById('toolsBtn')?.click();
+        await wait(80);
+        check('preview More menu opens', !!doc.getElementById('toolPopover'));
+        check('preview exposes Text-to-Speech', !!doc.getElementById('ttsTool'));
+        doc.getElementById('ttsTool')?.click();
+        await wait(80);
+        check('TTS panel opens', !!doc.getElementById('ttsPanel'));
+        check('TTS has shared Move control', !!doc.querySelector('#ttsPanel .azm-move-button'));
+        doc.getElementById('ttsClose')?.click();
+        await wait(30);
+        doc = frame.contentDocument;
+        doc.querySelector('[data-preview-answer]')?.click();
+        await wait(60);
+        const afterAnswer = JSON.parse(frame.contentWindow.localStorage.getItem(KEY));
+        check('preview answer persists', !!afterAnswer?.previewAnswers?.[0]);
+        doc.getElementById('previewNextBtn')?.click();
+        await wait(60);
+        check('preview advances', /Question 2 of 6/.test(frame.contentDocument.querySelector('.question-nav')?.textContent || ''));
+        const resetState = {...JSON.parse(frame.contentWindow.localStorage.getItem(KEY)),screen:'yourtests'};
+        frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(resetState));
+        phase = 'practice';
+        frame.contentWindow.location.reload();
+        return;
+      }
+
       await wait(250);
-      frame.contentDocument.getElementById('fullLengthBtn')?.click();
+      const practiceDoc = frame.contentDocument;
+      check('dashboard restored for practice', !!practiceDoc.querySelector('.yourtests-page'));
+      practiceDoc.getElementById('fullLengthBtn')?.click();
       await wait(180);
-      doc = frame.contentDocument;
-      check('Full-Length Practice enters directions', !!doc.querySelector('#azmDirectionsPage'));
+      const finalDoc = frame.contentDocument;
+      check('Full-Length Practice enters directions', !!finalDoc.querySelector('#azmDirectionsPage'));
       check('practice mode persisted', JSON.parse(frame.contentWindow.localStorage.getItem(KEY)).practiceMode === true);
       out.textContent = checks.join('\\n') + '\\nPRACTICE EXPERIENCE SMOKE COMPLETE';
     } catch (e) {
