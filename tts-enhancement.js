@@ -8,6 +8,7 @@
   let volume = 1;
   let clickMode = false;
   let voice = null;
+  let voicesBound = false;
 
   const icon = '<svg class="ico-tool" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6L8 10z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9.5c1.3 1.3 1.3 3.7 0 5M18.7 7c2.7 2.7 2.7 7.3 0 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
 
@@ -116,7 +117,7 @@
     panel.querySelector('#ttsSpeed').addEventListener('change', (e) => { speed = Number(e.target.value) || 1; if (utterance) utterance.rate = speed; });
     panel.querySelector('#ttsVolume').addEventListener('input', (e) => { volume = Number(e.target.value); if (utterance) utterance.volume = volume; });
     panel.querySelector('#ttsVoice').addEventListener('change', (e) => { const voices = synth()?.getVoices?.() || []; voice = e.target.value === '' ? null : voices[Number(e.target.value)] || null; });
-    if (synth()) { loadVoices(); synth().addEventListener?.('voiceschanged', loadVoices); }
+    if (synth()) { loadVoices(); if (!voicesBound) { synth().addEventListener?.('voiceschanged', loadVoices); voicesBound = true; } }
     panel.querySelector('#ttsCollapse').addEventListener('click', (e) => {
       const collapsed = panel.classList.toggle('azm-tts-collapsed');
       e.currentTarget.setAttribute('aria-expanded', String(!collapsed));
