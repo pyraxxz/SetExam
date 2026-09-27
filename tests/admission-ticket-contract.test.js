@@ -13,10 +13,16 @@ assert(app.includes('function formatDob('), 'ticket must format stored date of b
 assert(app.includes('id="setupDob"'), 'exam setup must collect date of birth for the admission ticket');
 assert(!app.includes('max="2015-12-31"'), 'DOB field must not impose an arbitrary age cutoff');
 assert(app.includes('function admissionTicketPage('), 'admission ticket must have a dedicated page renderer');
+assert(app.includes('case"ticket":return shell(admissionTicketPage())'), 'admission ticket must be an explicit runtime screen');
+assert(app.includes('s.screen="ticket"'), 'setup completion must route to the explicit ticket screen');
+assert(app.includes('if(s.screen==="ticket")'), 'ticket controls must bind only on the ticket screen');
+assert(app.includes('if(x.screen==="setup"&&Number(x.setupStep||1)>5)'), 'legacy setup-step ticket state must migrate to the ticket screen');
 assert(app.includes('Your SAT<br>Admission Ticket'), 'ticket must use the Bluebook-style title');
 assert(app.includes('Digital SAT October 2026 - Admission Ticket'), 'ticket page must use the current outer admission-ticket heading');
 assert(app.includes('id="doneTicketBtn"'), 'ticket page must expose a Done action');
 assert(app.includes('aria-label="Admission ticket QR code"'), 'ticket QR must be explicitly labelled');
+assert(app.includes('const rows=['), 'ticket QR must use a deterministic encoded matrix');
+assert(app.includes('viewBox="0 0 41 41"'), 'ticket QR must render as a version-4-scale matrix with quiet zone');
 assert(app.includes('ticket-masthead'), 'ticket must have a dedicated masthead');
 assert(app.includes('ticket-main-head'), 'ticket must separate title and QR header content');
 assert(app.includes('ticket-registration'), 'ticket registration number must occupy its own block');
@@ -36,6 +42,7 @@ assert(app.includes('function emailAdmissionTicket('), 'ticket Email control mus
 assert(css.includes('@media print{body.printing-ticket'), 'ticket must have print-only styling');
 assert(!app.includes('sat-badge'), 'old generic SAT badge ticket treatment must be removed');
 assert(!app.includes('ticket-grid'), 'old generic ticket grid treatment must be removed');
+assert(!css.includes('.ticket-grid'), 'old generic ticket grid CSS must be removed');
 for (const token of ['.admit-ticket{', '.ticket-masthead{', '.ticket-main-head{', '.ticket-qr-frame{', '.ticket-identity{', '.ticket-details{', '.ticket-comments{']) {
   assert(css.includes(token), `ticket visual token missing: ${token}`);
 }
