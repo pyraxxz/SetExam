@@ -20,3 +20,7 @@
 .ref2-access-brand{z-index:10;font-size:25px}.ref2-access-brand .ref2-logo{width:29px;height:29px}
 @media(max-width:760px){.access-page::before{left:8%;bottom:18%;font-size:118px}.access-page::after{height:104px}.access-page .signin-modal{margin-top:72px;width:min(340px,calc(100vw - 28px));padding:24px 25px 22px}.ref2-access-brand{top:15px;font-size:22px}.ref2-access-brand .ref2-logo{width:26px;height:26px}}
 .access-art{position:absolute;top:auto;left:0;right:0;bottom:0;height:auto;display:block}.access-art img{position:absolute;left:0;bottom:0;width:100%;height:auto;object-fit:contain}
+.azm-start-status{min-height:26px;margin:-14px auto 16px;display:flex;justify-content:center;align-items:center}
+.azm-battery-status{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--color-text-muted)}
+.azm-battery-status::before{content:"";display:inline-block;width:9px;height:5px;border:1.5px solid currentColor;border-radius:1px;box-shadow:1px 0 0 -0.2px currentColor}
+.azm-battery-status[data-state="warn"]{color:var(--color-danger)}
