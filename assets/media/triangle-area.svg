@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" role="img" aria-labelledby="title desc">
+<title id="title">Triangle with a labeled base and height</title>
+<desc id="desc">A triangle has a horizontal base labeled 12 and a perpendicular height labeled 7.</desc>
+<rect width="520" height="300" fill="#fff"/>
+<path d="M70 230 L450 230 L255 60 Z" fill="#eef3fb" stroke="#202124" stroke-width="3" stroke-linejoin="round"/>
+<path d="M255 60 L255 230" stroke="#202124" stroke-width="2.5" stroke-dasharray="8 7"/>
+<path d="M255 230 h28 v-28" fill="none" stroke="#202124" stroke-width="2.5"/>
+<path d="M70 247 H450" stroke="#202124" stroke-width="2"/>
+<path d="M70 241 V253 M450 241 V253" stroke="#202124" stroke-width="2"/>
+<text x="260" y="268" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="#202124">12</text>
+<path d="M237 60 H211 M237 230 H211 M220 60 V230" stroke="#202124" stroke-width="2"/>
+<path d="M214 60 H226 M214 230 H226" stroke="#202124" stroke-width="2"/>
+<text x="197" y="150" font-family="Arial, sans-serif" font-size="20" text-anchor="middle" fill="#202124">7</text>
+</svg>
