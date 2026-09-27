@@ -101,3 +101,36 @@ body.exam-resizing, body.exam-resizing * { cursor: col-resize !important; user-s
   .q-number { width: 28px; height: 28px; min-width: 28px; }
   .choice { min-height: 48px; }
 }
+
+/* ---------- Dashboard refinement from current Bluebook home references ---------- */
+.yourtests-page { background: #fff; }
+.yourtests-page .yt-wrap { max-width: 960px; padding: 0 20px 56px; }
+.yourtests-page .app-head { min-height: 68px; height: 68px; padding: 0 24px; background: #fff; border-bottom: 1px solid #e4e7eb; }
+.yourtests-page .app-brand .ico-logo { width: 30px; height: 30px; }
+.yourtests-page .brand-word { color: #2f55cc; font-size: 18px; }
+.yourtests-page .app-head-links { gap: 24px; }
+.yourtests-page .yt-welcome { margin: 0 -20px; padding: 32px 42px 34px; background: #eaf0fa; color: #5570aa; font-size: 34px; font-weight: 300; }
+.yourtests-page .yt-head { width: min(920px, 100%); margin: 30px auto 18px; }
+.yourtests-page .yt-h2 { font-size: 30px; line-height: 1.1; margin: 0; }
+.yourtests-page .tab-toggle { padding: 0; background: #fff; border: 1px solid #c9ced6; overflow: hidden; }
+.yourtests-page .tab-pill { min-width: 78px; padding: 8px 16px; color: #4b535e; border: 0; border-radius: 0; background: #fff; }
+.yourtests-page .tab-pill.active { color: #fff; background: #32363b; }
+.yourtests-page .test-card { width: min(100%, 920px); margin: 0 auto; padding: 24px 26px 22px; border: 1px solid #e3e6e9; border-radius: 13px; box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+.yourtests-page .test-name { font-size: 21px; margin-bottom: 13px; }
+.yourtests-page .meta-row { font-size: 14px; padding: 3px 0; }
+.yourtests-page .test-acc { font-size: 13px; }
+.yourtests-page .test-ready { align-items: center; }
+.yourtests-page .ready-note { font-size: 13px; }
+.yourtests-page .test-ready .cta-yellow { min-width: 126px; min-height: 44px; border-radius: 23px; font-size: 14px; }
+.yourtests-page .prepare-block { width: min(920px, 100%); margin: 34px auto 0; }
+.yourtests-page .prepare-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.yourtests-page .prepare-item { min-height: 150px; padding: 20px 22px; border-radius: 12px; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+.yourtests-page .prepare-item:hover, .yourtests-page .prepare-item:focus-visible { transform: translateY(-1px); border-color: #c9d2e2; box-shadow: 0 4px 15px rgba(0,0,0,.07); }
+.yourtests-page .prepare-icon { width: 40px; height: 40px; display: grid; place-items: center; color: #4e678f; margin-bottom: 10px; }
+.yourtests-page .ico-prepare { width: 36px; height: 36px; display: block; }
+.yourtests-page .prepare-title { font-size: 17px; font-weight: 800; }
+.yourtests-page .prepare-item small { font-size: 13px; line-height: 1.4; }
+@media(max-width:760px) {
+  .yourtests-page .yt-welcome { padding: 25px 20px 28px; font-size: 28px; }
+  .yourtests-page .prepare-grid { grid-template-columns: 1fr; }
+}
