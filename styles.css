@@ -201,7 +201,6 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-details{display:block}
 
 .ticket-registration-side{min-width:0;padding:16px 18px 14px 20px;border-left:1px solid var(--color-border);display:flex;align-items:flex-start}
-.ticket-identity{display:block}
 .ticket-field{min-width:0;margin:0 0 13px}
 .ticket-field:last-child{margin-bottom:0}
 .ticket-field span,.ticket-comments span{display:block;font-size:.56rem;line-height:1.2;text-transform:uppercase;letter-spacing:.09em;color:var(--color-text-muted);font-weight:800;margin-bottom:4px}
@@ -260,5 +259,5 @@ body.access-active .app-shell{min-height:100vh}
 .bigfuture-banner h3{margin:0 0 6px}
 .bigfuture-banner p{margin:0;color:var(--color-text-muted)}
 .success-msg{display:flex;align-items:center;gap:8px;color:var(--color-green);font-weight:700;margin:16px 0}
-@media(max-width:720px){.admit-ticket{padding-right:18px}.ticket-qr{position:static;transform:none;margin:12px auto 0}.checklist-cols,.prepare-grid{grid-template-columns:1fr}.ticket-grid{grid-template-columns:1fr}}
-@media print{body.printing-ticket{background:var(--color-surface)!important;color:var(--color-text)!important}body.printing-ticket .app-shell,body.printing-ticket .wiz-head,body.printing-ticket .wiz-foot,body.printing-ticket .ticket-page-heading{display:none!important}body.printing-ticket .wiz-body{display:block!important;padding:0!important;margin:0!important}body.printing-ticket .wiz-card{display:block!important;max-width:none!important;width:100%!important;box-shadow:none!important;padding:24px!important;margin:0!important}body.printing-ticket .admit-ticket{display:block!important;max-width:760px!important;margin:0 auto!important;box-shadow:none!important;border:1px solid var(--color-border-strong)!important}body.printing-ticket .ticket-qr-frame{width:128px!important;height:128px!important}body.printing-ticket .ticket-field strong{color:var(--color-text)!important}body.printing-ticket .small,body.printing-ticket .muted{color:var(--color-text-muted)!important}}
+@media(max-width:720px){.ticket-qr{position:static;transform:none;margin:12px auto 0}.checklist-cols,.prepare-grid{grid-template-columns:1fr}}
+
