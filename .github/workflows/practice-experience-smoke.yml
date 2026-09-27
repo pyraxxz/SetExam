@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: practice-experience-\${{ github.ref }}
+  group: practice-experience-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
