@@ -102,30 +102,32 @@ return `<main class="page admission-ticket-page">
 <section class="ticket-page-inner">
 <header class="ticket-page-heading"><div><h1>Digital SAT October 2026 - Admission Ticket</h1><p class="small muted">You&#39;re ready to test! Bring this admission ticket with you on test day.</p></div><div class="btn-row"><button type="button" id="printTicketBtn" class="btn pill-outline">Print</button><button type="button" id="emailTicketBtn" class="btn pill-outline">Email</button></div></header>
 <article class="admit-ticket" aria-labelledby="admitTicketTitle">
-<header class="ticket-masthead"><div class="ticket-brand-lockup"><span class="college-board-mark" aria-hidden="true"><span class="cb-shield">CB</span><span class="cb-word">College Board</span></span><span class="ticket-sat-mark">SAT</span></div></header>
-<div class="ticket-main-head"><div><h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2></div><div class="ticket-qr"><div class="ticket-qr-frame" title="Admission ticket QR code">${qrSvg()}</div></div></div>
-<div class="ticket-divider"></div>
-<section class="ticket-info">
-<div class="ticket-primary">
+<header class="ticket-masthead"><div class="college-board-mark"><span class="cb-shield" aria-hidden="true">CB</span><span class="cb-word">College Board</span></div><span class="ticket-sat-mark">SAT</span></header>
+<section class="ticket-main-head">
+<div class="ticket-column ticket-left">
+<h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2>
 <div class="ticket-identity">
 <div class="ticket-field"><span>Name</span><strong>${esc(s.student||"Student")}</strong></div>
 <div class="ticket-field"><span>Date of Birth</span><strong>${esc(formatDob(s.dob)||"Not provided")}</strong></div>
 </div>
-<div class="ticket-field ticket-registration"><span>Registration Number</span><strong>${C.regNum}</strong></div>
 <div class="ticket-details">
-<div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
-<div class="ticket-times"><div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div><div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div></div>
+<div class="ticket-fields-row"><div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div><div class="ticket-times"><div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div><div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div></div></div>
+</div>
+</div>
+<div class="ticket-column ticket-middle">
 <div class="ticket-field ticket-location"><span>Location</span><strong>${C.loc}<small>${C.locAddress}</small></strong></div>
-</div>
-</div>
-</section>
-<div class="ticket-divider"></div>
 <section class="ticket-comments"><span>Comments</span><strong>Thanks for participating in the Digital Exam!</strong></section>
+</div>
+<aside class="ticket-column ticket-right">
+<div class="ticket-field ticket-registration"><span>Registration Number</span><strong>${C.regNum}</strong></div>
+<div class="ticket-qr"><div class="ticket-qr-frame" title="Admission ticket QR code" aria-label="Admission ticket QR code">${qrSvg()}</div></div>
+</aside>
+</section>
 </article>
 <footer class="ticket-page-actions"><button id="doneTicketBtn" class="btn cta-yellow pill">Done</button></footer>
 </section>
-</main>`}
-
+</main>`
+}
 function rulesDoc(){return`<div class="rules-doc"><p><strong>1. Taking the Test.</strong> You'll take the test in the Bluebook app on your own device or a school-provided device. Your proctor supervises the room and reads the scripts that guide each part of the test.</p><p><strong>2. Your Device.</strong> Keep your device on and open for the entire test. Keep it plugged in if possible. Don't switch devices during the test. If your device malfunctions, raise your hand and wait for the proctor.</p><p><strong>3. Personal Items.</strong> Your phone and any other prohibited devices must be powered off and put away for the entire test. Don't access other applications, notes, or websites during testing. Scratch paper is prohibited unless your proctor provides and collects it.</p><p><strong>4. Test Content.</strong> The questions in the test are confidential. Don't share test questions or answers with anyone, during or after the test. Don't post or discuss test content online.</p><p><strong>5. Fairness.</strong> Giving or receiving unfair advantage is prohibited and may result in score cancellation. College Board may cancel scores when there's evidence of unfair advantage.</p><p class="small muted">Full rules and contact information: satsuite.collegeboard.org · 866-630-9305</p></div>`}
 function setup(){const n=s.setupStep||1;switch(n){
 case 1:return setupwiz(1,`<h1>Confirm Your Personal Information</h1><p>Review your information and make sure it's correct before test day.</p><dl class="info-rows"><div class="info-row"><dt>First and Last Name</dt><dd>${esc(s.student)}</dd></div><div class="info-row"><dt>Date of Birth</dt><dd><label class="sr-only" for="setupDob">Date of birth</label><input id="setupDob" class="text-input" type="date" value="${esc(s.dob||"")}" autocomplete="bday"></dd></div><div class="info-row"><dt>Accommodations</dt><dd>You don't have any approved digital testing accommodations.</dd></div></dl><div class="field"><span class="field-label" id="infoCorrectLabel">Is your name correct as shown above?</span><div class="radio-row" role="radiogroup" aria-labelledby="infoCorrectLabel"><label class="radio"><input type="radio" name="infoCorrect" value="yes" ${s.infoCorrect==="yes"?"checked":""}> Yes</label><label class="radio"><input type="radio" name="infoCorrect" value="no" ${s.infoCorrect==="no"?"checked":""}> No</label></div></div><p class="small muted">Your date of birth is printed on your admission ticket and must match your photo ID.</p>`,"Next");
