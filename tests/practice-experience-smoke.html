@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SetExam practice experience smoke</title></head>
+<body>
+<pre id="result">running</pre>
+<iframe id="app" title="SetExam" style="width:100%;height:900px;border:0"></iframe>
+<script>
+(() => {
+  'use strict';
+  const out = document.getElementById('result');
+  const frame = document.getElementById('app');
+  const KEY = 'azaman-sat-practice-v3';
+  const state = {
+    v:3, screen:'yourtests', student:'Smoke Student', email:'smoke@example.com', password:'',
+    accessCode:'SAT26', roomCode:'AZM24', startCode:'492776', step:1, setupStep:1, setupDone:true,
+    infoCorrect:'yes', deviceOk:'yes', rulesOk:true, checkinRules:true, harness:false, infoOk:true,
+    aids:{}, pledge:'', roomOk:true, mi:0, qi:0, endAt:null, breakEndAt:null, answers:{}, marked:{},
+    eliminated:{}, notes:{}, highlights:{}, completed:{}, submitted:false,
+    adaptive:{rw:'easy',math:'easy'}, timerHidden:false, lineReader:false, rules:true, desk:true, warning:{},
+    previewIndex:0, previewAnswers:{}, previewNotes:{}, practiceMode:false
+  };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const checks = [];
+  const check = (name, ok) => { checks.push((ok ? 'PASS ' : 'FAIL ') + name); if (!ok) throw new Error(name); };
+
+  frame.addEventListener('load', async () => {
+    try {
+      frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(state));
+      frame.contentWindow.location.reload();
+      await wait(300);
+      let doc = frame.contentDocument;
+      check('dashboard renders', !!doc.querySelector('.yourtests-page'));
+      doc.getElementById('testPreviewBtn')?.click();
+      await wait(180);
+      doc = frame.contentDocument;
+      check('Test Preview opens', !!doc.querySelector('.azm-test-preview-shell'));
+      check('preview is untimed', doc.querySelector('.preview-untimed')?.textContent.trim() === 'Untimed');
+      check('preview has question 1 of 6', /Question 1 of 6/.test(doc.querySelector('.question-nav')?.textContent || ''));
+      check('preview has adjustable splitter', !!doc.getElementById('examSplitter'));
+      check('preview has More menu button', !!doc.getElementById('toolsBtn'));
+      doc.getElementById('toolsBtn')?.click();
+      await wait(80);
+      check('preview More menu opens', !!doc.getElementById('toolPopover'));
+      check('preview exposes Text-to-Speech', !!doc.getElementById('ttsTool'));
+      doc.getElementById('ttsTool')?.click();
+      await wait(80);
+      check('TTS panel opens', !!doc.getElementById('ttsPanel'));
+      check('TTS has shared Move control', !!doc.querySelector('#ttsPanel .azm-move-button'));
+      doc.getElementById('ttsClose')?.click();
+      await wait(30);
+      doc = frame.contentDocument;
+      doc.querySelector('[data-preview-answer]')?.click();
+      await wait(60);
+      const afterAnswer = JSON.parse(frame.contentWindow.localStorage.getItem(KEY));
+      check('preview answer persists', !!afterAnswer?.previewAnswers?.[0]);
+      doc.getElementById('previewNextBtn')?.click();
+      await wait(60);
+      check('preview advances', /Question 2 of 6/.test(frame.contentDocument.querySelector('.question-nav')?.textContent || ''));
+      const resetState = {...JSON.parse(frame.contentWindow.localStorage.getItem(KEY)),screen:'yourtests'};
+      frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(resetState));
+      frame.contentWindow.location.reload();
+      await wait(250);
+      frame.contentDocument.getElementById('fullLengthBtn')?.click();
+      await wait(180);
+      doc = frame.contentDocument;
+      check('Full-Length Practice enters directions', !!doc.querySelector('#azmDirectionsPage'));
+      check('practice mode persisted', JSON.parse(frame.contentWindow.localStorage.getItem(KEY)).practiceMode === true);
+      out.textContent = checks.join('\\n') + '\\nPRACTICE EXPERIENCE SMOKE COMPLETE';
+    } catch (e) {
+      out.textContent = 'FAIL ' + (e.message || e) + '\\n' + checks.join('\\n');
+    }
+  });
+  frame.src = '../index.html?practice-experience-smoke=1';
+})();
+</script>
+</body>
+</html>
