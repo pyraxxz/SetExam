@@ -134,3 +134,46 @@ body.exam-resizing, body.exam-resizing * { cursor: col-resize !important; user-s
   .yourtests-page .yt-welcome { padding: 25px 20px 28px; font-size: 28px; }
   .yourtests-page .prepare-grid { grid-template-columns: 1fr; }
 }
+
+/* ---------- More-menu interaction polish ---------- */
+.tool-popover {
+  width: 260px;
+  padding: 6px;
+  border: 1px solid #d8dce1;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+}
+.tool-popover .tool-item {
+  min-height: 42px;
+  width: 100%;
+  padding: 0 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  text-align: left;
+}
+.tool-popover .tool-item:hover,
+.tool-popover .tool-item:focus-visible {
+  background: #f1f4f8;
+}
+.tool-popover .tool-item .ico-tool {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+.tool-popover #unscheduledBreakTool {
+  margin-top: 4px;
+  border-top: 1px solid #e3e6ea;
+  border-radius: 5px;
+}
+.tool-popover #refExitExam {
+  margin-top: 4px;
+  border-top: 1px solid #e3e6ea;
+  border-radius: 5px;
+}
+@media(max-width:760px) {
+  .tool-popover { right: 10px; width: min(260px, calc(100vw - 20px)); }
+}
