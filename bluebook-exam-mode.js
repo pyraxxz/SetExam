@@ -87,7 +87,7 @@
     const heading = panel.querySelector('h2');
     if (heading) heading.textContent = `Section ${section}, Module ${module}: ${name}`;
     const bullets = [
-      'This module is made up of multiple-choice questions.',
+      index >= 2 ? 'This module is made up of multiple-choice questions and student-produced response questions.' : 'This module is made up of multiple-choice questions.',
       'You can move back and forth between questions until time expires.',
       'At the end of the module, you can review your answers until time expires.',
       'Once the next module begins, you cannot return to these questions.'
