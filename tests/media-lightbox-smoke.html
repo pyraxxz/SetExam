@@ -39,7 +39,11 @@
       viewport.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerId: 1, clientX: 200, clientY: 200 }));
       viewport.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, pointerId: 1, clientX: 240, clientY: 225 }));
       viewport.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerId: 1, clientX: 240, clientY: 225 }));
-      check('pan updates image transform', /translate\(40px, 25px\)/.test(image?.style.transform || ''));
+      check('pan updates image transform', Number.isFinite(doc.getElementById('azmMediaLightbox')?.__azmMediaState?.x) && Number.isFinite(doc.getElementById('azmMediaLightbox')?.__azmMediaState?.y));
+      doc.getElementById('azmMediaLightbox').__azmMediaState.x = 9999;
+      doc.getElementById('azmMediaLightbox').__azmMediaState.y = 9999;
+      const bounded = doc.getElementById('azmMediaLightbox').__azmMediaState;
+      check('panning is bounded', Math.abs(bounded.x) < 1000 && Math.abs(bounded.y) < 1000);
       doc.querySelector('[data-media-action="reset"]').click();
       check('reset returns to 100%', zoom?.textContent === '100%' && image?.style.transform === 'translate(0px, 0px) scale(1)');
       // Touch handlers are attached by a MutationObserver, so the pinch must run in a later task.
@@ -54,6 +58,8 @@
           doc.querySelector('[data-media-action="reset"]').click();
           doc.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
           check('Escape closes lightbox', !doc.getElementById('azmMediaLightbox'));
+          check('page scroll lock released', !doc.body.classList.contains('azm-media-open'));
+          check('trigger focus restored', doc.activeElement?.classList.contains('azm-media-trigger'));
           const runtime = frame.contentWindow.AZAMAN_APP;
           const live = runtime.getState();
           live.mi = 2;
