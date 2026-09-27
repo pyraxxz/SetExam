@@ -23,6 +23,7 @@ const uiA11y = read('ui-accessibility-enhancement.js');
 const quality = read('data/question-quality-overrides.js');
 const tokens = read('styles.css');
 const platformReadiness = read('docs/platform-readiness.md');
+const refinements = read('bluebook-fidelity-refinements.js');
 const spec = read('docs/bluebook-spec.md');
 
 const requiredScripts = [
