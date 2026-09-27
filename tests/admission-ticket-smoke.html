@@ -44,7 +44,7 @@
       check('QR is present', !!doc.querySelector('.ticket-qr-frame .ticket-qr-img'));
       const qr = doc.querySelector('.ticket-qr-frame .ticket-qr-img');
       check('QR has substantial matrix', qr?.querySelectorAll('rect')?.length > 500);
-      check('ticket has comments', doc.body.textContent.includes('Thanks for participating in the Digital SAT!'));
+      check('ticket has comments', doc.body.textContent.includes('Thanks for participating in the Digital Exam!'));
       out.textContent = checks.join('\\n') + '\\nADMISSION TICKET SMOKE COMPLETE';
     } catch (e) {
       out.textContent = 'FAIL ' + (e.message || e) + '\\n' + checks.join('\\n');
