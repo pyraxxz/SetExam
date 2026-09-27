@@ -37,6 +37,7 @@
         await wait(300);
         let doc = frame.contentDocument;
         check('dashboard renders', !!doc.querySelector('.yourtests-page'));
+        check('dashboard shows October 3, 2026', doc.body.textContent.includes('Sat, Oct 3, 2026'));
         doc.getElementById('testPreviewBtn')?.click();
         await wait(180);
         doc = frame.contentDocument;
