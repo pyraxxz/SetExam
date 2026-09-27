@@ -10,6 +10,7 @@ const calculator = read('calculator-enhancement.js');
 const codeInput = read('code-input-enhancement.js');
 const uiA11y = read('ui-accessibility-enhancement.js');
 const media = read('media-enhancement.js');
+const tts = read('tts-enhancement.js');
 const toolMove = read('tools-move-enhancement.js');
 
 assert(html.includes('<html lang="en">'), 'document language must be declared');
@@ -84,5 +85,15 @@ assert(html.includes('ui-accessibility-enhancement.js'), 'semantic accessibility
 assert(html.includes('media-enhancement.js'), 'media accessibility enhancement must be loaded');
 assert(html.includes('tools-move-enhancement.js'), 'keyboard tool movement enhancement must be loaded');
 assert(html.includes('media-touch-enhancement.js'), 'touch media enhancement must be loaded');
+assert(html.includes('tts-enhancement.js'), 'embedded TTS enhancement must be loaded');
+assert(tts.includes('Play All'), 'TTS must expose Play All');
+assert(tts.includes('Click Mode'), 'TTS must expose Click Mode');
+assert(tts.includes('Stop'), 'TTS must expose Stop');
+assert(tts.includes('ttsSpeed'), 'TTS must expose speed control');
+assert(tts.includes('ttsVolume'), 'TTS must expose volume control');
+assert(tts.includes('Move Text-to-Speech'), 'TTS must expose move control');
+assert(tts.includes('azm-tts-collapsed'), 'TTS must support collapse/expand');
+assert(tts.includes('speechSynthesis'), 'TTS must use the browser speech synthesis API locally');
+assert(tts.includes('aria-live="polite"'), 'TTS status must announce playback state');
 
 console.log('Accessibility, reduced-motion, media, tool movement, touch, platform shortcuts, toggle semantics, timer labels, landmarks, and observer safety contract checks passed.');
