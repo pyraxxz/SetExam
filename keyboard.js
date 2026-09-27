@@ -11,6 +11,8 @@
     ['F6 / Shift+F6', 'Move between exam regions'],
     ['Ctrl + + / Ctrl + - / Ctrl + 0 or Command equivalents', 'Zoom in / out / reset'],
     ['Ctrl + Alt + B / Command + Control + B', 'Back'],
+    ['Ctrl + P', 'Next question / next module (skips directions and break gates)'],
+    ['Ctrl + O', 'Previous question / previous module'],
     ['Ctrl + Alt + X / Command + Control + X', 'Next / review module'],
     ['Ctrl + Alt + G / Command + Control + G', 'Question menu'],
     ['Ctrl + Alt + H / Command + Control + H / iPad: Command + Control + P', 'Help'],
@@ -84,7 +86,7 @@
     document.getElementById('helpDialog')?.remove();
     const n = document.createElement('div');
     n.id = 'helpDialog'; n.className = 'modal-backdrop';
-    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Completed modules cannot be reopened, and the timer continues while help is open.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
+    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Ctrl + P and Ctrl + O can move through questions, modules, directions, and the break without waiting.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
     document.body.appendChild(n);
     const close = () => { n.remove(); document.removeEventListener('keydown', onEsc); };
     const onEsc = (e) => { if (e.key === 'Escape') close(); };
@@ -160,7 +162,9 @@
     if (key === 'Escape' && closeModal()) { event.preventDefault(); return; }
     if (key === 'F1' && !isChromeOS) { event.preventDefault(); openShortcuts(); return; }
     if (isChromeOS && ctrl && command && lower === 's') { event.preventDefault(); openShortcuts(); return; }
-    if (!document.querySelector('.test-shell')) return;
+    const state = window.AZAMAN_APP?.getState?.();
+    const examScreens = new Set(['test', 'directions', 'break', 'finish']);
+    if (!document.querySelector('.test-shell') && !examScreens.has(state?.screen)) return;
     if (key === 'F6') { event.preventDefault(); focusRegion(event.shiftKey ? -1 : 1); return; }
 
     const zoomMod = isMac ? command : ctrl;
@@ -168,6 +172,10 @@
     if (zoomMod && (key === '-' || key === '_')) { event.preventDefault(); document.documentElement.style.setProperty('--zoom-scale', String(Math.max(0.85, (Number(getComputedStyle(document.documentElement).getPropertyValue('--zoom-scale')) || 1) - 0.05))); return; }
     if (zoomMod && key === '0') { event.preventDefault(); document.documentElement.style.setProperty('--zoom-scale', '1'); return; }
     if (isTyping(event.target)) return;
+
+    const navigateExamPage = window.AZAMAN_APP?.navigateExamPage;
+    if (ctrl && !alt && !command && lower === 'p' && navigateExamPage?.('next')) { event.preventDefault(); return; }
+    if (ctrl && !alt && !command && lower === 'o' && navigateExamPage?.('previous')) { event.preventDefault(); return; }
 
     const triple = isMac ? command && ctrl : ctrl && alt;
     const comboAlt = isMac ? command && alt : ctrl && alt;
