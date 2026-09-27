@@ -214,8 +214,7 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-comments strong{display:block;font-size:.72rem;line-height:1.42;font-weight:600;color:var(--color-text)}
 .ticket-page-actions{display:flex;justify-content:flex-end;max-width:600px;margin:14px auto 0}
 .ticket-page-actions .btn{min-width:88px;min-height:42px}
-@media(max-width:720px){
-  .admission-ticket-page{padding:30px 16px 44px}
+@media(max-width:720px){.admission-ticket-page{padding:30px 16px 44px}
   .ticket-page-inner{width:100%}
   .ticket-page-heading h1{font-size:1.35rem}
   .ticket-main-head{grid-template-columns:minmax(0,1fr) 112px;gap:12px;padding:16px 16px 13px}
@@ -226,8 +225,7 @@ body.access-active .app-shell{min-height:100vh}
   .ticket-comments{padding-left:16px;padding-right:16px}
   .ticket-page-actions{max-width:none}
 }
-@media(max-width:460px){
-  .admission-ticket-page{padding:24px 12px 36px}
+@media(max-width:460px){.admission-ticket-page{padding:24px 12px 36px}
   .ticket-main-head{grid-template-columns:1fr;justify-items:start}
   .ticket-qr{width:100%;justify-content:flex-end;margin-top:10px}
   .ticket-qr-frame{width:100px;height:100px}
