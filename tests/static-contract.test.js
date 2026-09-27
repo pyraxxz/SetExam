@@ -69,6 +69,7 @@ assert(helpSmoke.includes('Command + Control + H'), 'Help smoke must verify the 
 assert(helpSmoke.includes('HELP SMOKE COMPLETE'), 'Help smoke must expose a machine-checkable completion marker');
 for (const phrase of ['ChromeOS 144', 'macOS 15', 'iPadOS 18', 'Windows 11 24H2', 'support matrix']) assert(platformReadiness.includes(phrase), `platform readiness documentation missing: ${phrase}`);
 for (const phrase of ['Review Device Requirements', 'Windows 11 24H2 or later', 'macOS 15 or later', 'iPadOS 18 or later', 'school-managed', 'verified mode enabled', 'ChromeOS Flex isn\'t supported']) assert(app.includes(phrase), `setup device requirements missing: ${phrase}`);
+assert(refinements.includes('azmBatteryStatus'), 'start code must expose a battery indicator');
 for (const phrase of ['Control + Search + S', 'ChromeOS', 'macOS', 'iPad', 'Command + Control + P', 'Setup/check-in state']) assert(spec.includes(phrase), `Bluebook platform spec missing: ${phrase}`);
 for (const phrase of ['hash(value)', 'question.options = original.map', 'question.answer = letters', 'difficulty: \'hard\'']) assert(quality.includes(phrase), `question quality override missing: ${phrase}`);
 
