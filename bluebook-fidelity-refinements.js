@@ -149,7 +149,22 @@
     const app = document.getElementById('app');
     if (!app) return;
     const code = String(s.startCode || '');
-    app.innerHTML = `<main id="azmStartCodePage" class="azm-start-code-page"><header class="azm-flow-header"><button id="azmStartHelp" type="button" class="azm-flow-link">? Help</button><button id="azmStartHome" type="button" class="azm-flow-link">Return to Home <span aria-hidden="true" class="azm-home-icon">⌂</span></button></header><section class="azm-start-code-content"><h1>Start Code</h1><p>Once the proctor shares the start code, enter it here to begin testing.</p><p>The start code contains <strong>numbers only.</strong></p><div class="azm-start-code-boxes" aria-label="Start code">${Array.from({length:6},(_,i)=>`<input class="azm-start-digit" maxlength="1" inputmode="numeric" autocomplete="off" data-pos="${i}" aria-label="Start code digit ${i+1} of 6" value="${escapeHtml(code[i]||'')}">`).join('')}</div><button id="azmStartTest" type="button" class="azm-start-test">Start Test</button></section><p class="azm-start-note">You can <button id="azmReviewInstructions" type="button">review the instructions</button> that the proctor reads aloud.</p></main>`;
+    app.innerHTML = `<main id="azmStartCodePage" class="azm-start-code-page"><header class="azm-flow-header"><button id="azmStartHelp" type="button" class="azm-flow-link">? Help</button><button id="azmStartHome" type="button" class="azm-flow-link">Return to Home <span aria-hidden="true" class="azm-home-icon">⌂</span></button></header><section class="azm-start-code-content"><h1>Start Code</h1><div class="azm-start-status"><span id="azmBatteryStatus" class="azm-battery-status" aria-live="polite">Battery status unavailable</span></div><p>Once the proctor shares the start code, enter it here to begin testing.</p><p>The start code contains <strong>numbers only.</strong></p><div class="azm-start-code-boxes" aria-label="Start code">${Array.from({length:6},(_,i)=>`<input class="azm-start-digit" maxlength="1" inputmode="numeric" autocomplete="off" data-pos="${i}" aria-label="Start code digit ${i+1} of 6" value="${escapeHtml(code[i]||'')}">`).join('')}</div><button id="azmStartTest" type="button" class="azm-start-test">Start Test</button></section><p class="azm-start-note">You can <button id="azmReviewInstructions" type="button">review the instructions</button> that the proctor reads aloud.</p></main>`;
+    const battery = document.getElementById('azmBatteryStatus');
+    const renderBattery = (value) => {
+      if (!battery) return;
+      const level = Math.max(0, Math.min(100, Math.round(value.level * 100)));
+      battery.textContent = `Battery ${level}%${value.charging ? ' · Charging' : ''}`;
+      battery.dataset.state = level < 20 && !value.charging ? 'warn' : 'ready';
+    };
+    if (navigator.getBattery) {
+      navigator.getBattery().then((value) => {
+        renderBattery(value);
+        value.addEventListener('levelchange', () => renderBattery(value));
+        value.addEventListener('chargingchange', () => renderBattery(value));
+      }).catch(() => {});
+    }
+
     const boxes = [...app.querySelectorAll('.azm-start-digit')];
     const sync = () => { s.startCode = boxes.map((b) => b.value).join(''); save(); };
     boxes.forEach((box) => {
