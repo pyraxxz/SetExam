@@ -1,0 +1,50 @@
+name: Deploy PR preview to GitHub Pages
+
+on:
+  push:
+    branches:
+      - feat/exam-nav-splitter-polish
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}preview/
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main site
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Materialize PR preview
+        env:
+          PREVIEW_SHA: ${{ github.sha }}
+        run: |
+          set -eu
+          mkdir -p preview
+          git fetch --no-tags --depth=1 origin "${PREVIEW_SHA}"
+          git archive "${PREVIEW_SHA}" | tar -x -C preview
+          rm -rf preview/.git
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
