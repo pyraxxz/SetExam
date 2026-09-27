@@ -8,6 +8,7 @@ const guard = read('session-guard.js');
 const keyboard = read('keyboard.js');
 const spr = read('spr-input.js');
 const tools = read('tools-enhancement.js');
+const toolMove = read('tools-move-enhancement.js');
 const notes = read('note-enhancement.js');
 const modal = read('modal-enhancement.js');
 const calculator = read('calculator-enhancement.js');
@@ -53,7 +54,8 @@ for (const phrase of ['F1 (Windows/macOS/iPad)', 'Control + Search + S (ChromeOS
   assert(keyboard.includes(phrase), `keyboard shortcut missing: ${phrase}`);
 }
 for (const phrase of ['normalizeFraction', 'normalizeDecimal', 'blur', 'MAX_POSITIVE_CHARS', 'MAX_NEGATIVE_CHARS']) assert(spr.includes(phrase), `SPR normalization contract missing: ${phrase}`);
-for (const phrase of ['setAttribute(\'role\', \'dialog\')', 'aria-modal', 'Resize calculator', 'makeDraggable', 'makeResizable', 'restoreSavedHighlights']) assert(tools.includes(phrase), `tool enhancement contract missing: ${phrase}`);
+for (const phrase of ['setAttribute(\'role\', \'dialog\')', 'aria-modal', 'Resize calculator', 'makeResizable', 'restoreSavedHighlights']) assert(tools.includes(phrase), `tool enhancement contract missing: ${phrase}`);
+for (const phrase of ["head.addEventListener('pointerdown'", "head.addEventListener('pointermove'", "head.addEventListener('pointerup'", 'ttsPanel']) assert(toolMove.includes(phrase), `tool movement contract missing: ${phrase}`);
 for (const phrase of ['STORAGE_KEY', 'questionKey', 'saveNote', 'azmNoteEditor', 'stopImmediatePropagation']) assert(notes.includes(phrase), `note enhancement contract missing: ${phrase}`);
 for (const phrase of ['FOCUSABLE', 'activeDialog', 'event.key !== \'Tab\'', 'aria-modal', 'focusFirst']) assert(modal.includes(phrase), `modal focus contract missing: ${phrase}`);
 for (const phrase of ['tokenize(input)', 'sin', 'cos', 'tan', 'sqrt', 'log10', 'Graph', 'azmGraphExpr', 'azmXMin', 'azmXMax', 'getContext(\'2d\')', 'aria-controls="azmCalcCalculate"', 'aria-controls="azmCalcGraph"', 'Object.entries(views)', 'view.hidden = name !== mode']) assert(calculator.includes(phrase), `calculator enhancement contract missing: ${phrase}`);
