@@ -7,6 +7,7 @@
   let speed = 1;
   let volume = 1;
   let clickMode = false;
+  let voice = null;
 
   const icon = '<svg class="ico-tool" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h4l5 4V6L8 10z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9.5c1.3 1.3 1.3 3.7 0 5M18.7 7c2.7 2.7 2.7 7.3 0 10" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
 
@@ -38,6 +39,7 @@
     utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = speed;
     utterance.volume = volume;
+    if (voice) utterance.voice = voice;
     utterance.onend = () => {
       if (segmentIndex + 1 < segments.length) { segmentIndex += 1; speakSegment(segmentIndex); }
       else { updateStatus('Finished reading this page.'); }
@@ -85,6 +87,17 @@
     speakSegment(0);
   }
 
+  function loadVoices() {
+    const select = document.getElementById('ttsVoice');
+    const voices = synth()?.getVoices?.() || [];
+    if (!select) return;
+    const previous = select.value;
+    select.innerHTML = '<option value="">System default</option>' + voices.map((v, i) => '<option value="' + i + '">' + String(v.name || 'Voice ' + i).replace(/[<>&"']/g, '') + '</option>').join('');
+    select.value = previous;
+    if (!select.value) voice = null;
+    else if (voices[Number(select.value)]) voice = voices[Number(select.value)];
+  }
+
   function ensurePanel() {
     let panel = document.getElementById('ttsPanel');
     if (panel) return panel;
@@ -94,7 +107,7 @@
     panel.setAttribute('role', 'dialog');
     panel.setAttribute('aria-modal', 'false');
     panel.setAttribute('aria-labelledby', 'ttsTitle');
-    panel.innerHTML = `<div class="tts-head panel-head"><span class="tts-title" id="ttsTitle">Text-to-Speech</span><button type="button" class="tts-icon-btn" id="ttsCollapse" aria-expanded="true" aria-label="Collapse Text-to-Speech">−</button><button type="button" class="tts-icon-btn" id="ttsClose" aria-label="Close Text-to-Speech">×</button></div><div class="tts-body"><div class="tts-primary"><button type="button" id="ttsPlay">Play All</button><button type="button" id="ttsPause">Pause</button><button type="button" id="ttsStop">Stop</button></div><div class="tts-click-row"><input type="checkbox" id="ttsClickMode"><label for="ttsClickMode">Click Mode</label><span class="tts-label">(read selected or clicked text)</span></div><div class="tts-row"><span class="tts-label">Speed</span><select id="ttsSpeed" aria-label="Text-to-Speech speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select></div><div class="tts-row"><span class="tts-label">Volume</span><input id="ttsVolume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Text-to-Speech volume"></div><p id="ttsStatus" class="tts-status" aria-live="polite">Ready. Text-to-Speech reads the current test page locally.</p></div>`;
+    panel.innerHTML = `<div class="tts-head panel-head"><span class="tts-title" id="ttsTitle">Text-to-Speech</span><button type="button" class="tts-icon-btn" id="ttsCollapse" aria-expanded="true" aria-label="Collapse Text-to-Speech">−</button><button type="button" class="tts-icon-btn" id="ttsClose" aria-label="Close Text-to-Speech">×</button></div><div class="tts-body"><div class="tts-primary"><button type="button" id="ttsPlay">Play All</button><button type="button" id="ttsPause">Pause</button><button type="button" id="ttsStop">Stop</button></div><div class="tts-click-row"><input type="checkbox" id="ttsClickMode"><label for="ttsClickMode">Click Mode</label><span class="tts-label">(read selected or clicked text)</span></div><div class="tts-row"><span class="tts-label">Speed</span><select id="ttsSpeed" aria-label="Text-to-Speech speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="1.75">1.75×</option><option value="2">2×</option></select></div><div class="tts-row"><span class="tts-label">Volume</span><input id="ttsVolume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Text-to-Speech volume"></div><div class="tts-row"><span class="tts-label">Settings</span><select id="ttsVoice" aria-label="Text-to-Speech voice"><option value="">System default</option></select></div><p id="ttsStatus" class="tts-status" aria-live="polite">Ready. Text-to-Speech reads the current test page locally.</p></div>`;
     document.body.appendChild(panel);
     panel.querySelector('#ttsPlay').addEventListener('click', playAll);
     panel.querySelector('#ttsPause').addEventListener('click', pause);
@@ -102,6 +115,8 @@
     panel.querySelector('#ttsClickMode').addEventListener('change', (e) => { clickMode = e.target.checked; updateStatus(clickMode ? 'Click Mode is on.' : 'Click Mode is off.'); });
     panel.querySelector('#ttsSpeed').addEventListener('change', (e) => { speed = Number(e.target.value) || 1; if (utterance) utterance.rate = speed; });
     panel.querySelector('#ttsVolume').addEventListener('input', (e) => { volume = Number(e.target.value); if (utterance) utterance.volume = volume; });
+    panel.querySelector('#ttsVoice').addEventListener('change', (e) => { const voices = synth()?.getVoices?.() || []; voice = e.target.value === '' ? null : voices[Number(e.target.value)] || null; });
+    if (synth()) { loadVoices(); synth().addEventListener?.('voiceschanged', loadVoices); }
     panel.querySelector('#ttsCollapse').addEventListener('click', (e) => {
       const collapsed = panel.classList.toggle('azm-tts-collapsed');
       e.currentTarget.setAttribute('aria-expanded', String(!collapsed));
@@ -115,6 +130,7 @@
   function open() {
     const panel = ensurePanel();
     panel.hidden = false;
+    loadVoices();
     panel.classList.remove('azm-tts-collapsed');
     panel.querySelector('#ttsPlay')?.focus();
   }
