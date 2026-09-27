@@ -132,6 +132,8 @@ jobs:
         run: node tests/full-run-contract.test.js
       - name: Validate QA matrix contract
         run: node tests/qa-matrix-contract.test.js
+      - name: Validate practice experience contract
+        run: node tests/practice-experience-contract.test.js
       - name: Run accessibility contract checks
         run: node tests/accessibility-contract.test.js
       - name: Run session recovery edge-case tests
