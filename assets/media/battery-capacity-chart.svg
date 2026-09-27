@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" role="img" aria-labelledby="title desc">
+<title id="title">Battery capacity after charge cycles</title>
+<desc id="desc">Line graph showing retained capacity of 92 percent after 100 cycles, 81 percent after 200, 74 percent after 300, and 68 percent after 400 cycles.</desc>
+<rect width="560" height="320" fill="#fff"/>
+<g font-family="Arial, sans-serif" fill="#202124">
+  <text x="280" y="30" text-anchor="middle" font-size="17" font-weight="700">Retained battery capacity</text>
+  <text x="18" y="170" transform="rotate(-90 18 170)" text-anchor="middle" font-size="14">Capacity (%)</text>
+  <text x="315" y="306" text-anchor="middle" font-size="14">Charge cycles</text>
+</g>
+<g stroke="#d4d6d9" stroke-width="1">
+  <path d="M72 64H520M72 112H520M72 160H520M72 208H520M72 256H520"/>
+  <path d="M72 64V256M184 64V256M296 64V256M408 64V256M520 64V256"/>
+</g>
+<g stroke="#202124" stroke-width="2">
+  <path d="M72 256H520M72 64V256"/>
+</g>
+<g font-family="Arial, sans-serif" fill="#202124" font-size="12">
+  <text x="58" y="260" text-anchor="end">60</text><text x="58" y="212" text-anchor="end">70</text>
+  <text x="58" y="164" text-anchor="end">80</text><text x="58" y="116" text-anchor="end">90</text>
+  <text x="72" y="274" text-anchor="middle">0</text><text x="184" y="274" text-anchor="middle">100</text>
+  <text x="296" y="274" text-anchor="middle">200</text><text x="408" y="274" text-anchor="middle">300</text>
+  <text x="520" y="274" text-anchor="middle">400</text>
+</g>
+<polyline points="184,102.4 296,155.2 408,188.8 520,217.6" fill="none" stroke="#2f55cc" stroke-width="4"/>
+<g fill="#2f55cc">
+  <circle cx="184" cy="102.4" r="5"/><circle cx="296" cy="155.2" r="5"/><circle cx="408" cy="188.8" r="5"/><circle cx="520" cy="217.6" r="5"/>
+</g>
+<g font-family="Arial, sans-serif" fill="#202124" font-size="12" font-weight="700">
+  <text x="184" y="88" text-anchor="middle">92%</text><text x="296" y="141" text-anchor="middle">81%</text>
+  <text x="408" y="175" text-anchor="middle">74%</text><text x="500" y="205" text-anchor="end">68%</text>
+</g>
+</svg>
