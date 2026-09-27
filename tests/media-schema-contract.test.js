@@ -13,6 +13,8 @@ if (!override.includes("type: 'image'")) throw new Error('media override must us
 if (!override.includes("alt: '")) throw new Error('media override must provide non-empty alt text');
 if (!override.includes('assets/media/rainfall-chart.svg')) throw new Error('R&W media fixture path missing');
 if (!override.includes('assets/media/triangle-area.svg')) throw new Error('Math media fixture path missing');
+if (!override.includes('assets/media/battery-capacity-chart.svg')) throw new Error('adaptive R&W graph fixture path missing');
+if (!override.includes("rw2?.hard?.find((item) => item.id === 'RWM2HQ5')")) throw new Error('adaptive R&W graph override target missing');
 if (!override.includes("math1?.find((item) => item.id === 'MM1Q7')")) throw new Error('Math media override target missing');
 if (!script.includes("media.type !== 'image'")) throw new Error('media viewer must gate supported media types');
 if (!script.includes('media.alt')) throw new Error('media viewer must require alt text');
@@ -36,5 +38,6 @@ if (!index.includes('data/media-overrides.js') || !index.includes('media-enhance
 if (!index.includes('media-touch-enhancement.js')) throw new Error('touch media script not wired into entrypoint');
 if (!fs.existsSync('assets/media/rainfall-chart.svg')) throw new Error('R&W media fixture is missing');
 if (!fs.existsSync('assets/media/triangle-area.svg')) throw new Error('Math media fixture is missing');
+if (!fs.existsSync('assets/media/battery-capacity-chart.svg')) throw new Error('adaptive R&W graph fixture is missing');
 
 console.log('MEDIA SCHEMA CONTRACT PASSED');
