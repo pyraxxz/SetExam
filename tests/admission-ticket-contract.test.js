@@ -48,7 +48,7 @@ for (const token of ['.admit-ticket{', '.ticket-masthead{', '.ticket-main-head{'
 }
 assert(css.includes('@media(max-width:720px){.admission-ticket-page'), 'ticket must have tablet/mobile responsive layout');
 assert(css.includes('@media(max-width:460px){.admission-ticket-page'), 'ticket must have narrow-phone responsive layout');
-assert(index.includes('styles.css?v=23'), 'canonical stylesheet must remain loaded');
+assert(index.includes('styles.css?v=24'), 'canonical stylesheet must remain loaded at current asset generation');
 
 for (const marker of [
   'Your SAT\\s*Admission Ticket',
