@@ -183,3 +183,93 @@ body.exam-resizing, body.exam-resizing * { cursor: col-resize !important; user-s
 .overlay-panel > .panel-head:active,
 body.azm-tool-dragging .overlay-panel > .panel-head { cursor: grabbing; }
 .overlay-panel > .panel-head button { cursor: pointer; }
+
+/* ---------- Exam chrome and calculator reference calibration ---------- */
+.test-top { background: #eaf2fb; }
+.test-footer { background: #eaf2fb; }
+.test-top:after { color: #6a7077; }
+#calculatorPanel {
+  width: min(360px, calc(100vw - 24px));
+  max-width: calc(100vw - 16px);
+  border-radius: 3px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.24);
+  overflow: hidden;
+}
+#calculatorPanel > .panel-head {
+  min-height: 38px;
+  padding: 0 9px;
+  background: #171717;
+  color: #fff;
+  border-radius: 0;
+}
+#calculatorPanel > .panel-head b {
+  font-size: 13px;
+  font-weight: 600;
+}
+#calculatorPanel > .panel-head .azm-move-button,
+#calculatorPanel > .panel-head .icon-btn {
+  color: #fff;
+}
+#calculatorPanel > .panel-head .azm-move-button {
+  margin-left: auto;
+  width: 30px;
+  height: 28px;
+  font-size: 17px;
+}
+#calculatorPanel > .panel-head .icon-btn {
+  width: 28px;
+  height: 28px;
+  font-size: 21px;
+}
+#calculatorPanel .azm-calc-tabs {
+  margin: 0;
+  border-radius: 0;
+  background: #eceff2;
+}
+#calculatorPanel .calc-display {
+  margin: 10px 10px 8px;
+  width: calc(100% - 20px);
+  min-height: 45px;
+  background: #fff;
+  font-size: 19px;
+}
+#calculatorPanel .calc-grid {
+  gap: 4px;
+  margin: 0 10px 10px;
+}
+#calculatorPanel .calc-key {
+  min-height: 39px;
+  padding: 8px 6px;
+  border-radius: 2px;
+  background: #f2f3f4;
+}
+#calculatorPanel .azm-calc-memory {
+  gap: 4px;
+  margin: 0 10px 7px;
+}
+#calculatorPanel .azm-calc-memory button {
+  padding: 6px 3px;
+  border-radius: 2px;
+}
+#calculatorPanel .azm-calc-help {
+  padding: 0 10px 9px;
+  margin: 8px 0 0;
+  font-size: 10px;
+}
+#calculatorPanel .resize-handle {
+  width: 28px;
+  height: 28px;
+}
+#referencePanel {
+  border-radius: 4px;
+  overflow: hidden;
+}
+#referencePanel > .panel-head {
+  min-height: 42px;
+  padding: 0 12px;
+  background: #171717;
+  color: #fff;
+  border-radius: 0;
+}
+#referencePanel > .panel-head .icon-btn,
+#referencePanel > .panel-head .azm-move-button { color: #fff; }
