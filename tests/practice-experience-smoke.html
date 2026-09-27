@@ -23,10 +23,15 @@
   const checks = [];
   const check = (name, ok) => { checks.push((ok ? 'PASS ' : 'FAIL ') + name); if (!ok) throw new Error(name); };
 
+  let bootstrapped = false;
   frame.addEventListener('load', async () => {
     try {
-      frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(state));
-      frame.contentWindow.location.reload();
+      if (!bootstrapped) {
+        bootstrapped = true;
+        frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(state));
+        frame.contentWindow.location.reload();
+        return;
+      }
       await wait(300);
       let doc = frame.contentDocument;
       check('dashboard renders', !!doc.querySelector('.yourtests-page'));
@@ -70,7 +75,7 @@
       out.textContent = 'FAIL ' + (e.message || e) + '\\n' + checks.join('\\n');
     }
   });
-  frame.src = '../index.html?practice-experience-smoke=1';
+  frame.src = '../index.html?browser-smoke=1&practice-experience-smoke=1';
 })();
 </script>
 </body>
