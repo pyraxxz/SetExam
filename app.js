@@ -100,12 +100,23 @@ function setupwiz(n,inner,next){const step=Math.min(n,5);return`<main class="pag
 function admissionTicketPage(){
 return `<main class="page admission-ticket-page">
 <section class="ticket-page-inner">
-<header class="ticket-page-heading"><div><h1>Digital SAT October 2026 - Admission Ticket</h1><p class="small muted">You&#39;re ready to test! Bring this admission ticket with you on test day.</p></div><div class="btn-row"><button id="printTicketBtn" class="btn pill-outline">Print</button><button id="emailTicketBtn" class="btn pill-outline">Email</button></div></header>
+<header class="ticket-page-heading"><div><h1>Digital SAT October 2026 - Admission Ticket</h1><p class="small muted">You&#39;re ready to test! Bring this admission ticket with you on test day.</p></div><div class="btn-row"><button type="button" id="printTicketBtn" class="btn pill-outline">Print</button><button type="button" id="emailTicketBtn" class="btn pill-outline">Email</button></div></header>
 <article class="admit-ticket" aria-labelledby="admitTicketTitle">
 <header class="ticket-masthead"><div class="ticket-brand-lockup"><span class="college-board-mark" aria-hidden="true"><span class="cb-shield">CB</span><span class="cb-word">College Board</span></span><span class="ticket-sat-mark">SAT</span></div></header>
-<div class="ticket-main-head"><div><h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2></div><div class="ticket-qr"><div class="ticket-qr-frame">${qrSvg()}</div></div></div>
+<div class="ticket-main-head"><div><h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2></div><div class="ticket-qr"><div class="ticket-qr-frame" title="Admission ticket QR code">${qrSvg()}</div></div></div>
 <div class="ticket-divider"></div>
-<section class="ticket-info"><div class="ticket-identity"><div class="ticket-field"><span>Name</span><strong>${esc(s.student||"Student")}</strong></div><div class="ticket-field"><span>Date of Birth</span><strong>${esc(formatDob(s.dob)||"Not provided")}</strong></div></div><div class="ticket-details"><div class="ticket-field ticket-registration"><span>Registration Number</span><strong>${C.regNum}</strong></div><div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div><div class="ticket-times"><div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div><div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div></div><div class="ticket-field ticket-location"><span>Location</span><strong>${C.loc}<small>${C.locAddress}</small></strong></div></div></section>
+<section class="ticket-info">
+<div class="ticket-primary">
+<div class="ticket-field"><span>Name</span><strong>${esc(s.student||"Student")}</strong></div>
+<div class="ticket-field"><span>Date of Birth</span><strong>${esc(formatDob(s.dob)||"Not provided")}</strong></div>
+<div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
+<div class="ticket-times"><div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div><div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div></div>
+<div class="ticket-field ticket-location"><span>Location</span><strong>${C.loc}<small>${C.locAddress}</small></strong></div>
+</div>
+<div class="ticket-registration-side">
+<div class="ticket-field ticket-registration"><span>Registration Number</span><strong>${C.regNum}</strong></div>
+</div>
+</section>
 <div class="ticket-divider"></div>
 <section class="ticket-comments"><span>Comments</span><strong>Thanks for participating in the Digital Exam!</strong></section>
 </article>
