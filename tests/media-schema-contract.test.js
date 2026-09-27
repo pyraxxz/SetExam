@@ -24,7 +24,7 @@ if (!script.includes('renderedMediaKey')) throw new Error('media viewer must pre
 if (!script.includes("event.key === 'Escape'")) throw new Error('media viewer must close with Escape');
 if (!script.includes('__azmMediaState')) throw new Error('media viewer must expose shared interaction state');
 if (!script.includes('aria-describedby')) throw new Error('media viewer must associate caption descriptions');
-if (!script.includes('aria-labelledby',)) throw new Error('media viewer must expose a labelled dialog');
+if (!script.includes('aria-labelledby')) throw new Error('media viewer must expose a labelled dialog');
 if (!script.includes('azm-media-open')) throw new Error('media viewer must lock page scrolling while open');
 if (!script.includes('const clampPan')) throw new Error('media viewer must bound panning');
 if (!script.includes("event.key === 'Tab'")) throw new Error('media viewer must trap keyboard focus');
