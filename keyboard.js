@@ -26,6 +26,8 @@
     ['Ctrl + Alt + O / Command + Control + O', 'Option eliminator'],
     ['Ctrl + Alt + 1–4 / Command + Option + 1–4', 'Eliminate option A–D'],
     ['Ctrl + Shift + 1–4 / Command + Control + 1–4', 'Select option A–D'],
+    ['Alt + P / Option + P', 'Text-to-Speech play/pause'],
+    ['Alt + C / Option + C', 'Text-to-Speech Click Mode'],
   ];
 
   const isTyping = (target) => {
@@ -188,6 +190,8 @@
     if (navCombo && event.shiftKey && lower === 'd') { event.preventDefault(); openDirections(); return; }
     if ((isMac ? command : ctrl) && !alt && lower === 'l') { event.preventDefault(); const lineTool = document.getElementById('lineTool'); if (lineTool) lineTool.click(); else { const app = window.AZAMAN_APP; const state = app?.getState?.(); if (state) { state.lineReader = !state.lineReader; app.save(); app.render(); } } return; }
     if (comboAlt && lower === 't') { event.preventDefault(); const t = document.getElementById('hideTimerBtn'); if (t) t.click(); else openToolByText('Hide timer', () => openToolByText('Show timer')); return; }
+    if (alt && !ctrl && !command && lower === 'p' && window.AZAMAN_TTS_PLAY_PAUSE) { event.preventDefault(); window.AZAMAN_TTS_PLAY_PAUSE(); return; }
+    if (alt && !ctrl && !command && lower === 'c' && window.AZAMAN_TTS_CLICKMODE) { event.preventDefault(); window.AZAMAN_TTS_CLICKMODE(); return; }
     if (isMac ? command && event.shiftKey && lower === 'v' : ctrl && alt && lower === 'v') { event.preventDefault(); clickText('Mark for review'); return; }
     if (ctrl && !alt && lower === 'h') { event.preventDefault(); if (String(window.getSelection?.() || '').trim() && typeof highlight === 'function') highlight(); else openToolByText('Highlights & Notes'); return; }
     if (comboAlt && lower === 'c') { event.preventDefault(); toggleDialogById('calculatorPanel', () => openToolByText('Calculator')); return; }
