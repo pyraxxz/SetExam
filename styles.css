@@ -252,8 +252,8 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-masthead{padding:0 12px}
 .college-board-mark{padding-right:9px}
 .cb-word{font-size:.61rem}}
-@media print{@page{size:landscape;margin:12mm}
-body.printing-ticket{background:var(--color-surface)!important;color:var(--color-text)!important}
+@media print{body.printing-ticket{background:var(--color-surface)!important;color:var(--color-text)!important}
+@page{size:landscape;margin:12mm}
 body.printing-ticket .app-shell,body.printing-ticket .wiz-head,body.printing-ticket .wiz-foot,body.printing-ticket .ticket-page-heading,body.printing-ticket .ticket-page-actions{display:none!important}
 body.printing-ticket .admission-ticket-page{display:block!important;max-width:none!important;width:auto!important;margin:0!important;padding:0!important}
 body.printing-ticket .ticket-page-inner{width:auto!important;max-width:none!important;margin:0!important}
