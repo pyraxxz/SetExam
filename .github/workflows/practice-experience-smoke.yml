@@ -1,9 +1,7 @@
 name: Practice experience smoke
 
 on:
-  push:
-    branches:
-      - feat/exam-nav-splitter-polish
+  pull_request:
     paths:
       - 'index.html'
       - 'app.js'
@@ -16,7 +14,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: practice-experience-${{ github.ref }}
+  group: practice-experience-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
