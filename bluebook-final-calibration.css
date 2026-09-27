@@ -177,3 +177,9 @@ body.exam-resizing, body.exam-resizing * { cursor: col-resize !important; user-s
 @media(max-width:760px) {
   .tool-popover { right: 10px; width: min(260px, calc(100vw - 20px)); }
 }
+
+/* Floating calculator/reference panels support direct pointer dragging. */
+.overlay-panel > .panel-head { cursor: grab; user-select: none; }
+.overlay-panel > .panel-head:active,
+body.azm-tool-dragging .overlay-panel > .panel-head { cursor: grabbing; }
+.overlay-panel > .panel-head button { cursor: pointer; }
