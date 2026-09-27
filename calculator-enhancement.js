@@ -111,7 +111,6 @@
     const close = panel.querySelector('#closeCalc');
     // The calculator enhancement replaces the panel body. Reset the tool-layer
     // enhancement flags so its observer can rebind the new header/resize handle.
-    panel.dataset.dragReady = '0';
     panel.dataset.resizeReady = '0';
     panel.dataset.focusReady = '0';
     panel.innerHTML = `${head?.outerHTML || '<div class="panel-head"><b>Calculator</b></div>'}
