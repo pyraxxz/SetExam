@@ -359,3 +359,8 @@ body.azm-tool-dragging .overlay-panel > .panel-head { cursor: grabbing; }
 #reviewModal .review-page-action{display:flex;justify-content:center;margin:18px 0 4px}
 #reviewModal .review-page-action .btn{min-width:176px;min-height:38px;border:1px solid #315bd0;border-radius:20px;background:#fff;color:#315bd0;font-size:13px;font-weight:700}
 #reviewModal .review-page-action .btn:hover,#reviewModal .review-page-action .btn:focus-visible{background:#f2f5ff}
+
+.azm-test-preview-shell .preview-title{font-size:16px;font-weight:700;justify-self:start}
+.azm-test-preview-shell .preview-untimed{font-size:15px;color:#626870}
+.azm-test-preview-shell .preview-main{min-width:0}
+.azm-test-preview-shell .preview-banner{letter-spacing:.03em}
