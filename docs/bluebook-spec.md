@@ -34,6 +34,10 @@ The exam model provides the documented testing tools and interaction families:
 10. **Keyboard Move** — calculator/reference movement with a dedicated Move control and arrow-key repositioning.
 11. **Unscheduled Break** — interrupting break; module timer continues running.
 
+## Current SAT administration
+
+For this simulator's current SAT Weekend presentation, the test administration is **Saturday, October 3, 2026**, with a **7:45 a.m. local arrival**. The simulated center is **International Community School, Pakyi No. 1, Kumasi, Ghana**. The admission ticket follows the current Bluebook pattern of a compact white ticket, upper-right QR area, identity fields, registration number, test timing, center information, and comments.
+
 ## 3. Actual exam-model flow
 
 The default student runtime is the exam-model path. QA-only harness state is separate and is never the target presentation.
