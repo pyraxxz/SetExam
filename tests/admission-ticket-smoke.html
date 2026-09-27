@@ -39,7 +39,7 @@
       check('October 3 date renders', doc.body.textContent.includes('Sat, Oct 3, 2026'));
       check('date of birth renders', doc.body.textContent.includes('Jul 20, 2008'));
       check('registration number renders', doc.body.textContent.includes('4106920164'));
-      check('location renders', doc.body.textContent.includes('International Community School, Kumasi, GH'));
+      check('location renders', doc.body.textContent.includes('International Community School, Pakyi No. 1, Kumasi, Ghana'));
       check('QR is present', !!doc.querySelector('.ticket-qr-frame .ticket-qr-img'));
       const qr = doc.querySelector('.ticket-qr-frame .ticket-qr-img');
       check('QR has substantial matrix', qr?.querySelectorAll('rect')?.length > 500);
