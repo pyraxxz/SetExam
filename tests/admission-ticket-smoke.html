@@ -35,6 +35,11 @@
       await wait(350);
       const doc = frame.contentDocument;
       check('ticket page renders', !!doc.querySelector('.admission-ticket-page .admit-ticket'));
+      const ticket = doc.querySelector('.admit-ticket');
+      const ticketRect = ticket?.getBoundingClientRect();
+      check('ticket is landscape at desktop width', !!ticketRect && ticketRect.width > ticketRect.height * 1.45);
+      check('ticket has three desktop columns', getComputedStyle(doc.querySelector('.ticket-main-head')).gridTemplateColumns.split(' ').length === 3);
+      check('QR is in the right ticket column', !!doc.querySelector('.ticket-right .ticket-qr-frame'));
       check('runtime migrated to explicit ticket screen', JSON.parse(frame.contentWindow.localStorage.getItem(KEY) || '{}').screen === 'ticket');
       check('print action renders', !!doc.getElementById('printTicketBtn'));
       check('email action renders', !!doc.getElementById('emailTicketBtn'));
