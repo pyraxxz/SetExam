@@ -273,3 +273,85 @@ body.azm-tool-dragging .overlay-panel > .panel-head { cursor: grabbing; }
 }
 #referencePanel > .panel-head .icon-btn,
 #referencePanel > .panel-head .azm-move-button { color: #fff; }
+
+
+/* ---------- Current Bluebook dashboard geometry and active controls ---------- */
+.yourtests-page .yt-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+.yourtests-page .yt-title-row,
+.yourtests-page .prepare-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  min-width: 0;
+}
+.yourtests-page .yt-head:after { display: none !important; }
+.yourtests-page .yt-title-row .btn,
+.yourtests-page .prepare-title-row .btn {
+  padding: 2px 0;
+  white-space: nowrap;
+}
+.yourtests-page .test-card {
+  position: relative;
+  width: 446px;
+  max-width: calc(100% - 82px);
+  margin-left: max(41px, calc((100% - 920px) / 2));
+  margin-right: 0;
+  padding: 24px;
+}
+.yourtests-page .test-meta { padding-right: 164px; }
+.yourtests-page .test-links {
+  position: absolute;
+  top: 63px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.yourtests-page .test-acc {
+  max-width: 315px;
+  margin: 35px 0 25px;
+}
+.yourtests-page .prepare-block {
+  width: min(920px, calc(100% - 82px));
+  margin: 34px auto 0;
+}
+.yourtests-page .prepare-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-bottom: 16px;
+}
+.yourtests-page .prepare-head .tab-toggle { margin-left: 0; }
+
+@media(max-width:760px) {
+  .yourtests-page .test-card {
+    max-width: calc(100% - 32px);
+    margin-left: 16px;
+  }
+  .yourtests-page .test-meta { padding-right: 0; }
+  .yourtests-page .test-links {
+    position: static;
+    margin-top: 18px;
+  }
+  .yourtests-page .test-acc {
+    max-width: none;
+    margin-top: 18px;
+  }
+  .yourtests-page .yt-title-row,
+  .yourtests-page .prepare-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .yourtests-page .prepare-block {
+    width: calc(100% - 32px);
+  }
+}
