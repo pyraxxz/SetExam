@@ -16,6 +16,10 @@ assert(app.includes('Your SAT<br>Admission Ticket'), 'ticket must use the Bluebo
 assert(app.includes('aria-label="Admission ticket QR code"'), 'ticket QR must be explicitly labelled');
 assert(app.includes('ticket-masthead'), 'ticket must have a dedicated masthead');
 assert(app.includes('ticket-main-head'), 'ticket must separate title and QR header content');
+assert(app.includes('ticket-registration'), 'ticket registration number must occupy its own block');
+assert(app.includes('ticket-date'), 'ticket date must occupy its own block');
+assert(app.includes('ticket-times'), 'ticket arrival and doors-close fields must share the time row');
+assert(app.includes('ticket-location'), 'ticket location must occupy its own block');
 assert(app.includes('ticket-identity'), 'ticket must expose identity fields');
 assert(app.includes('Registration Number'), 'ticket must show the registration number');
 assert(app.includes('Location'), 'ticket must show the test location');
