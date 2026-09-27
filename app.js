@@ -100,7 +100,7 @@ function setupwiz(n,inner,next){const step=Math.min(n,5);return`<main class="pag
 function admissionTicketPage(){
 return `<main class="page admission-ticket-page">
 <section class="ticket-page-inner">
-<header class="ticket-page-heading"><div><h1>SAT Admission Ticket</h1><p class="small muted">You are ready to test! Bring this admission ticket with you on test day.</p></div><div class="btn-row"><button id="printTicketBtn" class="btn pill-outline">Print</button><button id="emailTicketBtn" class="btn pill-outline">Email</button></div></header>
+<header class="ticket-page-heading"><div><h1>Digital SAT October 2026 - Admission Ticket</h1><p class="small muted">You&#39;re ready to test! Bring this admission ticket with you on test day.</p></div><div class="btn-row"><button id="printTicketBtn" class="btn pill-outline">Print</button><button id="emailTicketBtn" class="btn pill-outline">Email</button></div></header>
 <article class="admit-ticket" aria-labelledby="admitTicketTitle">
 <header class="ticket-masthead"><div class="ticket-brand-lockup"><span class="college-board-mark" aria-hidden="true"><span class="cb-shield">CB</span><span class="cb-word">College Board</span></span><span class="ticket-sat-mark">SAT</span></div></header>
 <div class="ticket-main-head"><div><h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2></div><div class="ticket-qr"><div class="ticket-qr-frame">${qrSvg()}</div></div></div>
