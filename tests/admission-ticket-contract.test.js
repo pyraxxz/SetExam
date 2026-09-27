@@ -32,7 +32,7 @@ for (const marker of [
   'Sat, Oct 3, 2026',
   'Date of Birth',
   'Registration Number',
-  'International Community School, Kumasi, GH',
+  'International Community School, Pakyi No. 1, Kumasi, Ghana',
   'Admission ticket QR code',
   'ADMISSION TICKET SMOKE COMPLETE'
 ]) {
