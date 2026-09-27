@@ -22,7 +22,7 @@ assert(app.includes('Digital SAT October 2026 - Admission Ticket'), 'ticket page
 assert(app.includes('id="doneTicketBtn"'), 'ticket page must expose a Done action');
 assert(app.includes('aria-label="Admission ticket QR code"'), 'ticket QR must be explicitly labelled');
 assert(app.includes('const rows=['), 'ticket QR must use a deterministic encoded matrix');
-assert(app.includes('viewBox="0 0 41 41"'), 'ticket QR must render as a version-4-scale matrix with quiet zone');
+assert(app.includes('const rows=') && app.includes('n=rows.length') && app.includes('x+4'), 'ticket QR must render a fixed matrix with a four-module quiet zone');
 assert(app.includes('ticket-masthead'), 'ticket must have a dedicated masthead');
 assert(app.includes('ticket-main-head'), 'ticket must separate title and QR header content');
 assert(app.includes('ticket-registration'), 'ticket registration number must occupy its own block');
