@@ -105,10 +105,7 @@
   }
 
   function dashboardPolish() {
-    const page = document.querySelector('.yourtests-page');
-    if (!page) return;
-    const name = page.querySelector('.test-name');
-    if (name && name.textContent.trim() === 'SAT') name.textContent = 'Digital SAT';
+    // Current dashboard labels and values are rendered directly by app.js.
   }
 
   function patchAssistiveTechnology() {
