@@ -54,6 +54,25 @@
           doc.querySelector('[data-media-action="reset"]').click();
           doc.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }));
           check('Escape closes lightbox', !doc.getElementById('azmMediaLightbox'));
+          const runtime = frame.contentWindow.AZAMAN_APP;
+          const live = runtime.getState();
+          live.mi = 2;
+          live.qi = 6;
+          live.screen = 'test';
+          live.endAt = Date.now() + 1200000;
+          runtime.save();
+          runtime.render();
+          setTimeout(() => {
+            try {
+              const mathImage = frame.contentDocument.querySelector('.azm-media-image');
+              check('math geometry image renders', !!mathImage);
+              check('math image has descriptive alt', /triangle/i.test(mathImage?.alt || '') && (mathImage?.alt || '').length > 25);
+              check('math image uses original fixture', /triangle-area\.svg$/i.test(mathImage?.getAttribute('src') || ''));
+              out.textContent = checks.join('\n') + '\nMEDIA LIGHTBOX SMOKE COMPLETE';
+            } catch (error) {
+              out.textContent = checks.join('\n') + '\nFAIL ' + error.message;
+            }
+          }, 175);
           out.textContent = checks.join('\n') + '\nMEDIA LIGHTBOX SMOKE COMPLETE';
         } catch (error) {
           out.textContent = checks.join('\n') + `\nFAIL ${error.message}`;
