@@ -174,8 +174,8 @@
     if (isTyping(event.target)) return;
 
     const navigateExamPage = window.AZAMAN_APP?.navigateExamPage;
-    if (ctrl && !alt && !command && lower === 'p' && navigateExamPage?.('next')) { event.preventDefault(); return; }
-    if (ctrl && !alt && !command && lower === 'o' && navigateExamPage?.('previous')) { event.preventDefault(); return; }
+    if (ctrl && !alt && !command && lower === 'p') { event.preventDefault(); if (navigateExamPage?.('next')) return; }
+    if (ctrl && !alt && !command && lower === 'o') { event.preventDefault(); navigateExamPage?.('previous'); return; }
 
     const triple = isMac ? command && ctrl : ctrl && alt;
     const comboAlt = isMac ? command && alt : ctrl && alt;
