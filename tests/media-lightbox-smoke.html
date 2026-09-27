@@ -74,7 +74,23 @@
               check('math geometry image renders', !!mathImage);
               check('math image has descriptive alt', /triangle/i.test(mathImage?.alt || '') && (mathImage?.alt || '').length > 25);
               check('math image uses original fixture', /triangle-area\.svg$/i.test(mathImage?.getAttribute('src') || ''));
-              out.textContent = checks.join('\n') + '\nMEDIA LIGHTBOX SMOKE COMPLETE';
+              live.mi = 1;
+              live.qi = 4;
+              live.adaptive.rw = 'hard';
+              live.endAt = Date.now() + 1200000;
+              runtime.save();
+              runtime.render();
+              setTimeout(() => {
+                try {
+                  const graphImage = frame.contentDocument.querySelector('.azm-media-image');
+                  check('adaptive R&W graph image renders', !!graphImage);
+                  check('adaptive R&W graph has descriptive alt', /retained battery capacity/i.test(graphImage?.alt || ''));
+                  check('adaptive R&W graph uses original fixture', /battery-capacity-chart\.svg$/i.test(graphImage?.getAttribute('src') || ''));
+                  out.textContent = checks.join('\n') + '\nMEDIA LIGHTBOX SMOKE COMPLETE';
+                } catch (error) {
+                  out.textContent = checks.join('\n') + '\nFAIL ' + error.message;
+                }
+              }, 175);
             } catch (error) {
               out.textContent = checks.join('\n') + '\nFAIL ' + error.message;
             }
