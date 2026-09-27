@@ -143,5 +143,7 @@
   observer.observe(document.body, { childList: true, subtree: true });
   installMenuItem();
   window.AZAMAN_TTS_OPEN = open;
+  window.AZAMAN_TTS_PLAY_PAUSE = () => { if (!document.getElementById('ttsPanel')) { open(); window.setTimeout(playAll, 0); } else pause(); };
+  window.AZAMAN_TTS_CLICKMODE = () => { open(); const box = document.getElementById('ttsClickMode'); if (!box) return; box.checked = !box.checked; clickMode = box.checked; updateStatus(clickMode ? 'Click Mode is on.' : 'Click Mode is off.'); };
   window.addEventListener('beforeunload', () => synth()?.cancel());
 })();
