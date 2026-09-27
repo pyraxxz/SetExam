@@ -12,13 +12,13 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-preview
   cancel-in-progress: true
 
 jobs:
   deploy:
     environment:
-      name: github-pages
+      name: github-pages-preview
       url: ${{ steps.deployment.outputs.page_url }}preview/
     runs-on: ubuntu-latest
     steps:
