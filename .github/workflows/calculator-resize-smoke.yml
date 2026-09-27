@@ -6,6 +6,8 @@ on:
       - 'index.html'
       - 'calculator-enhancement.js'
       - 'tools-enhancement.js'
+      - 'tools-move-enhancement.js'
+      - 'tools-move-enhancement.css'
       - 'tests/calculator-resize-smoke.html'
       - '.github/workflows/calculator-resize-smoke.yml'
   workflow_dispatch:
