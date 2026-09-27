@@ -8,6 +8,7 @@ const read = (name) => fs.readFileSync(path.join(root, name), 'utf8');
 
 const index = read('index.html');
 const app = read('app.js');
+const keyboard = read('keyboard.js');
 const css = read('bluebook-fidelity-refinements.css');
 const pixelCss = read('bluebook-pixel-fidelity.css');
 const js = read('bluebook-fidelity-refinements.js');
@@ -34,7 +35,7 @@ for (const text of ['MathJax','Link to Referenced Content','Zoom and Magnificati
 for (const selector of ['.bb-final-device-card','.bb-final-device-row','.bb-final-at-card','#deviceTestDialog']) if (!finalCss.includes(selector) && selector !== '#deviceTestDialog') throw new Error(`missing final calibration selector: ${selector}`);
 if (!finalJs.includes('deviceTestDialog') || !finalJs.includes('ref2DeviceDialog')) throw new Error('final calibration must handle both legacy device-check dialog surfaces');
 for (const [text, source] of [['Take a Break: Do Not Close Your Device',breakCss+breakJs],['Resume Testing Now',breakCss+breakJs],['Follow these rules during the break:',breakJs],['This Module Is Over',transitionJs],['moduleSec',mvpJs],['Congratulations!',finalizationJs],['Return to Homepage',finalizationJs]]) if (!source.includes(text)) throw new Error(`missing MVP runtime behavior: ${text}`);
-for (const [text, source] of [['Section ${secNum}, Module ${s.mi+1}: ${esc(sec)} Questions',app],['Question Status',app],['reviewDismiss',app],['examSplitter',app],['Ctrl + P',app],['Ctrl + O',app]]) if (!source.includes(text)) throw new Error(`missing new fidelity behavior: ${text}`);
+for (const [text, source] of [['Section ${secNum}, Module ${s.mi+1}: ${esc(sec)} Questions',app],['Question Status',app],['reviewDismiss',app],['examSplitter',app],['Ctrl + P',keyboard],['Ctrl + O',keyboard]]) if (!source.includes(text)) throw new Error(`missing new fidelity behavior: ${text}`);
 for (const text of ['Section ${section}: ${name}','Section ${section}, Module ${module}: ${name}','multiple-choice questions','You can move back and forth between questions until time expires.','Once the next module begins, you cannot return to these questions.','const minutes = state.mi >= 2 ? 35 : 32','const moduleId = index === 0 ? \'rw1\' : index === 1 ? \'rw2\' : index === 2 ? \'math1\' : \'math2\'','state.endAt = Date.now() + minutes * 60 * 1000','actualModeDirectionsContinue']) if (!examJs.includes(text)) throw new Error(`missing official exam wording/timer behavior: ${text}`);
 if (!pixelCss.includes('.test-top:after') || !pixelCss.includes('content:"100%"')) throw new Error('exam header must retain the Bluebook zoom indicator');
 if (!examCss.includes('body:not(.azm-harness) .preview-banner')) throw new Error('actual exam model must suppress preview-only chrome outside QA harness');
