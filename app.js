@@ -111,14 +111,12 @@ return `<main class="page admission-ticket-page">
 <div class="ticket-field"><span>Name</span><strong>${esc(s.student||"Student")}</strong></div>
 <div class="ticket-field"><span>Date of Birth</span><strong>${esc(formatDob(s.dob)||"Not provided")}</strong></div>
 </div>
+<div class="ticket-field ticket-registration"><span>Registration Number</span><strong>${C.regNum}</strong></div>
 <div class="ticket-details">
 <div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
 <div class="ticket-times"><div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div><div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div></div>
 <div class="ticket-field ticket-location"><span>Location</span><strong>${C.loc}<small>${C.locAddress}</small></strong></div>
 </div>
-</div>
-<div class="ticket-registration-side">
-<div class="ticket-field ticket-registration"><span>Registration Number</span><strong>${C.regNum}</strong></div>
 </div>
 </section>
 <div class="ticket-divider"></div>
