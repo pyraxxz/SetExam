@@ -91,7 +91,7 @@ assert(tts.includes('Click Mode'), 'TTS must expose Click Mode');
 assert(tts.includes('Stop'), 'TTS must expose Stop');
 assert(tts.includes('ttsSpeed'), 'TTS must expose speed control');
 assert(tts.includes('ttsVolume'), 'TTS must expose volume control');
-assert(tts.includes('Move Text-to-Speech'), 'TTS must expose move control');
+assert(toolMove.includes('Move Text-to-Speech'), 'TTS must expose move control through the dedicated tool movement layer');
 assert(tts.includes('azm-tts-collapsed'), 'TTS must support collapse/expand');
 assert(tts.includes('speechSynthesis'), 'TTS must use the browser speech synthesis API locally');
 assert(tts.includes('aria-live="polite"'), 'TTS status must announce playback state');
