@@ -7,6 +7,7 @@ const index = fs.readFileSync('index.html', 'utf8');
 const smoke = fs.readFileSync('tests/admission-ticket-smoke.html', 'utf8');
 
 assert(app.includes('testDate:"Sat, Oct 3, 2026"'), 'admission ticket/test card must use the October 3, 2026 SAT date');
+assert(!app.includes('Sep 12, 2026'), 'obsolete September 12, 2026 test date must be removed');
 assert(app.includes('dob:""'), 'runtime state must retain date of birth');
 assert(app.includes('function formatDob('), 'ticket must format stored date of birth');
 assert(app.includes('id="setupDob"'), 'exam setup must collect date of birth for the admission ticket');
