@@ -34,7 +34,10 @@
       }
       await wait(350);
       const doc = frame.contentDocument;
-      check('ticket page renders', !!doc.querySelector('.admit-ticket'));
+      check('ticket page renders', !!doc.querySelector('.admission-ticket-page .admit-ticket'));
+      check('runtime migrated to explicit ticket screen', JSON.parse(frame.contentWindow.localStorage.getItem(KEY) || '{}').screen === 'ticket');
+      check('print action renders', !!doc.getElementById('printTicketBtn'));
+      check('email action renders', !!doc.getElementById('emailTicketBtn'));
       check('ticket heading renders', /Your SAT\s*Admission Ticket/.test(doc.querySelector('#admitTicketTitle')?.textContent || ''));
       check('October 3 date renders', doc.body.textContent.includes('Sat, Oct 3, 2026'));
       check('date of birth renders', doc.body.textContent.includes('Jul 20, 2008'));
@@ -44,6 +47,7 @@
       check('QR is present', !!doc.querySelector('.ticket-qr-frame .ticket-qr-img'));
       const qr = doc.querySelector('.ticket-qr-frame .ticket-qr-img');
       check('QR has substantial matrix', qr?.querySelectorAll('rect')?.length > 500);
+      check('QR has expected quiet-zone viewBox', qr?.getAttribute('viewBox') === '0 0 41 41');
       check('ticket has comments', doc.body.textContent.includes('Thanks for participating in the Digital Exam!'));
       out.textContent = checks.join('\\n') + '\\nADMISSION TICKET SMOKE COMPLETE';
     } catch (e) {
