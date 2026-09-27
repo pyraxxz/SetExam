@@ -2,6 +2,7 @@ const fs = require('fs');
 const assert = require('assert');
 
 const tools = fs.readFileSync('tools-enhancement.js', 'utf8');
+const move = fs.readFileSync('tools-move-enhancement.js', 'utf8');
 const app = fs.readFileSync('app.js', 'utf8');
 const keyboard = fs.readFileSync('keyboard.js', 'utf8');
 const index = fs.readFileSync('index.html', 'utf8').replace(/\?v=\d+/g, '')
@@ -14,7 +15,10 @@ assert(tools.includes("panel.id === 'referencePanel'"), 'reference sheet must ha
 assert(tools.includes("title.textContent = 'Reference sheet'"), 'reference sheet title must be student-facing');
 assert(tools.includes("aria-labelledby', 'referencePanelTitle'"), 'reference sheet must expose an accessible name');
 assert(tools.includes('Resize calculator'), 'calculator must expose a resize affordance');
-assert(tools.includes('makeDraggable'), 'tool panels must be draggable');
+assert(move.includes("head.addEventListener('pointerdown'"), 'tool panels must bind header pointer dragging in the dedicated movement layer');
+assert(move.includes("head.addEventListener('pointermove'"), 'tool panels must update position during pointer dragging in the dedicated movement layer');
+assert(move.includes("head.addEventListener('pointerup'"), 'tool panels must terminate pointer dragging in the dedicated movement layer');
+assert(!tools.includes('makeDraggable(panel)'), 'legacy tool layer must not attach a second header-drag implementation');
 assert(app.includes('Line reader'), 'line reader tool must remain in the core exam surface');
 assert(app.includes('Mark for Review'), 'mark-for-review tool must remain in the core exam surface');
 assert(keyboard.includes('Option eliminator'), 'option eliminator shortcut must remain wired in keyboard layer');
