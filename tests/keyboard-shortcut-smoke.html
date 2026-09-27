@@ -38,6 +38,15 @@
             check('Ctrl+Alt+B moves back', /Question\s+1/i.test(doc.querySelector('.question-nav')?.textContent || ''));
             key('x', { ctrlKey: true, altKey: true });
             check('Ctrl+Alt+X moves next', /Question\s+2/i.test(doc.querySelector('.question-nav')?.textContent || ''));
+            key('p', { ctrlKey: true });
+            check('Ctrl+P moves to next question', /Question\s+3/i.test(doc.querySelector('.question-nav')?.textContent || ''));
+            key('o', { ctrlKey: true });
+            check('Ctrl+O returns to previous question', /Question\s+2/i.test(doc.querySelector('.question-nav')?.textContent || ''));
+            check('Resizable exam splitter is present', !!doc.getElementById('examSplitter'));
+            const splitter = doc.getElementById('examSplitter');
+            const splitterBefore = Number(splitter?.getAttribute('aria-valuenow') || 48);
+            splitter?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+            check('Splitter responds to keyboard resize', Number(splitter?.getAttribute('aria-valuenow') || 0) === Math.min(65, splitterBefore + 1));
 
             key('g', { ctrlKey: true, altKey: true });
             check('Ctrl+Alt+G opens question menu', !!doc.getElementById('reviewModal'));
@@ -67,6 +76,20 @@
             check('Ctrl+L opens line reader', !!doc.querySelector('.line-reader'));
             key('l', { ctrlKey: true });
             check('Ctrl+L closes line reader', !doc.querySelector('.line-reader'));
+            const api = frame.contentWindow.AZAMAN_APP;
+            const testState = api.getState();
+            testState.mi = 2; testState.qi = 21; testState.screen = 'test'; testState.endAt = Date.now() + 1200000;
+            testState.completed.math1 = false; testState.completed.math2 = false;
+            api.save(); api.render();
+            key('p', { ctrlKey: true });
+            check('Ctrl+P skips directions into Math 2', api.getState().mi === 3 && api.getState().screen === 'test' && api.getState().qi === 0);
+            key('o', { ctrlKey: true });
+            check('Ctrl+O returns to prior module last question', api.getState().mi === 2 && api.getState().screen === 'test' && api.getState().qi === 21);
+            testState.mi = 1; testState.qi = 0; testState.screen = 'break'; testState.breakEndAt = Date.now() + 600000;
+            testState.completed.rw1 = true; testState.completed.rw2 = true; testState.completed.math1 = false; testState.completed.math2 = false;
+            api.save(); api.render();
+            key('p', { ctrlKey: true });
+            check('Ctrl+P skips the break into Math 1', api.getState().mi === 2 && api.getState().screen === 'test' && api.getState().qi === 0);
 
             key('t', { ctrlKey: true, altKey: true });
             check('Ctrl+Alt+T hides timer', doc.getElementById('timer')?.classList.contains('hidden'));
