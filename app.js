@@ -103,7 +103,7 @@ return `<main class="page admission-ticket-page">
 <header class="ticket-page-heading"><div><h1>Digital SAT October 2026 - Admission Ticket</h1><p class="small muted">You&#39;re ready to test! Bring this admission ticket with you on test day.</p></div><div class="btn-row"><button type="button" id="printTicketBtn" class="btn pill-outline">Print</button><button type="button" id="emailTicketBtn" class="btn pill-outline">Email</button></div></header>
 <article class="admit-ticket" aria-labelledby="admitTicketTitle">
 <header class="ticket-masthead"><div class="college-board-mark"><span class="cb-shield" aria-hidden="true">CB</span><span class="cb-word">College Board</span></div><span class="ticket-sat-mark">SAT</span></header>
-<section class="ticket-main-head">
+<section class="ticket-main-head ticket-info">
 <div class="ticket-column ticket-left">
 <h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2>
 <div class="ticket-identity">
