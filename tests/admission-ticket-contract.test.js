@@ -18,6 +18,9 @@ assert(app.includes('ticket-identity'), 'ticket must expose identity fields');
 assert(app.includes('Registration Number'), 'ticket must show the registration number');
 assert(app.includes('Location'), 'ticket must show the test location');
 assert(app.includes('Comments'), 'ticket must reserve a comments section');
+assert(app.includes('function printAdmissionTicket('), 'ticket Print control must invoke a real print flow');
+assert(app.includes('function emailAdmissionTicket('), 'ticket Email control must invoke a real email flow');
+assert(css.includes('@media print{body.printing-ticket'), 'ticket must have print-only styling');
 assert(!app.includes('sat-badge'), 'old generic SAT badge ticket treatment must be removed');
 assert(!app.includes('ticket-grid'), 'old generic ticket grid treatment must be removed');
 for (const token of ['.admit-ticket{', '.ticket-masthead{', '.ticket-main-head{', '.ticket-qr-frame{', '.ticket-identity{', '.ticket-details{', '.ticket-comments{']) {
