@@ -24,6 +24,7 @@ assert(app.includes('ticket-identity'), 'ticket must expose identity fields');
 assert(app.includes('Registration Number'), 'ticket must show the registration number');
 assert(app.includes('Location'), 'ticket must show the test location');
 assert(app.includes('locAddress:'), 'ticket must keep a separate published center address');
+assert(app.includes('!(s.dob||"").trim()'), 'exam setup must require a date of birth before continuing');
 assert(app.includes('Comments'), 'ticket must reserve a comments section');
 assert(app.includes('function printAdmissionTicket('), 'ticket Print control must invoke a real print flow');
 assert(app.includes('function emailAdmissionTicket('), 'ticket Email control must invoke a real email flow');
