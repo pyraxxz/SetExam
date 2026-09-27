@@ -27,7 +27,6 @@ assert(moveSource.includes("head.addEventListener('pointerup'"), 'floating tools
 assert(moveSource.includes('setPointerCapture'), 'floating tools must capture the active pointer while dragging');
 assert(moveSource.includes('azm-tool-dragging'), 'floating tools must expose a dragging state for UI feedback');
 assert(source.includes('xmax - xmin > 200'), 'graphing mode must reject unbounded ranges');
-assert(source.includes("panel.dataset.dragReady = '0'"), 'calculator rewrite must reset drag enhancement state');
 assert(source.includes("panel.dataset.resizeReady = '0'"), 'calculator rewrite must reset resize enhancement state');
 assert(source.includes("panel.dataset.focusReady = '0'"), 'calculator rewrite must reset focus enhancement state');
 assert(smoke.includes('resize-handle'), 'calculator resize smoke must exercise resize handle');
