@@ -12,7 +12,7 @@
   }
 
   function logoSvg() {
-    return `<img class="ref2-logo" src="assets/bluebook-logo.jpg?v=22" alt="" aria-hidden="true">`;
+    return `<img class="ref2-logo" src="assets/bluebook-logo.jpg?v=23" alt="" aria-hidden="true">`;
   }
 
   function deviceButton() {
