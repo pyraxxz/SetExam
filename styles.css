@@ -8,19 +8,19 @@
 .finish-heading{position:relative;z-index:2;margin:0 auto 32px;color:#fff}
 .finish-heading h1{font-size:2rem;line-height:1.15;font-weight:400;margin:0 0 24px;letter-spacing:-.015em}
 .finish-heading p{font-size:1.05rem;line-height:1.4;font-weight:700;margin:0}
-.congrats-card{position:relative;z-index:2;width:min(720px,calc(100vw - 40px));max-width:720px;min-height:296px;margin:0 auto;border:0;border-radius:7px;padding:40px 62px;background:#fff;box-shadow:none}
+.congrats-card{position:relative;z-index:2;width:min(720px,calc(100vw - 40px));max-width:720px;min-height:296px;margin:0 auto;border:0;border-radius:7px;padding:40px 62px;background:var(--color-finish-card);box-shadow:none}
 .congrats-split{display:grid;grid-template-columns:255px 1fr;gap:40px;align-items:center;text-align:left;height:100%;margin:0;padding:0}
-.congrats-art{display:grid;place-items:center;height:100%;padding-right:38px;border-right:2px solid #e4e6e9;color:#4a4a4a}
+.congrats-art{display:grid;place-items:center;height:100%;padding-right:38px;border-right:2px solid var(--color-finish-divider);color:var(--color-finish-text)}
 .congrats-art svg{width:225px;height:auto}
-.congrats-text{font-size:1rem;color:#202020}
+.congrats-text{font-size:1rem;color:var(--color-finish-text)}
 .congrats-text p{line-height:1.55;margin:0 0 28px}.congrats-text p:last-child{margin-bottom:0}
 .congrats-text strong{font-weight:800}
 .finish-cta{position:relative;z-index:2;margin:33px auto 0;display:flex;justify-content:center}
-.cta-yellow{background:var(--color-cta-yellow);border-color:var(--color-cta-yellow);color:#111;border-radius:999px;padding:14px 27px;min-width:176px;font-size:.82rem}
+.cta-yellow{background:var(--color-cta-yellow);border-color:var(--color-cta-yellow);color:var(--color-text);border-radius:999px;padding:14px 27px;min-width:176px;font-size:.82rem}
 .cta-yellow:hover{filter:brightness(1.04)}
 .finish-results{position:relative;z-index:2;margin-top:34px}
 @media (prefers-reduced-motion:reduce){.confetti-ribbon{animation:none;opacity:.9}}
-@media(max-width:760px){.finish-page{padding:30px 10px 56px}.finish-heading{margin-bottom:24px}.finish-heading h1{font-size:1.75rem;margin-bottom:18px}.finish-heading p{font-size:.95rem}.congrats-card{width:calc(100vw - 24px);padding:26px 24px;min-height:0}.congrats-split{grid-template-columns:1fr;gap:22px}.congrats-art{height:auto;padding:0 0 20px;border-right:0;border-bottom:2px solid #e4e6e9}.congrats-art svg{width:180px}.congrats-text{text-align:left}.finish-results{margin-top:28px}}
+@media(max-width:760px){.finish-page{padding:30px 10px 56px}.finish-heading{margin-bottom:24px}.finish-heading h1{font-size:1.75rem;margin-bottom:18px}.finish-heading p{font-size:.95rem}.congrats-card{width:calc(100vw - 24px);padding:26px 24px;min-height:0}.congrats-split{grid-template-columns:1fr;gap:22px}.congrats-art{height:auto;padding:0 0 20px;border-right:0;border-bottom:2px solid var(--color-finish-divider)}.congrats-art svg{width:180px}.congrats-text{text-align:left}.finish-results{margin-top:28px}}
 body.access-active .app-shell{background:linear-gradient(160deg,var(--color-access-bg-a),var(--color-access-bg-b))}
 body.access-active .topbar{background:var(--color-surface)}
 .access-page .card{box-shadow:0 12px 44px var(--color-access-card-shadow)}
