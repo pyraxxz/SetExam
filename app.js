@@ -46,6 +46,25 @@ function startTestPreview(){s.previewIndex=0;s.previewAnswers={};s.previewNotes=
 function startFullLengthPractice(){s.practiceMode=true;s.previewIndex=0;s.previewAnswers={};s.previewNotes={};s.mi=0;s.qi=0;s.endAt=null;s.breakEndAt=null;s.answers={};s.marked={};s.eliminated={};s.notes={};s.highlights={};s.completed={};s.submitted=false;s.adaptive={rw:"easy",math:"easy"};save();closeOverlays();show("directions")}
 function previewAdvance(delta){const total=previewBank().length;const next=s.previewIndex+delta;if(next<0){s.previewIndex=0;save();render();return}if(next>=total){s.screen="yourtests";s.previewIndex=0;save();render();toast("Test Preview complete. No score or feedback is reported.");return}s.previewIndex=next;save();render()}
 function previewNote(){if(document.getElementById("previewNoteEditor"))return;const backdrop=document.createElement("div");backdrop.id="previewNoteEditor";backdrop.className="modal-backdrop";backdrop.innerHTML='<div class="modal note-editor" role="dialog" aria-modal="true" aria-labelledby="previewNoteTitle"><div class="modal-head"><h3 id="previewNoteTitle">Highlights &amp; Notes</h3><button class="icon-btn" id="previewNoteClose" aria-label="Close notes">×</button></div><p class="small">Add a private note to this preview question. Notes are cleared when you start another preview.</p><textarea id="previewNoteText" rows="7" maxlength="1000" aria-label="Preview question note" style="width:100%;resize:vertical;padding:12px;border:1px solid var(--color-border-strong);border-radius:6px;background:var(--color-surface);color:var(--color-text)">'+esc(s.previewNotes?.[s.previewIndex]||"")+'</textarea><div class="modal-actions"><button class="btn" id="previewNoteCancel">Cancel</button><button class="btn primary-action" id="previewNoteSave">Save note</button></div></div>';document.body.appendChild(backdrop);const close=()=>backdrop.remove();const commit=()=>{const noteText=backdrop.querySelector("#previewNoteText").value.trim();s.previewNotes=s.previewNotes||{};if(noteText)s.previewNotes[s.previewIndex]=noteText;else delete s.previewNotes[s.previewIndex];save();close();toast(noteText?"Preview note saved":"Preview note removed")};backdrop.querySelector("#previewNoteClose").onclick=close;backdrop.querySelector("#previewNoteCancel").onclick=close;backdrop.querySelector("#previewNoteSave").onclick=commit;backdrop.addEventListener("click",e=>{if(e.target===backdrop)close()});backdrop.querySelector("#previewNoteText").focus()}
+function forceNavigateExamPage(direction){
+  closeOverlays();
+  if(direction!=="next") return navigateExamPage(direction);
+  if(s.screen==="test"){
+    if(s.qi<bank().length-1){s.qi++;save();render();focusQ();return true;}
+    const current=s.mi;
+    s.completed[C.mods[current].id]=true;
+    stop();
+    routeNext();
+    if(current===C.mods.length-1){s.endAt=null;s.submitted=true;s.screen="finish";save();render();return true;}
+    if(current===1){s.mi=2;s.qi=0;s.endAt=null;s.breakEndAt=Date.now()+C.breakSec*1000;save();show("break");return true;}
+    s.mi=current+1;s.qi=0;s.endAt=null;s.breakEndAt=null;save();show("directions");return true;
+  }
+  if(s.screen==="directions"){
+    if(s.mi===1){s.completed.rw2=false;s.mi=1;s.qi=0;s.endAt=Date.now()+C.mods[1].minutes*60000;save();show("test");return true;}
+    return startNavigatedModule(s.mi);
+  }
+  return navigateExamPage(direction);
+}
 function navigateExamPage(direction){closeOverlays();if(s.screen==="testPreview"){previewAdvance(direction==="next"?1:-1);return true}if(s.screen==="break"){return false}if(direction==="next"){if(s.screen==="test"){if(s.qi<bank().length-1){next();return true}if(!s.harness&&rem()>0)return false;const current=s.mi;routeNext();s.completed[C.mods[current].id]=true;stop();if(current===C.mods.length-1){s.endAt=null;s.submitted=true;s.screen="finish";save();render();return true}return startNavigatedModule(current+1)}if(s.screen==="directions")return startNavigatedModule(s.mi);return false}if(direction==="previous"){if(s.screen==="test"){if(s.qi>0){back();return true}return s.harness&&s.mi>0?rewindNavigatedModule(s.mi-1):false}if(s.screen==="directions")return s.harness&&s.mi>0?rewindNavigatedModule(s.mi-1):false;if(s.screen==="finish")return s.harness?rewindNavigatedModule(2):false}return false}
 function focusQ(){setTimeout(()=>document.getElementById("questionPrompt")?.focus(),0)}
 function warning(){closeOverlays();const n=document.createElement("div");n.className="modal-backdrop";n.innerHTML='<div class="modal warning-modal" role="dialog" aria-modal="true" aria-labelledby="warnTitle"><h3 id="warnTitle">5 minutes remaining</h3><p>Five minutes remain in this module. The timer must remain visible until the module ends.</p><div class="modal-actions"><button class="btn" id="dismissWarn">Continue</button></div></div>';document.body.append(n);n.querySelector("#dismissWarn").focus();n.querySelector("#dismissWarn").onclick=()=>n.remove()}
@@ -180,4 +199,4 @@ function ticketText(){return["SAT Admission Ticket","Name: "+(s.student||"Studen
 function printAdmissionTicket(){document.body.classList.add("printing-ticket");const done=()=>{document.body.classList.remove("printing-ticket");window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);window.print();setTimeout(()=>document.body.classList.remove("printing-ticket"),1200)}
 function emailAdmissionTicket(){const recipient=(s.email||"").trim();const subject="SAT Admission Ticket — "+C.testDate;const body=ticketText()+"\n\nPlease keep this ticket available for test day.";window.location.href="mailto:"+encodeURIComponent(recipient)+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body)}
 function reset(){stop();localStorage.removeItem(C.storageKey);location.reload()}
-render();window.AZAMAN_APP={getState:()=>s,save,render,scoreAll,same,navigateExamPage,skipToBreak};})();
+render();window.AZAMAN_APP={getState:()=>s,save,render,scoreAll,same,navigateExamPage,forceNavigateExamPage,skipToBreak};})();
