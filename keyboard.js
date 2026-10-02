@@ -11,8 +11,8 @@
     ['F6 / Shift+F6', 'Move between exam regions'],
     ['Ctrl + + / Ctrl + - / Ctrl + 0 or Command equivalents', 'Zoom in / out / reset'],
     ['Ctrl + Alt + B / Command + Control + B', 'Back'],
-    ['Ctrl + P', 'Next question / next module (skips directions and break gates)'],
-    ['Ctrl + O', 'Previous question / previous module'],
+    ['Ctrl + P', 'Next question / next module (cannot bypass the timed inter-section break)'],
+    ['Ctrl + O', 'Previous question / previous module (cannot bypass the timed inter-section break)'],
     ['Ctrl + Alt + X / Command + Control + X', 'Next / review module'],
     ['Ctrl + Alt + G / Command + Control + G', 'Question menu'],
     ['Ctrl + Alt + H / Command + Control + H / iPad: Command + Control + P', 'Help'],
@@ -88,7 +88,7 @@
     document.getElementById('helpDialog')?.remove();
     const n = document.createElement('div');
     n.id = 'helpDialog'; n.className = 'modal-backdrop';
-    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Ctrl + P and Ctrl + O can move through questions, modules, directions, and the break without waiting.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
+    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Ctrl + P and Ctrl + O can move through questions and module directions, but the timed inter-section break must run to completion.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
     document.body.appendChild(n);
     const close = () => { n.remove(); document.removeEventListener('keydown', onEsc); };
     const onEsc = (e) => { if (e.key === 'Escape') close(); };
