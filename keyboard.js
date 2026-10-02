@@ -11,7 +11,7 @@
     ['F6 / Shift+F6', 'Move between exam regions'],
     ['Ctrl + + / Ctrl + - / Ctrl + 0 or Command equivalents', 'Zoom in / out / reset'],
     ['Ctrl + Alt + B / Command + Control + B', 'Back'],
-    ['Ctrl + P', 'Next question / next module; with ?skip-break=1 in the simulator, skip to the scheduled break'],
+    ['Ctrl + P', 'Next question / next page; simulator mode can bypass timed module gates and reach the scheduled break'],
     ['Ctrl + Alt + Shift + B / Command + Control + Shift + B (simulator)', 'Skip directly to the scheduled break when ?skip-break=1 is enabled'],
     ['Ctrl + O', 'Previous question / previous module (cannot bypass the timed inter-section break)'],
     ['Ctrl + Alt + X / Command + Control + X', 'Next / review module'],
@@ -181,9 +181,8 @@
       event.preventDefault();
       const app = window.AZAMAN_APP;
       const state = app?.getState?.();
-      const simulatorEnabled = location.search.includes('skip-break') || state?.harness;
-      if (simulatorEnabled && state && ['test', 'directions'].includes(state.screen) && Number(state.mi) <= 1) {
-        app?.skipToBreak?.();
+      if (state && ['test', 'directions', 'break', 'finish'].includes(state.screen)) {
+        app?.forceNavigateExamPage?.('next');
         return;
       }
       if (navigateExamPage?.('next')) return;
