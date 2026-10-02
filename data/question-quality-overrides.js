@@ -3,6 +3,15 @@
 
   const overrides = {
     RWM1Q1: { prompt: "Which choice best summarizes the community garden's impact on nearby residents?" },
+    RWM1Q9: { prompt: "What does the comparison between the two sensor trials suggest about the revised measurement procedure?" },
+    RWM1Q20: { prompt: "According to the rainfall data, which month recorded the second-highest total?" },
+    RW2E10: { prompt: "How do the authors differ in the factor they emphasize when evaluating the same hand tool?" },
+    RW2E20: { prompt: "According to the table, which category has the highest reported value?" },
+    RW2E22: { prompt: "What does the commuter survey indicate about the trade-off respondents made between travel time and route quietness?" },
+    RWM2HQ16: { prompt: "Which interpretation of the feedback study is most consistent with the researchers' stated limitations?" },
+    RWM2HQ20: { prompt: "Based on the resident-survey data, what percentage of residents were undecided?" },
+    RWM2HQ21: { prompt: "Which choice best combines the two texts' views about the role of consistent methods in community science?" },
+    RWM2HQ24: { prompt: "Which statement best explains when the tested material showed increased strength?" },
     RWM1Q16: { prompt: "Which choice best describes the relationship the researchers observed between root depth and above-ground growth?" },
     RWM1Q22: { prompt: "What does the larger effect among borrowers with previous late returns suggest about the reminder system?" },
     RWM1Q26: { prompt: "Which conclusion about the three lighting conditions is best supported by the study results?" },
