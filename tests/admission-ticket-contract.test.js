@@ -51,7 +51,7 @@ assert(css.includes('@media(max-width:460px){.admission-ticket-page'), 'ticket m
 assert(css.includes('grid-template-columns:minmax(270px,1.02fr) minmax(330px,1.34fr) minmax(190px,.76fr)'), 'ticket must use the wide three-column landscape geometry');
 assert(css.includes('@page{size:landscape'), 'ticket print layout must preserve landscape orientation');
 
-assert(index.includes('styles.css?v=25'), 'canonical stylesheet must remain loaded at current asset generation');
+assert(index.includes('styles.css?v=27'), 'canonical stylesheet must remain loaded at current asset generation');
 
 for (const marker of [
   'Your SAT\\s*Admission Ticket',
