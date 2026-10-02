@@ -20,7 +20,7 @@ for (const [name, items] of groups) {
   const prompts = items.map((question) => question.prompt.trim().toLowerCase());
   assert.equal(new Set(prompts).size, 22, `${name} must contain unique question prompts`);
 
-  assert.equal(items.filter((question) => question.difficulty === 'hard').length, name === 'math2.hard' ? 22 : items.filter((question) => question.difficulty === 'hard').length, `${name} hard-tagging is inconsistent`);
+  if (name === 'math2.hard') assert.equal(items.filter((question) => question.difficulty === 'hard').length, 22, 'Math M2 hard module must be fully hard-tagged');
   assert.equal(items.filter((question) => question.type === 'spr').length, 5, `${name} must contain 5 Math SPR items`);
   assert.equal(items.filter((question) => question.type === 'mcq').length, 17, `${name} must contain 17 Math MCQ items`);
 
@@ -45,7 +45,6 @@ for (const [name, items] of groups) {
       const answerIndex = ['A', 'B', 'C', 'D'].indexOf(question.answer);
       assert(answerIndex >= 0, `${question.id} lost its answer letter`);
       assert.equal(new Set(question.options).size, 4, `${question.id} has duplicate answer choices`);
-      assert.equal(question.options[answerIndex]?.trim(), question.options[answerIndex]?.trim(), `${question.id} answer mapping must remain deterministic`);
     }
   });
 
