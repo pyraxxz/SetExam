@@ -73,7 +73,9 @@ for (const phrase of ['Review Device Requirements', 'Windows 11 24H2 or later', 
 assert(refinements.includes('azmBatteryStatus'), 'start code must expose a battery indicator');
 assert(app.includes('skipToBreak') && app.includes('skip-break'), 'scheduled break simulator skip control must be explicit and opt-in');
 assert(app.includes('skipToBreak};') || app.includes('skipToBreak};'), 'app must expose the break skip action to the keyboard layer');
-assert(keyboard.includes('Ctrl + Alt + Shift + B / Command + Control + Shift + B'), 'keyboard contract must document the simulator break skip shortcut');
+assert(keyboard.includes('Ctrl + P'), 'keyboard contract must document Ctrl+P');
+assert(keyboard.includes("['test', 'directions', 'break', 'finish']"), 'Ctrl+P must be available across exam screens');
+assert(app.includes('forceNavigateExamPage'), 'app must expose the forced simulator navigation path');
 assert(keyboard.includes("state.screen))"), 'keyboard break skip guard must stay screen-scoped');
 for (const phrase of ['Control + Search + S', 'ChromeOS', 'macOS', 'iPad', 'Command + Control + P', 'Setup/check-in state']) assert(spec.includes(phrase), `Bluebook platform spec missing: ${phrase}`);
 for (const phrase of ['hash(value)', 'question.options = original.map', 'question.answer = letters', 'difficulty: \'hard\'']) assert(quality.includes(phrase), `question quality override missing: ${phrase}`);
