@@ -130,6 +130,8 @@ jobs:
         run: node tests/static-contract.test.js
       - name: Validate full-run smoke contract
         run: node tests/full-run-contract.test.js
+      - name: Validate inter-section break contract
+        run: node tests/inter-section-break-contract.test.js
       - name: Validate QA matrix contract
         run: node tests/qa-matrix-contract.test.js
       - name: Validate practice experience contract
