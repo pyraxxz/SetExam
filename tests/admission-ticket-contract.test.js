@@ -62,7 +62,7 @@ assert(css.includes('@page{size:landscape'), 'ticket print layout must preserve 
 assert(index.includes(`styles.css?v=${assetVersion}`), 'canonical stylesheet must remain loaded at the canonical asset generation');
 
 for (const marker of [
-  'SAT\\s*-?\\s*Admission Ticket',
+  'ticket compact heading renders',
   'October 3 date renders',
   'date of birth renders',
   'registration number renders',
