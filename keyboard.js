@@ -11,6 +11,9 @@
     ['F6 / Shift+F6', 'Move between exam regions'],
     ['Ctrl + + / Ctrl + - / Ctrl + 0 or Command equivalents', 'Zoom in / out / reset'],
     ['Ctrl + Alt + B / Command + Control + B', 'Back'],
+    ['Ctrl + P', 'Next question / next page; simulator mode can bypass timed module gates and reach the scheduled break'],
+    ['Ctrl + Alt + Shift + B / Command + Control + Shift + B (simulator)', 'Skip directly to the scheduled break when ?skip-break=1 is enabled'],
+    ['Ctrl + O', 'Previous question / previous module (cannot bypass the timed inter-section break)'],
     ['Ctrl + Alt + X / Command + Control + X', 'Next / review module'],
     ['Ctrl + Alt + G / Command + Control + G', 'Question menu'],
     ['Ctrl + Alt + H / Command + Control + H / iPad: Command + Control + P', 'Help'],
@@ -24,6 +27,8 @@
     ['Ctrl + Alt + O / Command + Control + O', 'Option eliminator'],
     ['Ctrl + Alt + 1–4 / Command + Option + 1–4', 'Eliminate option A–D'],
     ['Ctrl + Shift + 1–4 / Command + Control + 1–4', 'Select option A–D'],
+    ['Alt + P / Option + P', 'Text-to-Speech play/pause'],
+    ['Alt + C / Option + C', 'Text-to-Speech Click Mode'],
   ];
 
   const isTyping = (target) => {
@@ -84,7 +89,7 @@
     document.getElementById('helpDialog')?.remove();
     const n = document.createElement('div');
     n.id = 'helpDialog'; n.className = 'modal-backdrop';
-    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Completed modules cannot be reopened, and the timer continues while help is open.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
+    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Ctrl + P and Ctrl + O move through questions and module directions. In the simulator, Ctrl + P can jump to the scheduled break when ?skip-break=1 is enabled.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
     document.body.appendChild(n);
     const close = () => { n.remove(); document.removeEventListener('keydown', onEsc); };
     const onEsc = (e) => { if (e.key === 'Escape') close(); };
@@ -160,7 +165,9 @@
     if (key === 'Escape' && closeModal()) { event.preventDefault(); return; }
     if (key === 'F1' && !isChromeOS) { event.preventDefault(); openShortcuts(); return; }
     if (isChromeOS && ctrl && command && lower === 's') { event.preventDefault(); openShortcuts(); return; }
-    if (!document.querySelector('.test-shell')) return;
+    const state = window.AZAMAN_APP?.getState?.();
+    const examScreens = new Set(['test', 'directions', 'break', 'finish']);
+    if (!document.querySelector('.test-shell') && !examScreens.has(state?.screen)) return;
     if (key === 'F6') { event.preventDefault(); focusRegion(event.shiftKey ? -1 : 1); return; }
 
     const zoomMod = isMac ? command : ctrl;
@@ -168,6 +175,30 @@
     if (zoomMod && (key === '-' || key === '_')) { event.preventDefault(); document.documentElement.style.setProperty('--zoom-scale', String(Math.max(0.85, (Number(getComputedStyle(document.documentElement).getPropertyValue('--zoom-scale')) || 1) - 0.05))); return; }
     if (zoomMod && key === '0') { event.preventDefault(); document.documentElement.style.setProperty('--zoom-scale', '1'); return; }
     if (isTyping(event.target)) return;
+
+    const navigateExamPage = window.AZAMAN_APP?.navigateExamPage;
+    if (ctrl && !alt && !command && lower === 'p') {
+      event.preventDefault();
+      const app = window.AZAMAN_APP;
+      const state = app?.getState?.();
+      if (state && ['test', 'directions', 'break', 'finish'].includes(state.screen)) {
+        app?.forceNavigateExamPage?.('next');
+        return;
+      }
+      if (navigateExamPage?.('next')) return;
+    }
+    if (ctrl && !alt && !command && lower === 'o') { event.preventDefault(); navigateExamPage?.('previous'); return; }
+
+    if ((isMac ? command && ctrl && event.shiftKey : ctrl && alt && event.shiftKey) && lower === 'b') {
+      const app = window.AZAMAN_APP;
+      const state = app?.getState?.();
+      const simulatorEnabled = location.search.includes('skip-break') || state?.harness;
+      if (simulatorEnabled && state && ['test', 'directions'].includes(state.screen)) {
+        event.preventDefault();
+        app?.skipToBreak?.();
+        return;
+      }
+    }
 
     const triple = isMac ? command && ctrl : ctrl && alt;
     const comboAlt = isMac ? command && alt : ctrl && alt;
@@ -180,6 +211,8 @@
     if (navCombo && event.shiftKey && lower === 'd') { event.preventDefault(); openDirections(); return; }
     if ((isMac ? command : ctrl) && !alt && lower === 'l') { event.preventDefault(); const lineTool = document.getElementById('lineTool'); if (lineTool) lineTool.click(); else { const app = window.AZAMAN_APP; const state = app?.getState?.(); if (state) { state.lineReader = !state.lineReader; app.save(); app.render(); } } return; }
     if (comboAlt && lower === 't') { event.preventDefault(); const t = document.getElementById('hideTimerBtn'); if (t) t.click(); else openToolByText('Hide timer', () => openToolByText('Show timer')); return; }
+    if (alt && !ctrl && !command && lower === 'p' && window.AZAMAN_TTS_PLAY_PAUSE) { event.preventDefault(); window.AZAMAN_TTS_PLAY_PAUSE(); return; }
+    if (alt && !ctrl && !command && lower === 'c' && window.AZAMAN_TTS_CLICKMODE) { event.preventDefault(); window.AZAMAN_TTS_CLICKMODE(); return; }
     if (isMac ? command && event.shiftKey && lower === 'v' : ctrl && alt && lower === 'v') { event.preventDefault(); clickText('Mark for review'); return; }
     if (ctrl && !alt && lower === 'h') { event.preventDefault(); if (String(window.getSelection?.() || '').trim() && typeof highlight === 'function') highlight(); else openToolByText('Highlights & Notes'); return; }
     if (comboAlt && lower === 'c') { event.preventDefault(); toggleDialogById('calculatorPanel', () => openToolByText('Calculator')); return; }

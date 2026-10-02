@@ -87,13 +87,7 @@
   }
 
   function hideDashboardExtras() {
-    const page = document.querySelector('.yourtests-page');
-    if (!page) return;
-    page.querySelector('.meta-row:nth-child(4)')?.classList.add('ref-hidden');
-    const name = page.querySelector('.test-name');
-    if (name && /^(SAT|Digital SAT)$/i.test(name.textContent.trim()) && name.textContent.trim() !== 'Digital SAT March 2023') {
-      name.textContent = 'Digital SAT March 2023';
-    }
+    // Keep current Bluebook dashboard data visible; app.js owns the current test-card content.
   }
 
   function addExitItem() {

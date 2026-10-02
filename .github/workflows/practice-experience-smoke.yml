@@ -1,0 +1,37 @@
+name: Practice experience smoke
+
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'app.js'
+      - 'keyboard.js'
+      - 'tts-enhancement.js'
+      - 'tts-enhancement.css'
+      - 'tools-move-enhancement.js'
+      - 'tests/practice-experience-smoke.html'
+      - '.github/workflows/practice-experience-smoke.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: practice-experience-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v5
+      - name: Run practice experience browser smoke
+        run: |
+          set -eu
+          python3 -m http.server 8090 --bind 127.0.0.1 >/tmp/setexam-practice-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          sleep 1
+          timeout 90s chromium --headless=new --no-sandbox --disable-gpu --disable-dev-shm-usage \
+            --virtual-time-budget=20000 --dump-dom http://127.0.0.1:8090/tests/practice-experience-smoke.html \
+            > /tmp/setexam-practice-smoke.html
+          cat /tmp/setexam-practice-smoke.html
+          grep -q 'PRACTICE EXPERIENCE SMOKE COMPLETE' /tmp/setexam-practice-smoke.html

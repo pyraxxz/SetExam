@@ -12,7 +12,7 @@
   }
 
   function logoSvg() {
-    return `<img class="ref2-logo" src="assets/bluebook-logo.jpg?v=22" alt="" aria-hidden="true">`;
+    return `<img class="ref2-logo" src="assets/bluebook-logo.jpg?v=23" alt="" aria-hidden="true">`;
   }
 
   function deviceButton() {
@@ -105,10 +105,7 @@
   }
 
   function dashboardPolish() {
-    const page = document.querySelector('.yourtests-page');
-    if (!page) return;
-    const name = page.querySelector('.test-name');
-    if (name && name.textContent.trim() === 'SAT') name.textContent = 'Digital SAT';
+    // Current dashboard labels and values are rendered directly by app.js.
   }
 
   function patchAssistiveTechnology() {
@@ -131,6 +128,20 @@
     button.innerHTML = `<svg class="ico-tool" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 21 20H3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v5M12 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span>Exit the exam</span>`;
   }
 
+  function openReferenceNotice(title, body) {
+    document.getElementById('azmReferenceNotice')?.remove();
+    const backdrop = document.createElement('div');
+    backdrop.id = 'azmReferenceNotice';
+    backdrop.className = 'modal-backdrop';
+    backdrop.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="azmReferenceNoticeTitle"><div class="modal-head"><h3 id="azmReferenceNoticeTitle">${escapeHtml(title)}</h3><button class="icon-btn" id="azmReferenceNoticeClose" aria-label="Close">×</button></div><p>${escapeHtml(body)}</p><div class="modal-actions"><button class="btn cta-yellow" id="azmReferenceNoticeDone">Done</button></div></div>`;
+    document.body.appendChild(backdrop);
+    const close = () => backdrop.remove();
+    backdrop.querySelector('#azmReferenceNoticeClose').onclick = close;
+    backdrop.querySelector('#azmReferenceNoticeDone').onclick = close;
+    backdrop.addEventListener('click', (event) => { if (event.target === backdrop) close(); });
+    backdrop.querySelector('#azmReferenceNoticeDone').focus();
+  }
+
   function actualStartCodeSurface() {
     const s = getState();
     if (!s || s.harness || s.screen !== 'checkin' || s.step !== 8) return;
@@ -138,7 +149,22 @@
     const app = document.getElementById('app');
     if (!app) return;
     const code = String(s.startCode || '');
-    app.innerHTML = `<main id="azmStartCodePage" class="azm-start-code-page"><header class="azm-flow-header"><button id="azmStartHelp" type="button" class="azm-flow-link">? Help</button><button id="azmStartHome" type="button" class="azm-flow-link">Return to Home <span aria-hidden="true" class="azm-home-icon">⌂</span></button></header><section class="azm-start-code-content"><h1>Start Code</h1><p>Enter your start code now to begin testing. Good luck!</p><p>The start code contains <strong>numbers only.</strong></p><div class="azm-start-code-boxes" aria-label="Start code">${Array.from({length:6},(_,i)=>`<input class="azm-start-digit" maxlength="1" inputmode="numeric" autocomplete="off" data-pos="${i}" aria-label="Start code digit ${i+1} of 6" value="${escapeHtml(code[i]||'')}">`).join('')}</div><button id="azmStartTest" type="button" class="azm-start-test">Start Test</button></section><p class="azm-start-note">You can <button id="azmReviewInstructions" type="button">review the instructions</button> that the proctor reads aloud.</p></main>`;
+    app.innerHTML = `<main id="azmStartCodePage" class="azm-start-code-page"><header class="azm-flow-header"><button id="azmStartHelp" type="button" class="azm-flow-link">? Help</button><button id="azmStartHome" type="button" class="azm-flow-link">Return to Home <span aria-hidden="true" class="azm-home-icon">⌂</span></button></header><section class="azm-start-code-content"><h1>Start Code</h1><div class="azm-start-status"><span id="azmBatteryStatus" class="azm-battery-status" aria-live="polite">Battery status unavailable</span></div><p>Once the proctor shares the start code, enter it here to begin testing.</p><p>The start code contains <strong>numbers only.</strong></p><div class="azm-start-code-boxes" aria-label="Start code">${Array.from({length:6},(_,i)=>`<input class="azm-start-digit" maxlength="1" inputmode="numeric" autocomplete="off" data-pos="${i}" aria-label="Start code digit ${i+1} of 6" value="${escapeHtml(code[i]||'')}">`).join('')}</div><button id="azmStartTest" type="button" class="azm-start-test">Start Test</button></section><p class="azm-start-note">You can <button id="azmReviewInstructions" type="button">review the instructions</button> that the proctor reads aloud.</p></main>`;
+    const battery = document.getElementById('azmBatteryStatus');
+    const renderBattery = (value) => {
+      if (!battery) return;
+      const level = Math.max(0, Math.min(100, Math.round(value.level * 100)));
+      battery.textContent = `Battery ${level}%${value.charging ? ' · Charging' : ''}`;
+      battery.dataset.state = level < 20 && !value.charging ? 'warn' : 'ready';
+    };
+    if (navigator.getBattery) {
+      navigator.getBattery().then((value) => {
+        renderBattery(value);
+        value.addEventListener('levelchange', () => renderBattery(value));
+        value.addEventListener('chargingchange', () => renderBattery(value));
+      }).catch(() => {});
+    }
+
     const boxes = [...app.querySelectorAll('.azm-start-digit')];
     const sync = () => { s.startCode = boxes.map((b) => b.value).join(''); save(); };
     boxes.forEach((box) => {
@@ -146,9 +172,9 @@
       box.addEventListener('keydown', (e) => { const i=Number(box.dataset.pos); if(e.key==='Backspace'&&!box.value&&i>0){boxes[i-1].focus();e.preventDefault();} });
       box.addEventListener('focus', () => box.select());
     });
-    document.getElementById('azmStartHelp')?.addEventListener('click', () => window.AZAMAN_HELP?.() || alert('Ask your proctor for help.'));
+    document.getElementById('azmStartHelp')?.addEventListener('click', () => window.AZAMAN_HELP?.() || openReferenceNotice('Help', 'Ask your proctor for help if you need assistance before starting the test.'));
     document.getElementById('azmStartHome')?.addEventListener('click', () => { s.screen='yourtests'; save(); render(); });
-    document.getElementById('azmReviewInstructions')?.addEventListener('click', () => alert('Your proctor will read the test instructions aloud before the test begins.'));
+    document.getElementById('azmReviewInstructions')?.addEventListener('click', () => openReferenceNotice('Test instructions', 'Your proctor will read the test instructions aloud before the test begins.'));
     document.getElementById('azmStartTest')?.addEventListener('click', () => { sync(); if(s.startCode.length!==6) return; s.step=10; s.screen='directions'; s.mi=0; s.qi=0; s.endAt=null; save(); render(); });
     boxes.find((b) => !b.value)?.focus();
   }
@@ -168,9 +194,17 @@
     const math = m.section === 'Math';
     const app = document.getElementById('app');
     if (!app) return;
-    app.innerHTML = `<main id="azmDirectionsPage" class="azm-directions-page"><header class="azm-directions-top"><div class="azm-directions-left"><strong>Section ${secNum}: ${escapeHtml(m.section)}</strong><button id="azmDirectionsMenu" class="azm-directions-link">Directions <span aria-hidden="true">⌄</span></button></div><div class="azm-directions-timer">${m.minutes}:00<button id="azmDirectionsHide" type="button">Hide</button></div><div class="azm-directions-tools">${math?'<button type="button">▣<span>Calculator</span></button><button type="button">▤<span>Reference</span></button>':'<button type="button">✎<span>Highlights &amp; Notes</span></button>'}<button type="button">⋮<span>More</span></button></div></header><div class="azm-directions-stripe" aria-hidden="true"></div><section class="azm-directions-panel"><h2>Section ${secNum}, ${escapeHtml(m.label)}: ${m.count} Questions</h2><ul><li>This module is made up of multiple-choice questions.</li><li>You can move back and forth between questions until time expires.</li><li>At the end of the module, you can review your answers until time expires.</li><li>Once the next module begins, you cannot return to these questions.</li></ul><button id="beginModuleBtn" type="button" class="azm-directions-continue">Continue</button></section></main>`;
-    document.getElementById('azmDirectionsHide')?.addEventListener('click', (e) => { e.currentTarget.textContent = e.currentTarget.textContent === 'Hide' ? 'Show' : 'Hide'; });
-    document.getElementById('azmDirectionsMenu')?.addEventListener('click', () => alert('These directions explain how this module works.'));
+    const questionType = math ? 'This module is made up of multiple-choice questions and student-produced response questions.' : 'This module is made up of multiple-choice questions.';
+    app.innerHTML = `<main id="azmDirectionsPage" class="azm-directions-page"><header class="azm-directions-top"><div class="azm-directions-left"><strong>Section ${secNum}: ${escapeHtml(m.section)}</strong><button id="azmDirectionsMenu" class="azm-directions-link">Directions <span aria-hidden="true">⌄</span></button></div><div class="azm-directions-timer"><span id="azmDirectionsClock">${m.minutes}:00</span><button id="azmDirectionsHide" type="button" aria-pressed="false">Hide</button></div><div class="azm-directions-tools">${math?'<button type="button" aria-disabled="true">▣<span>Calculator</span></button><button type="button" aria-disabled="true">▤<span>Reference</span></button>':'<button type="button" aria-disabled="true">✎<span>Highlights &amp; Notes</span></button>'}<button type="button" aria-disabled="true">⋮<span>More</span></button></div></header><div class="azm-directions-stripe" aria-hidden="true"></div><section class="azm-directions-panel"><h2>Section ${secNum}, ${escapeHtml(m.label)}: ${m.count} Questions</h2><ul><li>${questionType}</li><li>You can move back and forth between questions until time expires.</li><li>At the end of the module, you can review your answers until time expires.</li><li>Once the next module begins, you cannot return to these questions.</li></ul><button id="beginModuleBtn" type="button" class="azm-directions-continue">Continue</button></section></main>`;
+    let timerHidden = false;
+    document.getElementById('azmDirectionsHide')?.addEventListener('click', (e) => {
+      timerHidden = !timerHidden;
+      const clock = document.getElementById('azmDirectionsClock');
+      if (clock) clock.hidden = timerHidden;
+      e.currentTarget.textContent = timerHidden ? 'Show' : 'Hide';
+      e.currentTarget.setAttribute('aria-pressed', String(timerHidden));
+    });
+    document.getElementById('azmDirectionsMenu')?.addEventListener('click', () => openReferenceNotice('Directions', 'These directions explain how this module works and how you move through its questions.'));
     document.getElementById('beginModuleBtn')?.addEventListener('click', () => {
       const current = getState();
       if (!current || current.screen !== 'directions') return;
@@ -222,4 +256,100 @@
   const observer = new MutationObserver(maintain);
   observer.observe(document.body, { childList: true, subtree: true });
   maintain();
+})();
+
+(() => {
+  'use strict';
+  const KEY = 'azm-exam-source-width-v1';
+  const MIN = 35;
+  const MAX = 65;
+  const clamp = (value) => Math.min(MAX, Math.max(MIN, Number(value) || 48));
+  const readRatio = () => {
+    try { const value = Number(localStorage.getItem(KEY)); return Number.isFinite(value) ? clamp(value) : 48; }
+    catch (_) { return 48; }
+  };
+  const writeRatio = (value) => {
+    try { localStorage.setItem(KEY, String(Math.round(clamp(value) * 10) / 10)); } catch (_) {}
+  };
+  const applyRatio = (main, value) => {
+    const ratio = clamp(value);
+    document.documentElement.style.setProperty('--azm-exam-source-width', ratio + '%');
+    main?.style.setProperty('--azm-exam-source-width', ratio + '%');
+    const splitter = document.getElementById('examSplitter');
+    if (splitter) {
+      splitter.setAttribute('aria-valuenow', String(Math.round(ratio)));
+      splitter.setAttribute('aria-valuetext', Math.round(ratio) + '% passage, ' + Math.round(100 - ratio) + '% question');
+    }
+  };
+  function bindExamSplitter() {
+    const main = document.querySelector('.test-main');
+    const splitter = document.getElementById('examSplitter');
+    if (!main || !splitter || splitter.dataset.examSplitterReady === '1') return;
+    splitter.dataset.examSplitterReady = '1';
+    applyRatio(main, readRatio());
+    let dragging = false;
+    let pointerId = null;
+    const ratioFromPointer = (clientX) => {
+      const rect = main.getBoundingClientRect();
+      return rect.width ? clamp(((clientX - rect.left) / rect.width) * 100) : readRatio();
+    };
+    const setDragging = (value) => {
+      dragging = value;
+      main.classList.toggle('is-resizing', value);
+      document.body.classList.toggle('exam-resizing', value);
+      if (!value) pointerId = null;
+    };
+    splitter.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      pointerId = event.pointerId;
+      try { splitter.setPointerCapture?.(pointerId); } catch (_) {}
+      setDragging(true);
+      applyRatio(main, ratioFromPointer(event.clientX));
+      event.preventDefault();
+    });
+    splitter.addEventListener('pointermove', (event) => {
+      if (!dragging || event.pointerId !== pointerId) return;
+      applyRatio(main, ratioFromPointer(event.clientX));
+      event.preventDefault();
+    });
+    const finishPointer = (event) => {
+      if (!dragging) return;
+      if (event?.pointerId != null && pointerId != null && event.pointerId !== pointerId) return;
+      const ratio = Number(getComputedStyle(document.documentElement).getPropertyValue('--azm-exam-source-width').replace('%', '')) || 48;
+      writeRatio(ratio);
+      try { splitter.releasePointerCapture?.(pointerId); } catch (_) {}
+      setDragging(false);
+    };
+    splitter.addEventListener('pointerup', finishPointer);
+    splitter.addEventListener('pointercancel', finishPointer);
+    splitter.addEventListener('lostpointercapture', () => {
+      if (!dragging) return;
+      const ratio = Number(getComputedStyle(document.documentElement).getPropertyValue('--azm-exam-source-width').replace('%', '')) || 48;
+      writeRatio(ratio);
+      setDragging(false);
+    });
+    splitter.addEventListener('keydown', (event) => {
+      const current = Number(getComputedStyle(document.documentElement).getPropertyValue('--azm-exam-source-width').replace('%', '')) || 48;
+      let next = current;
+      if (event.key === 'ArrowLeft') next -= 1;
+      else if (event.key === 'ArrowRight') next += 1;
+      else if (event.key === 'PageUp') next += 5;
+      else if (event.key === 'PageDown') next -= 5;
+      else if (event.key === 'Home') next = MIN;
+      else if (event.key === 'End') next = MAX;
+      else return;
+      event.preventDefault();
+      applyRatio(main, next);
+      writeRatio(next);
+    });
+  }
+  function observeExamSplitter() {
+    bindExamSplitter();
+    const app = document.getElementById('app');
+    if (app && !observeExamSplitter.bound) {
+      observeExamSplitter.bound = true;
+      new MutationObserver(bindExamSplitter).observe(app, { childList: true, subtree: true });
+    }
+  }
+  observeExamSplitter();
 })();

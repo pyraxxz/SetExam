@@ -8,6 +8,7 @@ const guard = read('session-guard.js');
 const keyboard = read('keyboard.js');
 const spr = read('spr-input.js');
 const tools = read('tools-enhancement.js');
+const toolMove = read('tools-move-enhancement.js');
 const notes = read('note-enhancement.js');
 const modal = read('modal-enhancement.js');
 const calculator = read('calculator-enhancement.js');
@@ -22,6 +23,7 @@ const uiA11y = read('ui-accessibility-enhancement.js');
 const quality = read('data/question-quality-overrides.js');
 const tokens = read('styles.css');
 const platformReadiness = read('docs/platform-readiness.md');
+const refinements = read('bluebook-fidelity-refinements.js');
 const spec = read('docs/bluebook-spec.md');
 
 const requiredScripts = [
@@ -53,7 +55,8 @@ for (const phrase of ['F1 (Windows/macOS/iPad)', 'Control + Search + S (ChromeOS
   assert(keyboard.includes(phrase), `keyboard shortcut missing: ${phrase}`);
 }
 for (const phrase of ['normalizeFraction', 'normalizeDecimal', 'blur', 'MAX_POSITIVE_CHARS', 'MAX_NEGATIVE_CHARS']) assert(spr.includes(phrase), `SPR normalization contract missing: ${phrase}`);
-for (const phrase of ['setAttribute(\'role\', \'dialog\')', 'aria-modal', 'Resize calculator', 'makeDraggable', 'makeResizable', 'restoreSavedHighlights']) assert(tools.includes(phrase), `tool enhancement contract missing: ${phrase}`);
+for (const phrase of ['setAttribute(\'role\', \'dialog\')', 'aria-modal', 'Resize calculator', 'makeResizable', 'restoreSavedHighlights']) assert(tools.includes(phrase), `tool enhancement contract missing: ${phrase}`);
+for (const phrase of ["head.addEventListener('pointerdown'", "head.addEventListener('pointermove'", "head.addEventListener('pointerup'", 'ttsPanel']) assert(toolMove.includes(phrase), `tool movement contract missing: ${phrase}`);
 for (const phrase of ['STORAGE_KEY', 'questionKey', 'saveNote', 'azmNoteEditor', 'stopImmediatePropagation']) assert(notes.includes(phrase), `note enhancement contract missing: ${phrase}`);
 for (const phrase of ['FOCUSABLE', 'activeDialog', 'event.key !== \'Tab\'', 'aria-modal', 'focusFirst']) assert(modal.includes(phrase), `modal focus contract missing: ${phrase}`);
 for (const phrase of ['tokenize(input)', 'sin', 'cos', 'tan', 'sqrt', 'log10', 'Graph', 'azmGraphExpr', 'azmXMin', 'azmXMax', 'getContext(\'2d\')', 'aria-controls="azmCalcCalculate"', 'aria-controls="azmCalcGraph"', 'Object.entries(views)', 'view.hidden = name !== mode']) assert(calculator.includes(phrase), `calculator enhancement contract missing: ${phrase}`);
@@ -66,6 +69,14 @@ assert(helpSmoke.includes("key: 'h', ctrlKey: true, altKey: true"), 'Help smoke 
 assert(helpSmoke.includes('Command + Control + H'), 'Help smoke must verify the documented macOS Help shortcut');
 assert(helpSmoke.includes('HELP SMOKE COMPLETE'), 'Help smoke must expose a machine-checkable completion marker');
 for (const phrase of ['ChromeOS 144', 'macOS 15', 'iPadOS 18', 'Windows 11 24H2', 'support matrix']) assert(platformReadiness.includes(phrase), `platform readiness documentation missing: ${phrase}`);
+for (const phrase of ['Review Device Requirements', 'Windows 11 24H2 or later', 'macOS 15 or later', 'iPadOS 18 or later', 'school-managed', 'verified mode enabled', 'ChromeOS Flex isn\'t supported']) assert(app.includes(phrase), `setup device requirements missing: ${phrase}`);
+assert(refinements.includes('azmBatteryStatus'), 'start code must expose a battery indicator');
+assert(app.includes('skipToBreak') && app.includes('skip-break'), 'scheduled break simulator skip control must be explicit and opt-in');
+assert(app.includes('skipToBreak};') || app.includes('skipToBreak};'), 'app must expose the break skip action to the keyboard layer');
+assert(keyboard.includes('Ctrl + P'), 'keyboard contract must document Ctrl+P');
+assert(keyboard.includes("['test', 'directions', 'break', 'finish']"), 'Ctrl+P must be available across exam screens');
+assert(app.includes('forceNavigateExamPage'), 'app must expose the forced simulator navigation path');
+assert(keyboard.includes("state.screen))"), 'keyboard break skip guard must stay screen-scoped');
 for (const phrase of ['Control + Search + S', 'ChromeOS', 'macOS', 'iPad', 'Command + Control + P', 'Setup/check-in state']) assert(spec.includes(phrase), `Bluebook platform spec missing: ${phrase}`);
 for (const phrase of ['hash(value)', 'question.options = original.map', 'question.answer = letters', 'difficulty: \'hard\'']) assert(quality.includes(phrase), `question quality override missing: ${phrase}`);
 

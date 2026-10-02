@@ -8,7 +8,7 @@ This project is a browser practice simulator, not a replacement for the official
 |---|---|
 | ChromeOS | ChromeOS 144 minimum; verified mode is required by the official Bluebook client |
 | macOS | macOS 15 minimum; public requirements currently list macOS 26.5.2 as the recommended maximum |
-| iPadOS | iPadOS 18 minimum; public requirements currently list iPadOS 26.4 as the recommended maximum |
+| iPadOS | iPadOS 18 minimum; public requirements currently list iPadOS 26.6.1 as the recommended maximum |
 | Windows | Windows 11 24H2 minimum; public requirements currently list Windows 11 26H2 as the recommended maximum |
 
 These requirements describe the official Bluebook environment. The Azaman simulator should use a separately defined browser support matrix for its own deployment rather than representing itself as Bluebook.
@@ -42,3 +42,8 @@ Before describing this product as deployment-ready for student use, verify the s
 - https://bluebook.collegeboard.org/technology/updates-releases/releases
 - https://bluebook.collegeboard.org/help-center/windows-keyboard-shortcuts
 - https://bluebook.collegeboard.org/help-center/macos-keyboard-shortcuts
+
+
+## Recheck date — 2026-09-27
+
+The current public Bluebook requirements used for this pass were rechecked against College Board's 2026–27 device requirements. The SAT's October 3, 2026 administration is listed for 7:45 a.m. local time. For student ticket flow, College Board says exam setup is completed 1–5 days before test day and produces an admission ticket that can be printed or emailed.

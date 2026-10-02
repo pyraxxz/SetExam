@@ -31,6 +31,14 @@
               const handle = panel.querySelector('.resize-handle');
               if (!handle) throw new Error('calculator resize handle missing');
               const before = panel.getBoundingClientRect();
+              const panelHead = panel.querySelector('.panel-head');
+              if (!panelHead) throw new Error('calculator header missing');
+              const moveBefore = panel.getBoundingClientRect();
+              panelHead.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerId: 2, button: 0, clientX: moveBefore.left + 40, clientY: moveBefore.top + 20 }));
+              panelHead.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, pointerId: 2, clientX: moveBefore.left + 90, clientY: moveBefore.top + 55 }));
+              panelHead.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerId: 2, button: 0, clientX: moveBefore.left + 90, clientY: moveBefore.top + 55 }));
+              const moved = panel.getBoundingClientRect();
+              if (moved.left <= moveBefore.left || moved.top <= moveBefore.top) throw new Error(`calculator pointer drag did not move: ${moveBefore.left},${moveBefore.top} -> ${moved.left},${moved.top}`);
               handle.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerId: 1, clientX: before.right, clientY: before.bottom }));
               handle.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, pointerId: 1, clientX: before.right + 80, clientY: before.bottom + 50 }));
               handle.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerId: 1, clientX: before.right + 80, clientY: before.bottom + 50 }));

@@ -34,6 +34,10 @@ The exam model provides the documented testing tools and interaction families:
 10. **Keyboard Move** — calculator/reference movement with a dedicated Move control and arrow-key repositioning.
 11. **Unscheduled Break** — interrupting break; module timer continues running.
 
+## Current SAT administration
+
+For this simulator's current SAT Weekend presentation, the test administration is **Saturday, October 3, 2026**, with a **7:45 a.m. local arrival**. The simulated center is **International Community School, Pakyi No. 1, Kumasi, Ghana**. The admission ticket follows the current Bluebook pattern of a compact white ticket, upper-right QR area, identity fields, registration number, test timing, center information, and comments.
+
 ## 3. Actual exam-model flow
 
 The default student runtime is the exam-model path. QA-only harness state is separate and is never the target presentation.
@@ -98,3 +102,12 @@ The exam model is self-contained after installation. The service worker precache
 
 - College Board public Bluebook student/test-admin materials for timing, tools and accessibility.
 - Owner-supplied reference screenshots in the current conversation, recorded in `docs/captures/INDEX.md`.
+
+
+## Current Fall 2026 implementation notes
+
+- **[VERIFIED] October 3, 2026 SAT:** the public College Board date page lists Saturday, October 3, 2026 at 7:45 a.m. local time.
+- **[VERIFIED] Admission-ticket timing:** students complete exam setup 1–5 days before test day; finishing setup produces an admission ticket that can be printed or emailed.
+- **[VERIFIED] Image interaction:** Fall 2026 Bluebook materials describe easier use of reference sheets and images, including zoom and pan for charts, graphs, and images.
+- **[VERIFIED] Device floor:** current public requirements list Windows 11 24H2, macOS 15, iPadOS 18, and ChromeOS 144 minimums; Chromebooks require managed-device kiosk operation with verified mode enabled.
+- **[VERIFY] Visual ticket geometry:** the repository ticket implementation is compared against the supplied project references plus public admission-ticket examples; an owner-supplied current ticket capture would supersede approximation where geometry differs.

@@ -119,7 +119,7 @@ assert.equal(state.mi, 0);
 assert.equal(state.breakEndAt, null);
 
 state = run({ ...base(), screen: 'break', mi: 1, breakEndAt: NOW - 1, completed: { rw1: true, rw2: true } });
-assert.equal(state.screen, 'directions');
+assert.equal(state.screen, 'break');
 assert.equal(state.mi, 2);
 assert.equal(state.breakEndAt, null);
 assert.equal(state.endAt, null);

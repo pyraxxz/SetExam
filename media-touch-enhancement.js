@@ -15,6 +15,7 @@
     const clampZoom = (value) => Math.max(1, Math.min(3, value));
 
     viewport.addEventListener('pointerdown', (event) => {
+      if (event.target.closest('button,[data-media-action]')) return;
       pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
       if (pointers.size === 2) {
         const [a, b] = [...pointers.values()];
@@ -42,6 +43,7 @@
     };
     viewport.addEventListener('pointerup', stop);
     viewport.addEventListener('pointercancel', stop);
+    viewport.addEventListener('lostpointercapture', stop);
   }
 
   const observer = new MutationObserver(() => {

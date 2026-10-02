@@ -1,4 +1,6 @@
-# Implementation status — 2026-09-11
+# Implementation status — 2026-09-27
+
+> Historical implementation notes below retain their original 2026-09-11 heading context; the latest verification and additions are recorded here.
 
 ## Done in the current autonomous pass
 
@@ -32,3 +34,23 @@ The current branch contains a reference-driven Bluebook fidelity layer wired int
 - Existing exam-state engine and QA suite left intact.
 - Reference capture evidence and current College Board material drive visual/behavioral work.
 - The service worker continues to precache the fidelity assets for offline operation.
+
+## Deep fidelity pass — 2026-09-27
+
+### Admission ticket
+- Added a dedicated ticket runtime screen instead of rendering the ticket as a hidden setup-step artifact.
+- Corrected the test administration to Saturday, October 3, 2026 at 7:45 a.m. local time and retained the admission-ticket flow after setup.
+- Rebuilt the ticket into the compact title/QR → identity → registration → date/times → location → comments hierarchy seen in public SAT ticket examples.
+- Replaced the previous QR mock with a deterministic offline QR matrix and added responsive + print-specific styling.
+- Added migration for persisted sessions created with the previous setup-step ticket state.
+
+### Media and 2026 Bluebook changes
+- Added original, license-independent media fixtures for a data chart, adaptive R&W graph, and Math geometry diagram.
+- Expanded the image viewer with bounded panning, zoom controls, keyboard interaction, focus trapping/restoration, scroll lock, and image-load error handling.
+- Added touch/pinch hardening and offline precaching for the new fixtures.
+- Refreshed setup-device guidance to reflect the current public Fall 2026 requirements: Windows 11 24H2, macOS 15, iPadOS 18, ChromeOS 144, school-managed Chromebooks with verified mode, current storage/display floors, and keyboard restrictions.
+
+### Latest automated verification
+- Latest PR validation CI completed successfully on the current head.
+- Fidelity contract, media schema contract, reference-fidelity smoke, keyboard smoke, UI answer-run, timer recovery, media lightbox/touch, calculator resize, room-code, results, practice, and related completed smoke jobs are green on the current head.
+- The remaining launch checklist still contains environment/human gates such as real-device accessibility validation, real group/proctor testing, and owner visual sign-off; those are intentionally not marked complete by automation.

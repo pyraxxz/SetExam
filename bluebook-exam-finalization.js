@@ -102,6 +102,30 @@
     </svg>`;
   }
 
+  function confettiMarkup() {
+    const pieces = [];
+    const palette = ['pink', 'yellow', 'blue', 'pink', 'blue', 'yellow', 'teal'];
+    const positions = [
+      [2, 9], [7, 31], [12, 17], [17, 44], [22, 7], [27, 24], [33, 13], [38, 37],
+      [44, 5], [50, 28], [56, 14], [62, 35], [67, 10], [72, 43], [78, 21], [84, 8],
+      [90, 33], [96, 17], [4, 58], [11, 72], [19, 63], [26, 82], [34, 68], [42, 91],
+      [49, 60], [57, 78], [64, 55], [71, 88], [79, 66], [87, 81], [94, 61], [98, 94],
+      [15, 95], [29, 53], [47, 71], [61, 96], [75, 57], [88, 70], [3, 87], [54, 44],
+      [23, 32], [36, 79], [69, 30], [81, 47], [92, 52], [58, 19], [9, 48], [43, 17],
+      [73, 6], [31, 5], [65, 73], [85, 13]
+    ];
+    positions.forEach(([x, y], i) => {
+      const delay = ((i % 9) * -0.78).toFixed(2);
+      const duration = (5.8 + (i % 6) * 0.72).toFixed(2);
+      const rotate = -26 + ((i * 19) % 52);
+      const drift = -34 + ((i * 13) % 69);
+      const width = 4 + (i % 3);
+      const height = 10 + (i % 5);
+      pieces.push(`<span class="azm-confetti-piece ${palette[i % palette.length]}" style="--x:${x}%;--y:${y}%;--delay:${delay}s;--duration:${duration}s;--rotate:${rotate}deg;--drift:${drift}px;width:${width}px;height:${height}px"></span>`);
+    });
+    return pieces.join('');
+  }
+
   function submissionPending(state) {
     return state.submissionPending === true && submissionRetryIsValid(state);
   }
@@ -155,7 +179,7 @@
       : expired
         ? 'Contact your testing coordinator for next steps.'
         : 'Your proctor will dismiss you when it’s time to go.';
-    app.innerHTML = `<main id="azmSubmissionScreen" class="azm-submission-page azm-congrats-page"><section class="azm-congrats-card" role="status" aria-live="polite" aria-atomic="true"><h1>Congratulations!</h1><p class="azm-congrats-sub">${statusCopy}</p><div class="azm-congrats-panel"><div class="azm-congrats-art">${laptopArt()}</div><div class="azm-congrats-copy"><p>${detailCopy}</p><p>${pending ? 'Your answers remain saved on this device until you submit them.' : expired ? 'The test record remains on this device for reference.' : 'Please <strong>be quiet</strong>; other students may still be testing.'}</p></div></div>${pending ? '<div class="modal-actions"><button type="button" id="azmRetrySubmission" class="btn primary-action">Submit Again</button></div>' : ''}<button type="button" id="azmReturnHome" class="azm-congrats-home">Return to Homepage</button></section></main>`;
+    app.innerHTML = `<main id="azmSubmissionScreen" class="azm-submission-page azm-congrats-page"><div class="azm-confetti-layer" aria-hidden="true">${confettiMarkup()}</div><section class="azm-congrats-card" role="status" aria-live="polite" aria-atomic="true"><h1>Congratulations!</h1><p class="azm-congrats-sub">${statusCopy}</p><div class="azm-congrats-panel"><div class="azm-congrats-art">${laptopArt()}</div><div class="azm-congrats-copy"><p>${detailCopy}</p><p>${pending ? 'Your answers remain saved on this device until you submit them.' : expired ? 'The test record remains on this device for reference.' : 'Please <strong>be quiet</strong>; other students may still be testing.'}</p></div></div>${pending ? '<div class="modal-actions"><button type="button" id="azmRetrySubmission" class="btn primary-action">Submit Again</button></div>' : ''}<button type="button" id="azmReturnHome" class="azm-congrats-home">Return to Homepage</button></section></main>`;
     document.getElementById('azmRetrySubmission')?.addEventListener('click', retrySubmission);
     document.getElementById('azmReturnHome')?.addEventListener('click', () => { try { localStorage.removeItem('azaman-sat-practice-v3'); } catch (_) {} location.reload(); });
   }

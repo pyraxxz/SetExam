@@ -29,3 +29,338 @@
    visibility or chrome height changes. */
 .test-shell{display:flex;flex-direction:column}
 .test-main{flex:1 1 auto;min-height:0;height:auto}
+
+/* ---------- Exam dash calibration, splitter surface and icon polish ---------- */
+:root {
+  --azm-exam-source-width: 48%;
+  --azm-exam-dash-pattern: repeating-linear-gradient(
+    90deg,
+    #4c4f55 0 17px,
+    transparent 17px 22px,
+    #f0d34f 22px 31px,
+    transparent 31px 37px,
+    #4c4f55 37px 54px,
+    transparent 54px 60px,
+    #55bfdc 60px 73px,
+    transparent 73px 79px,
+    #4c4f55 79px 95px,
+    transparent 95px 101px,
+    #55bfdc 101px 113px,
+    transparent 113px 119px,
+    #4c4f55 119px 136px,
+    transparent 136px 142px
+  );
+}
+.test-dashrule { height: 3px; background-image: var(--azm-exam-dash-pattern); }
+.test-main { display: grid !important; grid-template-columns: minmax(0, var(--azm-exam-source-width)) 10px minmax(0, 1fr) !important; min-width: 0; }
+.source-panel, .question-panel { min-width: 0; }
+.source-panel { border-right: 0 !important; }
+.test-footer { position: relative; border-top: 0 !important; }
+.test-footer::before { content: ""; position: absolute; inset: -3px 0 auto; height: 3px; background-image: var(--azm-exam-dash-pattern); pointer-events: none; }
+.exam-splitter { position: relative; z-index: 4; width: 10px; min-width: 10px; height: 100%; cursor: col-resize; touch-action: none; background: #e2e5e8; border: 0; outline: 0; }
+.exam-splitter::before { content: ""; position: absolute; inset: 0 auto 0 4px; width: 2px; background: #c5cad0; }
+.exam-splitter::after { content: ""; position: absolute; top: 50%; left: 2px; width: 6px; height: 42px; transform: translateY(-50%); border-radius: 4px; background: repeating-linear-gradient(to bottom, #9ca2a9 0 3px, transparent 3px 7px); }
+.exam-splitter:hover, .exam-splitter:focus-visible, .test-main.is-resizing .exam-splitter { background: #d9dde1; }
+.exam-splitter:focus-visible { box-shadow: inset 0 0 0 2px #315bd0; }
+body.exam-resizing, body.exam-resizing * { cursor: col-resize !important; user-select: none !important; }
+.nav-tool { min-width: 64px; padding: 4px 7px 3px; gap: 4px; border-radius: 9px; transition: background-color .12s ease, transform .12s ease; }
+.nav-tool .ico-tool { width: 22px; height: 22px; display: block; }
+.nav-tool:hover, .nav-tool:focus-visible { background: rgba(255,255,255,.55); }
+.nav-tool:active { transform: translateY(1px); }
+@media(max-width:800px) { .test-main { grid-template-columns: 1fr !important; } .exam-splitter { display: none; } .source-panel { border-right: 0 !important; } }
+
+/* ---------- Second-pass visual calibration from current Bluebook references ---------- */
+.test-top { height: 70px; min-height: 70px; background: #fff; }
+.test-footer { min-height: 68px; height: 68px; background: #fff; }
+.q-head { gap: 10px; margin-bottom: 17px; align-items: center; }
+.q-number { width: 28px; height: 28px; min-width: 28px; border-radius: 4px; font-size: 14px; }
+.mark-pill { font-size: 13px; min-height: 28px; }
+.mark-pill .ico-bookmark { width: 17px; height: 17px; }
+.elim-badge { min-height: 28px; padding: 4px 8px; border-radius: 4px; }
+.q-prompt { font-size: 17px; line-height: 1.5; margin-bottom: 16px; }
+.choice-wrap { gap: 6px; margin: 7px 0; }
+.choice { min-height: 50px; border-radius: 5px; padding: 9px 13px; gap: 9px; font-size: 15px; }
+.choice-letter { min-width: 27px; width: 27px; height: 27px; font-size: 12px; border-width: 1px; }
+.choice-text { line-height: 1.35; }
+.footer-right { gap: 8px; }
+.question-nav { font-size: 13px; }
+.pill-blue { min-width: 92px; min-height: 42px; height: 42px; font-size: 13px; border-radius: 22px; }
+#reviewModal .modal { position: relative; }
+#reviewModal .review-close { position: absolute; top: 8px; right: 10px; width: 30px; height: 30px; }
+#reviewModal .review-head { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+#reviewModal .review-head-title { font-size: 11px; font-weight: 700; color: #25282c; }
+#reviewModal .review-legend { display: flex; flex-wrap: wrap; gap: 10px 15px; font-size: 8px; }
+#reviewModal .legend-current { width: 8px; height: 8px; display: inline-block; border: 1px solid #31353a; background: #315bd0; vertical-align: -1px; }
+#reviewModal .review-q { position: relative; border: 1px dashed #7e858d; background: #fff; color: #202326; border-radius: 2px; }
+#reviewModal .review-q.answered { border-style: solid; border-color: #315bd0; background: #315bd0; color: #fff; }
+#reviewModal .review-q.current { box-shadow: inset 0 0 0 2px #111; }
+#reviewModal .review-q.marked::after { content: ""; position: absolute; top: -1px; right: 2px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 6px solid #c53b4a; }
+@media(max-width:800px) {
+  .test-top { height: 64px; min-height: 64px; }
+  .test-footer { height: 68px; min-height: 68px; }
+  .q-number { width: 28px; height: 28px; min-width: 28px; }
+  .choice { min-height: 48px; }
+}
+
+/* ---------- Dashboard refinement from current Bluebook home references ---------- */
+.yourtests-page { background: #fff; }
+.yourtests-page .yt-wrap { max-width: 960px; padding: 0 20px 56px; }
+.yourtests-page .app-head { min-height: 68px; height: 68px; padding: 0 24px; background: #fff; border-bottom: 1px solid #e4e7eb; }
+.yourtests-page .app-brand .ico-logo { width: 30px; height: 30px; }
+.yourtests-page .brand-word { color: #2f55cc; font-size: 18px; }
+.yourtests-page .app-head-links { gap: 24px; }
+.yourtests-page .yt-welcome { margin: 0 -20px; padding: 32px 42px 34px; background: #eaf0fa; color: #5570aa; font-size: 34px; font-weight: 300; }
+.yourtests-page .yt-head { width: min(920px, 100%); margin: 30px auto 18px; }
+.yourtests-page .yt-h2 { font-size: 30px; line-height: 1.1; margin: 0; }
+.yourtests-page .tab-toggle { padding: 0; background: #fff; border: 1px solid #c9ced6; overflow: hidden; }
+.yourtests-page .tab-pill { min-width: 78px; padding: 8px 16px; color: #4b535e; border: 0; border-radius: 0; background: #fff; }
+.yourtests-page .tab-pill.active { color: #fff; background: #32363b; }
+.yourtests-page .test-card { width: min(100%, 920px); margin: 0 auto; padding: 24px 26px 22px; border: 1px solid #e3e6e9; border-radius: 13px; box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+.yourtests-page .test-name { font-size: 21px; margin-bottom: 13px; }
+.yourtests-page .meta-row { font-size: 14px; padding: 3px 0; }
+.yourtests-page .test-acc { font-size: 13px; }
+.yourtests-page .test-ready { align-items: center; }
+.yourtests-page .ready-note { font-size: 13px; }
+.yourtests-page .test-ready .cta-yellow { min-width: 126px; min-height: 44px; border-radius: 23px; font-size: 14px; }
+.yourtests-page .prepare-block { width: min(920px, 100%); margin: 34px auto 0; }
+.yourtests-page .prepare-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.yourtests-page .prepare-item { min-height: 150px; padding: 20px 22px; border-radius: 12px; transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+.yourtests-page .prepare-item:hover, .yourtests-page .prepare-item:focus-visible { transform: translateY(-1px); border-color: #c9d2e2; box-shadow: 0 4px 15px rgba(0,0,0,.07); }
+.yourtests-page .prepare-icon { width: 40px; height: 40px; display: grid; place-items: center; color: #4e678f; margin-bottom: 10px; }
+.yourtests-page .ico-prepare { width: 36px; height: 36px; display: block; }
+.yourtests-page .prepare-title { font-size: 17px; font-weight: 800; }
+.yourtests-page .prepare-item small { font-size: 13px; line-height: 1.4; }
+@media(max-width:760px) {
+  .yourtests-page .yt-welcome { padding: 25px 20px 28px; font-size: 28px; }
+  .yourtests-page .prepare-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- More-menu interaction polish ---------- */
+.tool-popover {
+  width: 260px;
+  padding: 6px;
+  border: 1px solid #d8dce1;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+}
+.tool-popover .tool-item {
+  min-height: 42px;
+  width: 100%;
+  padding: 0 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  text-align: left;
+}
+.tool-popover .tool-item:hover,
+.tool-popover .tool-item:focus-visible {
+  background: #f1f4f8;
+}
+.tool-popover .tool-item .ico-tool {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+}
+.tool-popover #unscheduledBreakTool {
+  margin-top: 4px;
+  border-top: 1px solid #e3e6ea;
+  border-radius: 5px;
+}
+.tool-popover #refExitExam {
+  margin-top: 4px;
+  border-top: 1px solid #e3e6ea;
+  border-radius: 5px;
+}
+@media(max-width:760px) {
+  .tool-popover { right: 10px; width: min(260px, calc(100vw - 20px)); }
+}
+
+/* Floating calculator/reference panels support direct pointer dragging. */
+.overlay-panel > .panel-head { cursor: grab; user-select: none; }
+.overlay-panel > .panel-head:active,
+body.azm-tool-dragging .overlay-panel > .panel-head { cursor: grabbing; }
+.overlay-panel > .panel-head button { cursor: pointer; }
+
+/* ---------- Exam chrome and calculator reference calibration ---------- */
+.test-top { background: #eaf2fb; }
+.test-footer { background: #eaf2fb; }
+.test-top:after { color: #6a7077; }
+#calculatorPanel {
+  width: min(360px, calc(100vw - 24px));
+  max-width: calc(100vw - 16px);
+  border-radius: 3px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.24);
+  overflow: hidden;
+}
+#calculatorPanel > .panel-head {
+  min-height: 38px;
+  padding: 0 9px;
+  background: #171717;
+  color: #fff;
+  border-radius: 0;
+}
+#calculatorPanel > .panel-head b {
+  font-size: 13px;
+  font-weight: 600;
+}
+#calculatorPanel > .panel-head .azm-move-button,
+#calculatorPanel > .panel-head .icon-btn {
+  color: #fff;
+}
+#calculatorPanel > .panel-head .azm-move-button {
+  margin-left: auto;
+  width: 30px;
+  height: 28px;
+  font-size: 17px;
+}
+#calculatorPanel > .panel-head .icon-btn {
+  width: 28px;
+  height: 28px;
+  font-size: 21px;
+}
+#calculatorPanel .azm-calc-tabs {
+  margin: 0;
+  border-radius: 0;
+  background: #eceff2;
+}
+#calculatorPanel .calc-display {
+  margin: 10px 10px 8px;
+  width: calc(100% - 20px);
+  min-height: 45px;
+  background: #fff;
+  font-size: 19px;
+}
+#calculatorPanel .calc-grid {
+  gap: 4px;
+  margin: 0 10px 10px;
+}
+#calculatorPanel .calc-key {
+  min-height: 39px;
+  padding: 8px 6px;
+  border-radius: 2px;
+  background: #f2f3f4;
+}
+#calculatorPanel .azm-calc-memory {
+  gap: 4px;
+  margin: 0 10px 7px;
+}
+#calculatorPanel .azm-calc-memory button {
+  padding: 6px 3px;
+  border-radius: 2px;
+}
+#calculatorPanel .azm-calc-help {
+  padding: 0 10px 9px;
+  margin: 8px 0 0;
+  font-size: 10px;
+}
+#calculatorPanel .resize-handle {
+  width: 28px;
+  height: 28px;
+}
+#referencePanel {
+  border-radius: 4px;
+  overflow: hidden;
+}
+#referencePanel > .panel-head {
+  min-height: 42px;
+  padding: 0 12px;
+  background: #171717;
+  color: #fff;
+  border-radius: 0;
+}
+#referencePanel > .panel-head .icon-btn,
+#referencePanel > .panel-head .azm-move-button { color: #fff; }
+
+
+/* ---------- Current Bluebook dashboard geometry and active controls ---------- */
+.yourtests-page .yt-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+.yourtests-page .yt-title-row,
+.yourtests-page .prepare-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  min-width: 0;
+}
+.yourtests-page .yt-head:after { display: none !important; }
+.yourtests-page .yt-title-row .btn,
+.yourtests-page .prepare-title-row .btn {
+  padding: 2px 0;
+  white-space: nowrap;
+}
+.yourtests-page .test-card {
+  position: relative;
+  width: 446px;
+  max-width: calc(100% - 82px);
+  margin-left: max(41px, calc((100% - 920px) / 2));
+  margin-right: 0;
+  padding: 24px;
+}
+.yourtests-page .test-meta { padding-right: 164px; }
+.yourtests-page .test-links {
+  position: absolute;
+  top: 63px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.yourtests-page .test-acc {
+  max-width: 315px;
+  margin: 35px 0 25px;
+}
+.yourtests-page .prepare-block {
+  width: min(920px, calc(100% - 82px));
+  margin: 34px auto 0;
+}
+.yourtests-page .prepare-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-bottom: 16px;
+}
+.yourtests-page .prepare-head .tab-toggle { margin-left: 0; }
+
+@media(max-width:760px) {
+  .yourtests-page .test-card {
+    max-width: calc(100% - 32px);
+    margin-left: 16px;
+  }
+  .yourtests-page .test-meta { padding-right: 0; }
+  .yourtests-page .test-links {
+    position: static;
+    margin-top: 18px;
+  }
+  .yourtests-page .test-acc {
+    max-width: none;
+    margin-top: 18px;
+  }
+  .yourtests-page .yt-title-row,
+  .yourtests-page .prepare-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .yourtests-page .prepare-block {
+    width: calc(100% - 32px);
+  }
+}
+
+#reviewModal .review-page-action{display:flex;justify-content:center;margin:18px 0 4px}
+#reviewModal .review-page-action .btn{min-width:176px;min-height:38px;border:1px solid #315bd0;border-radius:20px;background:#fff;color:#315bd0;font-size:13px;font-weight:700}
+#reviewModal .review-page-action .btn:hover,#reviewModal .review-page-action .btn:focus-visible{background:#f2f5ff}
+
+.azm-test-preview-shell .preview-title{font-size:16px;font-weight:700;justify-self:start}
+.azm-test-preview-shell .preview-untimed{font-size:15px;color:#626870}
+.azm-test-preview-shell .preview-main{min-width:0}
+.azm-test-preview-shell .preview-banner{letter-spacing:.03em}

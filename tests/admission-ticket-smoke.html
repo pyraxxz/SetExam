@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SetExam ticket check</title></head>
+<body>
+<pre id="result">running</pre>
+<iframe id="app" title="SetExam" style="width:100%;height:1000px;border:0"></iframe>
+<script>
+(() => {
+  'use strict';
+  const out = document.getElementById('result');
+  const frame = document.getElementById('app');
+  const KEY = 'azaman-sat-practice-v3';
+  const state = {
+    v:3, screen:'setup', student:'Smoke Student', email:'smoke@example.com', password:'', dob:'2008-07-20',
+    accessCode:'SAT26', roomCode:'AZM24', startCode:'492776', step:1, setupStep:6, setupDone:false,
+    infoCorrect:'yes', deviceOk:'yes', rulesOk:true, checkinRules:false, harness:false, infoOk:false,
+    aids:{}, pledge:'', roomOk:true, mi:0, qi:0, endAt:null, breakEndAt:null, answers:{}, marked:{},
+    eliminated:{}, notes:{}, highlights:{}, completed:{}, submitted:false,
+    adaptive:{rw:'easy',math:'easy'}, timerHidden:false, lineReader:false, rules:true, desk:true, warning:{},
+    previewIndex:0, previewAnswers:{}, previewNotes:{}, practiceMode:false
+  };
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const checks = [];
+  const check = (name, ok) => { checks.push((ok ? 'PASS ' : 'FAIL ') + name); if (!ok) throw new Error(name); };
+
+  let bootstrapped = false;
+  frame.addEventListener('load', async () => {
+    try {
+      if (!bootstrapped) {
+        bootstrapped = true;
+        frame.contentWindow.localStorage.setItem(KEY, JSON.stringify(state));
+        frame.contentWindow.location.reload();
+        return;
+      }
+      await wait(350);
+      const doc = frame.contentDocument;
+      check('ticket page renders', !!doc.querySelector('.admission-ticket-page .admit-ticket'));
+      const ticket = doc.querySelector('.admit-ticket');
+      const ticketRect = ticket?.getBoundingClientRect();
+      check('ticket is landscape at desktop width', !!ticketRect && ticketRect.width > ticketRect.height * 1.45);
+      check('ticket has compact identity header', !!doc.querySelector('.ticket-hero') && !!doc.querySelector('.ticket-inline-field'));
+      check('ticket has three lower information columns', !!doc.querySelector('.ticket-time-column') && !!doc.querySelector('.ticket-location-comments') && !!doc.querySelector('.ticket-code-block'));
+      check('QR is paired with the registration block', !!doc.querySelector('.ticket-code-block .ticket-registration') && !!doc.querySelector('.ticket-code-block .ticket-qr-frame'));
+      check('runtime migrated to explicit ticket screen', JSON.parse(frame.contentWindow.localStorage.getItem(KEY) || '{}').screen === 'ticket');
+      check('print action renders', !!doc.getElementById('printTicketBtn'));
+      check('email action renders', !!doc.getElementById('emailTicketBtn'));
+      check('ticket compact heading renders', /Digital SAT October 2026 - Admission Ticket|SAT\s*-\s*Admission Ticket/.test(doc.querySelector('.ticket-reference-title')?.textContent || ''));
+      check('October 3 date renders', doc.body.textContent.includes('Sat, Oct 3, 2026'));
+      check('date of birth renders', doc.body.textContent.includes('Jul 20, 2008'));
+      check('registration number renders', doc.body.textContent.includes('4106920164'));
+      check('location venue renders', doc.body.textContent.includes('International Community School'));
+      check('location address renders', doc.body.textContent.includes('Pakyi No. 1, Kumasi, Ghana'));
+      check('QR is present', !!doc.querySelector('.ticket-qr-frame .ticket-qr-img'));
+      const qr = doc.querySelector('.ticket-qr-frame .ticket-qr-img');
+      check('QR has substantial matrix', qr?.querySelectorAll('rect')?.length > 500);
+      check('QR has expected quiet-zone viewBox', qr?.getAttribute('viewBox') === '0 0 41 41');
+      check('ticket has comments field', doc.body.textContent.includes('Comments'));
+      check('ticket uses realistic empty-comments copy', doc.body.textContent.includes('No special instructions.'));
+      out.textContent = checks.join('\\n') + '\\nADMISSION TICKET SMOKE COMPLETE';
+    } catch (e) {
+      out.textContent = 'FAIL ' + (e.message || e) + '\\n' + checks.join('\\n');
+    }
+  });
+  frame.src = '../index.html?browser-smoke=1&admission-ticket-smoke=1';
+})();
+</script>
+</body>
+</html>

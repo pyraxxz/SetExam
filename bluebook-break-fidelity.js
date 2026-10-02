@@ -22,7 +22,7 @@
     const remaining = state.breakEndAt ? Math.max(0, Math.ceil((state.breakEndAt - Date.now()) / 1000)) : 0;
     readyShown = !state.breakEndAt || remaining <= 0;
     app.innerHTML = `<main id="azmBreakPage" class="azm-break-page" aria-labelledby="azmBreakTitle">
-      <div class="azm-break-device-status" aria-hidden="true"><span class="azm-break-wifi">●</span><span class="azm-break-battery">85% ▰</span></div>
+      <div class="azm-break-device-status" aria-label="Battery status"><span class="azm-break-battery" id="azmBreakBattery">85% ▰</span></div>
       <section class="azm-break-timer" aria-label="Remaining Break Time">
         <div class="azm-break-label">Remaining Break Time:</div>
         <div id="breakClock" class="azm-break-clock">${fmt(remaining)}</div>
@@ -45,8 +45,18 @@
       <div class="azm-break-footer">${escapeHtml(state.student || 'Student')}</div>
     </main>`;
     bindResume();
+    refreshBattery();
   }
 
+  function refreshBattery() {
+    const node = document.getElementById('azmBreakBattery');
+    if (!node || !navigator.getBattery) return;
+    navigator.getBattery().then((battery) => {
+      const draw = () => { node.textContent = String(Math.round(battery.level * 100)) + '% ▰'; };
+      draw();
+      battery.addEventListener('levelchange', draw);
+    }).catch(() => {});
+  }
   function fmt(seconds) {
     seconds = Math.max(0, Math.floor(seconds));
     return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;

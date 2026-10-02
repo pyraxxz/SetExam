@@ -221,7 +221,7 @@
         state.endAt = null;
         if (!Number.isFinite(state.breakEndAt) || state.breakEndAt <= Date.now()) {
           state.breakEndAt = null;
-          state.screen = 'directions';
+          state.screen = 'break';
         }
         return;
       }

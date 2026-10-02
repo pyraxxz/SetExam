@@ -3,7 +3,8 @@
 
   const MOVE_LABELS = {
     calculatorPanel: 'Move calculator',
-    referencePanel: 'Move reference sheet'
+    referencePanel: 'Move reference sheet',
+    ttsPanel: 'Move Text-to-Speech'
   };
   const STEP = 24;
 
@@ -52,8 +53,35 @@
     move.setAttribute('aria-label', MOVE_LABELS[panel.id] || 'Move dialog');
     move.setAttribute('aria-pressed', 'false');
     move.title = 'Move with arrow keys';
-    move.textContent = '↕';
+    move.textContent = '⤢';
     if (close) head.insertBefore(move, close); else head.appendChild(move);
+
+    // Pointer dragging mirrors the current Bluebook floating-tool behavior.
+    // Only the panel header surface starts a drag; controls retain normal clicks.
+    let pointerDrag = null;
+    head.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0 || event.target.closest('button, input, select, textarea, a')) return;
+      ensurePosition(panel);
+      const rect = panel.getBoundingClientRect();
+      pointerDrag = { id: event.pointerId, x: event.clientX, y: event.clientY, left: rect.left, top: rect.top };
+      try { head.setPointerCapture?.(event.pointerId); } catch (_) {}
+      document.body.classList.add('azm-tool-dragging');
+      event.preventDefault();
+    });
+    head.addEventListener('pointermove', (event) => {
+      if (!pointerDrag || event.pointerId !== pointerDrag.id) return;
+      setPosition(panel, pointerDrag.left + event.clientX - pointerDrag.x, pointerDrag.top + event.clientY - pointerDrag.y);
+      event.preventDefault();
+    });
+    const endPointerDrag = (event) => {
+      if (!pointerDrag || (event?.pointerId != null && event.pointerId !== pointerDrag.id)) return;
+      try { head.releasePointerCapture?.(pointerDrag.id); } catch (_) {}
+      pointerDrag = null;
+      document.body.classList.remove('azm-tool-dragging');
+    };
+    head.addEventListener('pointerup', endPointerDrag);
+    head.addEventListener('pointercancel', endPointerDrag);
+    head.addEventListener('lostpointercapture', endPointerDrag);
 
     // Space/Enter use native button activation, which dispatches this click handler.
     move.addEventListener('click', () => togglePressed(move, panel));
@@ -90,10 +118,11 @@
   const observer = new MutationObserver(() => {
     enhance(document.getElementById('calculatorPanel'));
     enhance(document.getElementById('referencePanel'));
+    enhance(document.getElementById('ttsPanel'));
   });
   observer.observe(document.body, { childList: true, subtree: true });
   window.addEventListener('resize', () => {
-    document.querySelectorAll('#calculatorPanel, #referencePanel').forEach((panel) => {
+    document.querySelectorAll('#calculatorPanel, #referencePanel, #ttsPanel').forEach((panel) => {
       if (panel.dataset.azmMovePosition !== '1') return;
       const rect = panel.getBoundingClientRect();
       setPosition(panel, rect.left, rect.top);

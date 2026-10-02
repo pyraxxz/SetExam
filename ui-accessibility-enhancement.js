@@ -26,8 +26,11 @@
       const number = button.textContent.trim();
       const states = [button.classList.contains('answered') ? 'answered' : 'unanswered'];
       if (button.classList.contains('marked')) states.push('marked for review');
+      if (button.classList.contains('current')) states.push('current question');
       button.setAttribute('aria-label', `Question ${number}, ${states.join(', ')}`);
+      button.setAttribute('aria-current', button.classList.contains('current') ? 'page' : 'false');
     });
+    modal.querySelector('#goReviewPage')?.setAttribute('aria-label', 'Go to the first unanswered or marked question');
   }
 
   function enhanceTools(popover) {
