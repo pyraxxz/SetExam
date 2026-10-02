@@ -14,9 +14,14 @@ assert(app.includes('finish-page'), 'finish screen must use the navy finish page
 assert(app.includes('Return to Homepage'), 'finish CTA must read Return to Homepage');
 assert(app.includes('cta-yellow'), 'finish CTA must use the yellow pill style');
 assert(app.includes('laptopArt()'), 'finish card must include the laptop illustration');
+assert(app.includes('finishConfetti()'), 'finish screen must render the confetti layer');
+assert(app.includes('confetti-ribbon'), 'finish screen must render individual ribbon pieces');
+assert(css.includes('@keyframes finish-ribbon-fall'), 'finish ribbons must animate');
+assert(css.includes('prefers-reduced-motion'), 'finish confetti must respect reduced-motion preferences');
 
 // practice score reporting stays attached for the results layers
-assert(app.includes('>Test complete</div>'), 'test complete kicker must remain for the results layers');
+assert(app.includes('finish-results'), 'finish results layer must remain attached below the completion card');
+assert(app.includes('Test complete'), 'test complete kicker must remain for the results layers');
 assert(app.includes('id="restartBtn"'), 'restart control must remain wired');
 assert(smoke.includes("restartBtn") === false, 'no smoke coupling to the restart control label');
 
@@ -54,7 +59,7 @@ assert(app.includes('room-digit'), 'room code must use individual character boxe
 assert(!app.includes('id="room" class="text-input'), 'room code must not fall back to a single free-text field');
 
 // tokens stay centralized for the new palette
-for (const token of ['--color-finish-bg', '--confetti-yellow', '--confetti-pink', '--confetti-blue', '--color-cta-yellow', '--color-access-bg-a', '--color-access-bg-b', '--color-access-art']) {
+for (const token of ['--color-finish-bg', '--confetti-yellow', '--confetti-pink', '--confetti-blue', '--confetti-teal', '--color-finish-card', '--color-finish-text', '--color-finish-divider', '--color-cta-yellow', '--color-access-bg-a', '--color-access-bg-b', '--color-access-art']) {
   assert(tokens.includes(token), `styles-tokens.css must define ${token}`);
 }
 const rootEnd = css.indexOf('}');
