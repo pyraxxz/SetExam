@@ -193,6 +193,7 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-left{display:flex;flex-direction:column}
 .ticket-main-head h2{font-size:1.42rem;line-height:1.05;margin:0 0 24px;font-weight:600;letter-spacing:-.025em}
 .ticket-identity{display:grid;grid-template-columns:1fr;gap:15px}
+.ticket-details{min-width:0}
 .ticket-fields-row{display:grid;grid-template-columns:minmax(100px,.7fr) minmax(0,1.3fr);gap:20px;align-items:start;margin-top:auto;padding-top:24px}
 .ticket-field{min-width:0;margin:0 0 13px}
 .ticket-field:last-child{margin-bottom:0}
