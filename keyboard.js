@@ -12,6 +12,7 @@
     ['Ctrl + + / Ctrl + - / Ctrl + 0 or Command equivalents', 'Zoom in / out / reset'],
     ['Ctrl + Alt + B / Command + Control + B', 'Back'],
     ['Ctrl + P', 'Next question / next module (cannot bypass the timed inter-section break)'],
+    ['Ctrl + Alt + Shift + B / Command + Control + Shift + B (simulator)', 'Skip directly to the scheduled break when ?skip-break=1 is enabled'],
     ['Ctrl + O', 'Previous question / previous module (cannot bypass the timed inter-section break)'],
     ['Ctrl + Alt + X / Command + Control + X', 'Next / review module'],
     ['Ctrl + Alt + G / Command + Control + G', 'Question menu'],
@@ -178,6 +179,17 @@
     const navigateExamPage = window.AZAMAN_APP?.navigateExamPage;
     if (ctrl && !alt && !command && lower === 'p') { event.preventDefault(); if (navigateExamPage?.('next')) return; }
     if (ctrl && !alt && !command && lower === 'o') { event.preventDefault(); navigateExamPage?.('previous'); return; }
+
+    if ((isMac ? command && ctrl && event.shiftKey : ctrl && alt && event.shiftKey) && lower === 'b') {
+      const app = window.AZAMAN_APP;
+      const state = app?.getState?.();
+      const simulatorEnabled = location.search.includes('skip-break') || state?.harness;
+      if (simulatorEnabled && state && ['test', 'directions'].includes(state.screen)) {
+        event.preventDefault();
+        app?.skipToBreak?.();
+        return;
+      }
+    }
 
     const triple = isMac ? command && ctrl : ctrl && alt;
     const comboAlt = isMac ? command && alt : ctrl && alt;
