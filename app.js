@@ -125,7 +125,7 @@ return `<main class="page admission-ticket-page">
       </aside>
     </section>
     <section class="ticket-details">
-      <div class="ticket-detail-grid">
+      <div class="ticket-detail-grid ticket-times">
         <div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
         <div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div>
         <div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div>
