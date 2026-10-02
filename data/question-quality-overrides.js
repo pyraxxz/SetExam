@@ -2,6 +2,7 @@
   'use strict';
 
   const overrides = {
+  MM2HQ1: { difficulty: 'hard' },
     RWM1Q1: { prompt: "Which choice best summarizes the community garden's impact on nearby residents?" },
     RWM1Q9: { prompt: "What does the comparison between the two sensor trials suggest about the revised measurement procedure?" },
     RWM1Q20: { prompt: "According to the rainfall data, which month recorded the second-highest total?" },
