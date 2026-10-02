@@ -44,6 +44,7 @@ assert(app.includes("classList.toggle(\"option-eliminator-mode\")"), 'eliminator
 
 // footer matches the real layout: student name left, question pill center, back/next right
 assert(app.includes('footer-name'), 'footer-left must show the student name like the real test footer');
+assert(app.includes('aria-label="Student name"'), 'actual test footer must identify the displayed footer value as the student name');
 assert(app.includes('class="question-nav"'), 'footer-center must render a Question N of M pill');
 assert(app.includes('aria-label="Question menu"'), 'the question pill must carry the Question menu accessible name');
 assert(app.includes('<div class="footer-right">'), 'back/next controls must live in a dedicated footer-right region');
@@ -61,3 +62,5 @@ const raw = (css.slice(rootEnd + 1).match(/#[0-9a-fA-F]{3,8}\b|rgba?\([^)]*\)/g)
 assert.strictEqual(raw.length, 0, 'styles.css must keep colors tokenized outside :root');
 
 console.log('Bluebook screen fidelity contract passed.');
+
+assert(app.includes('function source(x){let h="";'), 'student-facing question source must not expose internal domain metadata');
