@@ -22,11 +22,6 @@
     RW2E9: { prompt: 'Which inference is best supported by the revised transit schedule?' },
     RWM2HQ2: { prompt: 'What does the comparison between the new and older irrigation schedules suggest?' },
     RWM2HQ9: { prompt: "Why do the authors caution against applying the first phase's conclusions too broadly?" },
-    MM2EQ3: { options: ['3', '4.5', '6', '7'] },
-    MM2EQ20: { options: ['5', '6', '7', '10'] },
-    MM2EQ4: { options: ['1', '3', '5', '7'] },
-    MM2HQ8: { options: ['2', '4', '7', '9'] },
-    MM2HQ16: { options: ['1', '4', '5', '8'] },
   };
 
   const groups = [window.SAT_QUESTIONS?.rw1 || [], window.SAT_QUESTIONS?.rw2?.easy || [], window.SAT_QUESTIONS?.rw2?.hard || [], window.SAT_QUESTIONS?.math1 || [], window.SAT_QUESTIONS?.math2?.easy || [], window.SAT_QUESTIONS?.math2?.hard || []];
