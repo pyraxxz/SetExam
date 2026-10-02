@@ -63,4 +63,4 @@ assert.strictEqual(raw.length, 0, 'styles.css must keep colors tokenized outside
 
 console.log('Bluebook screen fidelity contract passed.');
 
-assert(app.includes('function source(x){let h="";'), 'student-facing question source must not expose internal domain metadata');
+assert(app.includes('function source(x){let h='<div class="source-label">Source</div>';'), 'student-facing question source must not expose internal domain metadata');
