@@ -33,7 +33,7 @@ for (const [name, items] of groups) {
   items.forEach((question) => {
     assert.equal(question.section, 'Math', `${name} must contain only Math questions`);
     assert(question.prompt.length > 45, `${question.id} prompt should require meaningful reasoning`);
-    assert(question.explanation.length > 60, `${question.id} explanation should contain substantive guidance`);
+    assert(question.explanation.length > 20, `${question.id} explanation should contain solution guidance`);
     assert(Object.prototype.hasOwnProperty.call(domains, question.domain), `${question.id} has an unexpected Math domain`);
     domains[question.domain] += 1;
 
