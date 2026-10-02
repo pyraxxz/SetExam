@@ -105,9 +105,9 @@ return `<main class="page admission-ticket-page">
   <p class="small muted">You&#39;re ready to test! Bring this admission ticket with you on test day.</p>
   <div class="btn-row"><button type="button" id="printTicketBtn" class="btn pill-outline">Print</button><button type="button" id="emailTicketBtn" class="btn pill-outline">Email</button></div>
 </header>
-<article class="admit-ticket" aria-labelledby="admitTicketTitle">
+<article class="admit-ticket" aria-labelledby="ticketReferenceTitle">
   <header class="ticket-masthead">
-    <a class="ticket-reference-title" href="#" onclick="return false">Digital SAT October 2026 - Admission Ticket</a>
+    <a id="ticketReferenceTitle" class="ticket-reference-title" href="#" onclick="return false">Digital SAT October 2026 - Admission Ticket</a>
     <span class="ticket-sat-mark"><svg class="sat-shield" viewBox="0 0 20 22" aria-hidden="true"><path d="M10 1.5 18 5v5.4c0 4.7-3.2 8.4-8 10.1-4.8-1.7-8-5.4-8-10.1V5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>SAT<sup>®</sup></span></span>
   </header>
   <div class="ticket-body">
