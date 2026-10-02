@@ -11,7 +11,7 @@
     ['F6 / Shift+F6', 'Move between exam regions'],
     ['Ctrl + + / Ctrl + - / Ctrl + 0 or Command equivalents', 'Zoom in / out / reset'],
     ['Ctrl + Alt + B / Command + Control + B', 'Back'],
-    ['Ctrl + P', 'Next question / next module (cannot bypass the timed inter-section break)'],
+    ['Ctrl + P', 'Next question / next module; with ?skip-break=1 in the simulator, skip to the scheduled break'],
     ['Ctrl + Alt + Shift + B / Command + Control + Shift + B (simulator)', 'Skip directly to the scheduled break when ?skip-break=1 is enabled'],
     ['Ctrl + O', 'Previous question / previous module (cannot bypass the timed inter-section break)'],
     ['Ctrl + Alt + X / Command + Control + X', 'Next / review module'],
@@ -89,7 +89,7 @@
     document.getElementById('helpDialog')?.remove();
     const n = document.createElement('div');
     n.id = 'helpDialog'; n.className = 'modal-backdrop';
-    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Ctrl + P and Ctrl + O can move through questions and module directions, but the timed inter-section break must run to completion.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
+    n.innerHTML = `<div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal-head"><h3 id="helpTitle">Help</h3><button class="icon-btn" id="helpClose" aria-label="Close help">×</button></div><p>Use the question menu to move between questions, Mark for Review to flag work, and More for notes, highlighting, the line reader, timer controls, calculator, reference sheet, and zoom.</p><p>Your responses are saved automatically. Ctrl + P and Ctrl + O move through questions and module directions. In the simulator, Ctrl + P can jump to the scheduled break when ?skip-break=1 is enabled.</p><div class="modal-actions"><button class="btn" id="helpShortcuts">Keyboard shortcuts</button><button class="btn" id="helpDone">Done</button></div></div>`;
     document.body.appendChild(n);
     const close = () => { n.remove(); document.removeEventListener('keydown', onEsc); };
     const onEsc = (e) => { if (e.key === 'Escape') close(); };
@@ -177,7 +177,17 @@
     if (isTyping(event.target)) return;
 
     const navigateExamPage = window.AZAMAN_APP?.navigateExamPage;
-    if (ctrl && !alt && !command && lower === 'p') { event.preventDefault(); if (navigateExamPage?.('next')) return; }
+    if (ctrl && !alt && !command && lower === 'p') {
+      event.preventDefault();
+      const app = window.AZAMAN_APP;
+      const state = app?.getState?.();
+      const simulatorEnabled = location.search.includes('skip-break') || state?.harness;
+      if (simulatorEnabled && state && ['test', 'directions'].includes(state.screen) && Number(state.mi) <= 1) {
+        app?.skipToBreak?.();
+        return;
+      }
+      if (navigateExamPage?.('next')) return;
+    }
     if (ctrl && !alt && !command && lower === 'o') { event.preventDefault(); navigateExamPage?.('previous'); return; }
 
     if ((isMac ? command && ctrl && event.shiftKey : ctrl && alt && event.shiftKey) && lower === 'b') {
