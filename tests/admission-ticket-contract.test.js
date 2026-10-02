@@ -54,7 +54,7 @@ assert(!css.includes('.ticket-grid'), 'old generic ticket grid CSS must be remov
 for (const token of ['.admit-ticket{', '.ticket-masthead{', '.ticket-hero{', '.ticket-qr-frame{', '.ticket-identity{', '.ticket-details{', '.ticket-comments{']) {
   assert(css.includes(token), `ticket visual token missing: ${token}`);
 }
-assert(css.includes('@media(max-width:720px){.admission-ticket-page'), 'ticket must have tablet/mobile responsive layout');
+assert(css.includes('@media(max-width:820px){.admission-ticket-page'), 'ticket must have tablet/mobile responsive layout');
 assert(css.includes('@media(max-width:460px){.admission-ticket-page'), 'ticket must have narrow-phone responsive layout');
 assert(css.includes('grid-template-columns:minmax(230px,.95fr) minmax(330px,1.28fr) minmax(170px,.72fr)'), 'ticket must use the wide three-column landscape geometry');
 assert(css.includes('@page{size:landscape'), 'ticket print layout must preserve landscape orientation');
