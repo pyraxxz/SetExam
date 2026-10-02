@@ -182,10 +182,10 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-page-heading p{margin:0}
 .ticket-page-heading .btn-row{justify-content:center;align-items:center;margin-top:20px;gap:24px}
 .ticket-page-heading .btn{min-width:130px;min-height:54px;font-size:.92rem}
-.admit-ticket{border:1px solid #e5e7eb;border-left:4px solid var(--color-link-blue);border-radius:14px;background:var(--color-surface);margin:0 auto;max-width:1000px;box-shadow:0 3px 12px rgba(0,0,0,.09);color:var(--color-text);overflow:hidden}
+.admit-ticket{border:1px solid var(--color-border);border-left:4px solid var(--color-link-blue);border-radius:14px;background:var(--color-surface);margin:0 auto;max-width:1000px;box-shadow:0 3px 12px var(--shadow-soft);color:var(--color-text);overflow:hidden}
 .ticket-masthead{min-height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 25px}
 .ticket-reference-title{font-size:.78rem;line-height:1.2;color:var(--color-link-blue);font-weight:800;text-decoration:none}
-.ticket-sat-mark{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 10px 0 8px;background:#171717;color:#fff;font-size:1rem;font-weight:900;letter-spacing:.01em}
+.ticket-sat-mark{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 10px 0 8px;background:var(--color-text);color:var(--color-surface);font-size:1rem;font-weight:900;letter-spacing:.01em}
 .ticket-sat-mark sup{font-size:.45em;line-height:0;top:-.6em;position:relative}
 .sat-shield{width:17px;height:20px;display:block;flex:none}
 .ticket-body{padding:0 25px 24px}
