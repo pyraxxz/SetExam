@@ -108,7 +108,7 @@ return `<main class="page admission-ticket-page">
 <article class="admit-ticket" aria-labelledby="admitTicketTitle">
   <header class="ticket-masthead">
     <a class="ticket-reference-title" href="#" onclick="return false">Digital SAT October 2026 - Admission Ticket</a>
-    <span class="ticket-sat-mark"><span class="sat-shield" aria-hidden="true">◆</span>SAT</span>
+    <span class="ticket-sat-mark"><svg class="sat-shield" viewBox="0 0 20 22" aria-hidden="true"><path d="M10 1.5 18 5v5.4c0 4.7-3.2 8.4-8 10.1-4.8-1.7-8-5.4-8-10.1V5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>SAT</span></span>
   </header>
   <section class="ticket-main-head">
     <div class="ticket-column ticket-left">
