@@ -2,8 +2,8 @@
   'use strict';
 
   const overrides = {
-    RWM1Q1: { prompt: "Which choice best summarizes the text's main point?" },
-    RW2E9: { prompt: 'Which inference is best supported by the information given?' },
+    RWM1Q1: { prompt: "Which choice best summarizes the community garden's impact on nearby residents?" },
+    RW2E9: { prompt: 'Which inference is best supported by the revised transit schedule?' },
     RWM2HQ2: { prompt: 'Which conclusion can be reasonably drawn from the passage?' },
     RWM2HQ9: { prompt: 'Which choice most accurately captures the passage’s central idea?' },
     MM2EQ3: { options: ['3', '4.5', '6', '7'] },
