@@ -23,6 +23,8 @@ assert(app.includes('if(x.screen==="setup"&&Number(x.setupStep||1)>5)'), 'legacy
 assert(!app.includes('Your SAT<br>Admission Ticket'), 'ticket must not use the oversized intermediate title treatment');
 assert(app.includes('Digital SAT October 2026 - Admission Ticket'), 'ticket page must use the current outer admission-ticket heading');
 assert(app.includes('id="doneTicketBtn"'), 'ticket page must expose a Done action');
+assert(app.includes('id="ticketReferenceTitle"'), 'ticket masthead must provide an accessible ticket title');
+assert(css.includes('.ticket-page-actions{position:fixed'), 'ticket Done action must live in a fixed full-width bottom bar');
 assert(app.includes('aria-label="Admission ticket QR code"'), 'ticket QR must be explicitly labelled');
 assert(app.includes('const rows=['), 'ticket QR must use a deterministic encoded matrix');
 assert(app.includes('const rows=') && app.includes('n=rows.length') && app.includes('x+4'), 'ticket QR must render a fixed matrix with a four-module quiet zone');
