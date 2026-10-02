@@ -3,9 +3,9 @@
 .finish-confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
 .finish-confetti{position:absolute;inset:0;pointer-events:none}
 .confetti-ribbon{position:absolute;left:var(--x);top:var(--y);width:5px;height:15px;border-radius:1px;opacity:.96;transform:rotate(var(--rotate));animation:finish-ribbon-fall var(--duration) linear var(--delay) infinite;will-change:transform,opacity}
-.confetti-ribbon.pink{background:#f487a1}.confetti-ribbon.yellow{background:#ffd400}.confetti-ribbon.teal{background:#73c7cf}.confetti-ribbon.blue{background:#a7bff0}
+.confetti-ribbon.pink{background:var(--confetti-ribbon-pink)}.confetti-ribbon.yellow{background:var(--confetti-ribbon-yellow)}.confetti-ribbon.teal{background:var(--confetti-teal)}.confetti-ribbon.blue{background:var(--confetti-ribbon-blue)}
 @keyframes finish-ribbon-fall{0%{transform:translate3d(0,-18px,0) rotate(var(--rotate)) scale(.9);opacity:0}8%{opacity:.96}45%{transform:translate3d(16px,38vh,0) rotate(calc(var(--rotate) + 125deg)) scale(1)}78%{opacity:.9}100%{transform:translate3d(-22px,112vh,0) rotate(calc(var(--rotate) + 300deg)) scale(.92);opacity:0}}
-.finish-heading{position:relative;z-index:2;margin:0 auto 32px;color:#fff}
+.finish-heading{position:relative;z-index:2;margin:0 auto 32px;color:var(--color-finish-heading)}
 .finish-heading h1{font-size:2rem;line-height:1.15;font-weight:400;margin:0 0 24px;letter-spacing:-.015em}
 .finish-heading p{font-size:1.05rem;line-height:1.4;font-weight:700;margin:0}
 .congrats-card{position:relative;z-index:2;width:min(720px,calc(100vw - 40px));max-width:720px;min-height:296px;margin:0 auto;border:0;border-radius:7px;padding:40px 62px;background:var(--color-finish-card);box-shadow:none}
