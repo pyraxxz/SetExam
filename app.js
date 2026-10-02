@@ -108,30 +108,29 @@ return `<main class="page admission-ticket-page">
 <article class="admit-ticket" aria-labelledby="admitTicketTitle">
   <header class="ticket-masthead">
     <a class="ticket-reference-title" href="#" onclick="return false">Digital SAT October 2026 - Admission Ticket</a>
-    <span class="ticket-sat-mark"><svg class="sat-shield" viewBox="0 0 20 22" aria-hidden="true"><path d="M10 1.5 18 5v5.4c0 4.7-3.2 8.4-8 10.1-4.8-1.7-8-5.4-8-10.1V5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>SAT</span></span>
+    <span class="ticket-sat-mark"><svg class="sat-shield" viewBox="0 0 20 22" aria-hidden="true"><path d="M10 1.5 18 5v5.4c0 4.7-3.2 8.4-8 10.1-4.8-1.7-8-5.4-8-10.1V5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span>SAT<sup>®</sup></span></span>
   </header>
   <div class="ticket-body">
     <section class="ticket-hero">
-      <div class="ticket-title-block">
-        <h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2>
-        <div class="ticket-identity">
-          <div class="ticket-field"><span>Name</span><strong>${esc(s.student||"Student")}</strong></div>
-          <div class="ticket-field"><span>Date of Birth</span><strong>${esc(formatDob(s.dob)||"Not provided")}</strong></div>
-        </div>
+      <div class="ticket-identity">
+        <div class="ticket-inline-field"><span>Name:</span><strong>${esc(s.student||"Student")}</strong></div>
+        <div class="ticket-inline-field"><span>Date of Birth:</span><strong>${esc(formatDob(s.dob)||"Not provided")}</strong></div>
       </div>
-      <aside class="ticket-code-block">
-        <div class="ticket-registration"><span>Registration Number</span><strong>${C.regNum}</strong></div>
-        <div class="ticket-qr"><div class="ticket-qr-frame" title="Admission ticket QR code" aria-label="Admission ticket QR code">${qrSvg()}</div></div>
-      </aside>
     </section>
     <section class="ticket-details">
-      <div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
-      <div class="ticket-times">
-        <div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div>
-        <div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div>
+      <div class="ticket-time-column">
+        <div class="ticket-field ticket-date"><span>DATE</span><strong>${C.testDate}</strong></div>
+        <div class="ticket-field"><span>ARRIVAL TIME</span><strong>${C.arrival}</strong></div>
+        <div class="ticket-field"><span>DOORS CLOSE</span><strong>${C.doors}</strong></div>
       </div>
-      <div class="ticket-field ticket-location"><span>Location</span><strong>${C.loc}<small>${C.locAddress}</small></strong></div>
-      <section class="ticket-comments"><span>Comments</span><strong>No special instructions.</strong></section>
+      <div class="ticket-location-comments">
+        <div class="ticket-field ticket-location"><span>LOCATION</span><strong>${esc(C.loc)}<small>${esc(C.locAddress)}</small></strong></div>
+        <section class="ticket-comments"><span>COMMENTS</span><strong>No special instructions.</strong></section>
+      </div>
+      <aside class="ticket-code-block">
+        <div class="ticket-registration"><span>REGISTRATION NUMBER</span><strong>${C.regNum}</strong></div>
+        <div class="ticket-qr"><div class="ticket-qr-frame" title="Admission ticket QR code" aria-label="Admission ticket QR code">${qrSvg()}</div></div>
+      </aside>
     </section>
   </div>
 </article>
