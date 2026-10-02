@@ -186,7 +186,7 @@ body.access-active .app-shell{min-height:100vh}
 .ticket-masthead{min-height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--color-border)}
 .ticket-reference-title{font-size:.66rem;line-height:1.2;color:var(--color-link-blue);font-weight:800;text-decoration:none}
 .ticket-sat-mark{display:inline-flex;align-items:center;gap:6px;min-height:27px;padding:0 9px;background:var(--color-text);color:var(--color-surface);font-size:.72rem;font-weight:900;letter-spacing:.05em}
-.sat-shield{font-size:.62rem;line-height:1}
+.sat-shield{width:14px;height:16px;display:block;flex:none}
 .ticket-main-head{display:grid;grid-template-columns:minmax(270px,1.02fr) minmax(330px,1.34fr) minmax(190px,.76fr);min-height:270px}
 .ticket-column{min-width:0;padding:20px 24px}
 .ticket-column+.ticket-column{border-left:1px solid var(--color-border)}
