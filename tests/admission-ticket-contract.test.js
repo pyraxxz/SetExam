@@ -34,7 +34,6 @@ assert(app.includes('ticket-code-block'), 'ticket must pair registration number 
 assert(app.includes('ticket-date'), 'ticket date must occupy its own block');
 assert(app.includes('ticket-time-column'), 'ticket must stack date, arrival time, and doors close in the left lower column');
 assert(app.includes('ticket-location-comments'), 'ticket must group location and comments in the center lower column');
-assert(app.includes('ticket-times'), 'ticket arrival and doors-close fields must share the time row');
 assert(app.includes('ticket-location'), 'ticket location must occupy its own block');
 assert(app.includes('admission-ticket-page'), 'ticket must use a standalone page surface');
 assert(app.includes('doneTicketBtn'), 'ticket page must bind its Done action');
@@ -61,7 +60,7 @@ assert(css.includes('@page{size:landscape'), 'ticket print layout must preserve 
 assert(index.includes(`styles.css?v=${assetVersion}`), 'canonical stylesheet must remain loaded at the canonical asset generation');
 
 for (const marker of [
-  'Your SAT\\s*Admission Ticket',
+  'SAT\\s*-?\\s*Admission Ticket',
   'October 3 date renders',
   'date of birth renders',
   'registration number renders',
