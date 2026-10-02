@@ -112,12 +112,13 @@ return `<main class="page admission-ticket-page">
   </header>
   <section class="ticket-main-head">
     <div class="ticket-column ticket-left">
-      <h2 id="admitTicketTitle">Your SAT Admission Ticket</h2>
+      <h2 id="admitTicketTitle">Your SAT<br>Admission Ticket</h2>
       <div class="ticket-identity">
         <div class="ticket-field"><span>Name</span><strong>${esc(s.student||"Student")}</strong></div>
         <div class="ticket-field"><span>Date of Birth</span><strong>${esc(formatDob(s.dob)||"Not provided")}</strong></div>
       </div>
-      <div class="ticket-fields-row">
+      <div class="ticket-details">
+        <div class="ticket-fields-row">
         <div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
         <div class="ticket-times">
           <div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div>
