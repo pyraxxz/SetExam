@@ -19,7 +19,7 @@ function rem(){return s.endAt?Math.max(0,Math.ceil((s.endAt-Date.now())/1000)):m
 function show(x){s.screen=x;save();render()}
 function render(){stop();A.innerHTML=page();bind();document.body.classList.toggle("access-active",["access","signin"].includes(s.screen));if(s.screen==="test"&&s.endAt)runTimer();if(s.screen==="break"&&s.breakEndAt)runBreak()}
 function runTimer(){tick=setInterval(()=>{const r=rem(),n=document.getElementById("timer");if(n){n.textContent=fmt(r);n.classList.toggle("warning",r<=C.warnSec);n.classList.toggle("hidden",s.timerHidden&&r>C.warnSec)}if(r<=C.warnSec&&!s.warning[m().id]){s.warning[m().id]=true;save();warning()}if(r<=0)finishModule()},250)}
-function runBreak(){tick=setInterval(()=>{const r=Math.max(0,Math.ceil((s.breakEndAt-Date.now())/1000)),n=document.getElementById("breakClock");if(n)n.textContent=fmt(r);if(r<=0){stop();s.breakEndAt=null;s.mi=2;s.qi=0;show("directions")}},250)}
+function runBreak(){tick=setInterval(()=>{const r=Math.max(0,Math.ceil((s.breakEndAt-Date.now())/1000)),n=document.getElementById("breakClock");if(n)n.textContent=fmt(r);if(r<=0){stop();s.breakEndAt=null;save();if(s.harness){s.mi=2;s.qi=0;show("directions")}else{render()}}},250)}
 function begin(){if(s.completed[m().id])return;s.endAt=Date.now()+m().minutes*60000;s.qi=0;s.timerHidden=false;s.lineReader=false;save();show("test")}
 function routeNext(){if(m().id==="rw1")s.adaptive.rw=scoreMod("rw1")>=.7?"hard":"easy";if(m().id==="math1")s.adaptive.math=scoreMod("math1")>=.7?"hard":"easy";save()}
 function same(v,k){const a=String(v).trim(),b=String(k).trim();if(!a||!b)return false;const na=Number(a),nb=Number(b);if(Number.isFinite(na)&&Number.isFinite(nb))return na===nb;return a.toLowerCase()===b.toLowerCase()}
