@@ -24,8 +24,9 @@ assert(app.includes('aria-label="Admission ticket QR code"'), 'ticket QR must be
 assert(app.includes('const rows=['), 'ticket QR must use a deterministic encoded matrix');
 assert(app.includes('const rows=') && app.includes('n=rows.length') && app.includes('x+4'), 'ticket QR must render a fixed matrix with a four-module quiet zone');
 assert(app.includes('ticket-masthead'), 'ticket must have a dedicated masthead');
-assert(app.includes('ticket-main-head'), 'ticket must separate title and QR header content');
+assert(app.includes('ticket-hero'), 'ticket must separate title/identity from the QR registration block');
 assert(app.includes('ticket-registration'), 'ticket registration number must occupy its own block');
+assert(app.includes('ticket-code-block'), 'ticket must pair registration number and QR in the right-side code block');
 assert(app.includes('ticket-date'), 'ticket date must occupy its own block');
 assert(app.includes('ticket-times'), 'ticket arrival and doors-close fields must share the time row');
 assert(app.includes('ticket-location'), 'ticket location must occupy its own block');
@@ -43,7 +44,7 @@ assert(css.includes('@media print{body.printing-ticket'), 'ticket must have prin
 assert(!app.includes('sat-badge'), 'old generic SAT badge ticket treatment must be removed');
 assert(!app.includes('ticket-grid'), 'old generic ticket grid treatment must be removed');
 assert(!css.includes('.ticket-grid'), 'old generic ticket grid CSS must be removed');
-for (const token of ['.admit-ticket{', '.ticket-masthead{', '.ticket-main-head{', '.ticket-qr-frame{', '.ticket-identity{', '.ticket-details{', '.ticket-comments{']) {
+for (const token of ['.admit-ticket{', '.ticket-masthead{', '.ticket-hero{', '.ticket-qr-frame{', '.ticket-identity{', '.ticket-details{', '.ticket-comments{']) {
   assert(css.includes(token), `ticket visual token missing: ${token}`);
 }
 assert(css.includes('@media(max-width:720px){.admission-ticket-page'), 'ticket must have tablet/mobile responsive layout');
@@ -51,7 +52,7 @@ assert(css.includes('@media(max-width:460px){.admission-ticket-page'), 'ticket m
 assert(css.includes('grid-template-columns:minmax(270px,1.02fr) minmax(330px,1.34fr) minmax(190px,.76fr)'), 'ticket must use the wide three-column landscape geometry');
 assert(css.includes('@page{size:landscape'), 'ticket print layout must preserve landscape orientation');
 
-assert(index.includes('styles.css?v=29'), 'canonical stylesheet must remain loaded at current asset generation');
+assert(index.includes('styles.css?v=30'), 'canonical stylesheet must remain loaded at current asset generation');
 
 for (const marker of [
   'Your SAT\\s*Admission Ticket',
