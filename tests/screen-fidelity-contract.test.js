@@ -11,6 +11,7 @@ assert(app.includes('Congratulations!'), 'finish screen must greet with Congratu
 assert(app.includes('The test is complete, and your answers have been submitted.'), 'finish screen must state the test is complete');
 assert(app.includes("Please <strong>be quiet</strong>; other students may still be testing."), 'finish screen must keep the proctor dismissal copy');
 assert(app.includes('finish-page'), 'finish screen must use the navy finish page');
+assert(!app.includes('THIS IS A TEST PREVIEW'), 'actual exam must not display a practice-preview banner');
 assert(app.includes('Return to Homepage'), 'finish CTA must read Return to Homepage');
 assert(app.includes('cta-yellow'), 'finish CTA must use the yellow pill style');
 assert(app.includes('laptopArt()'), 'finish card must include the laptop illustration');
