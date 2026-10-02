@@ -125,15 +125,13 @@ return `<main class="page admission-ticket-page">
       </aside>
     </section>
     <section class="ticket-details">
-      <div class="ticket-detail-grid ticket-times">
-        <div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
+      <div class="ticket-field ticket-date"><span>Date</span><strong>${C.testDate}</strong></div>
+      <div class="ticket-times">
         <div class="ticket-field"><span>Arrival Time</span><strong>${C.arrival}</strong></div>
         <div class="ticket-field"><span>Doors Close</span><strong>${C.doors}</strong></div>
       </div>
-      <div class="ticket-detail-grid ticket-lower-grid">
-        <div class="ticket-field ticket-location"><span>Location</span><strong>${C.loc}<small>${C.locAddress}</small></strong></div>
-        <section class="ticket-comments"><span>Comments</span><strong>No special instructions.</strong></section>
-      </div>
+      <div class="ticket-field ticket-location"><span>Location</span><strong>${C.loc}<small>${C.locAddress}</small></strong></div>
+      <section class="ticket-comments"><span>Comments</span><strong>No special instructions.</strong></section>
     </section>
   </div>
 </article>
