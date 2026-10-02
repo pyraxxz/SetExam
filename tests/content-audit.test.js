@@ -20,6 +20,7 @@ const seenIds = new Set();
 const exactSignatures = new Set();
 const issues = [];
 const shortPassageIds = [];
+const forbiddenRwLabels = [];
 
 for (const [group, items] of groups) {
   assert(Array.isArray(items), `${group} is not an array`);
@@ -33,7 +34,8 @@ for (const [group, items] of groups) {
     if (question.section === 'Reading and Writing') {
       const paragraphs = question.source?.paragraphs || [];
       const words = paragraphs.join(' ').trim().split(/\s+/).filter(Boolean).length;
-      if (words < 25) shortPassageIds.push(question.id);
+      if (words < 45) shortPassageIds.push(question.id);
+      if (/practice|placeholder|synthetic|original azaman/i.test(question.source?.title || '')) forbiddenRwLabels.push(`${location}: ${question.source.title}`);
       if (words > 150) issues.push(`${location}: source exceeds 150 words`);
       if (!paragraphs.length) issues.push(`${location}: missing source passage`);
       if (!Array.isArray(question.options) || question.options.length !== 4) issues.push(`${location}: expected 4 R&W options`);
@@ -48,7 +50,8 @@ for (const [group, items] of groups) {
 
 assert.equal(issues.length, 0, `content integrity issues:\n${issues.join('\n')}`);
 assert.equal(exactSignatures.size, 147, 'expected 147 unique full-item signatures');
-assert.equal(shortPassageIds.length, 0, `R&W passages under 25 words:\n${shortPassageIds.join(', ')}`);
+assert.equal(shortPassageIds.length, 0, `R&W passages under 45 words:\n${shortPassageIds.join(', ')}`);
+assert.equal(forbiddenRwLabels.length, 0, `R&W stimuli must not expose practice/QA source labels:\n${forbiddenRwLabels.join('\n')}`);
 
 console.log(`Audited ${exactSignatures.size} unique items with complete R&W passages.`);
-console.log('No R&W synthetic placeholder passages remain.');
+console.log('No R&W short, synthetic, or practice-labelled stimuli remain.');
