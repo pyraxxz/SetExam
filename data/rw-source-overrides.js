@@ -90,6 +90,15 @@
     RWM2HQ27: 'Before a magazine article was published, the editor compared every quotation in the article with the original audio recording. The review was required even when a quotation appeared straightforward because a small transcription error could alter a speaker’s meaning. When discrepancies were found, the editor checked the recording again before approving the article. The process was therefore part of the publication workflow, not an optional correction performed only when a quotation seemed suspicious.'
   };
 
+  const tables = {
+    RWM1Q5: { headers: ['Group', 'Average daily screen time (hours)'], rows: [['Group A', '3.2'], ['Group B', '4.5']] },
+    RWM1Q20: { headers: ['Month', 'Rainfall (mm)'], rows: [['January', '42'], ['February', '58'], ['March', '51'], ['April', '49']] },
+    RW2E5: { headers: ['Draft', 'Pages'], rows: [['First', '34'], ['Second', '46']] },
+    RW2E20: { headers: ['Color', 'Responses'], rows: [['Red', '18'], ['Blue', '31'], ['Green', '24'], ['Yellow', '20']] },
+    RWM2HQ5: { headers: ['Charge cycles', 'Remaining capacity'], rows: [['100', '92%'], ['200', '81%'], ['300', '74%'], ['400', '68%']] },
+    RWM2HQ20: { headers: ['Response', 'Residents'], rows: [['Support', '156'], ['Oppose', '48'], ['Undecided', '36']] }
+  };
+
   const groups = ['rw1', 'rw2'];
   Object.entries(passages).forEach(([id, paragraphs]) => {
     for (const group of groups) {
@@ -99,6 +108,7 @@
       const question = list.find((item) => item.id === id);
       if (!question) continue;
       question.source = { ...(question.source || {}), paragraphs: [paragraphs] };
+      if (tables[id]) question.source.table = tables[id];
       // The real exam question surface does not label its stimulus as
       // "practice" or expose an authoring/QA title.
       delete question.source.title;
