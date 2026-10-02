@@ -27,21 +27,28 @@
   const groups = [window.SAT_QUESTIONS?.rw1 || [], window.SAT_QUESTIONS?.rw2?.easy || [], window.SAT_QUESTIONS?.rw2?.hard || [], window.SAT_QUESTIONS?.math1 || [], window.SAT_QUESTIONS?.math2?.easy || [], window.SAT_QUESTIONS?.math2?.hard || []];
   const letters = ['A', 'B', 'C', 'D'];
   function hash(value) { let h = 2166136261; for (const ch of value) h = Math.imul(h ^ ch.charCodeAt(0), 16777619); return h >>> 0; }
+  const mcqItems = groups.flat().filter((question) => question.type !== 'spr' && Array.isArray(question.options) && question.options.length === 4);
+  const balancedTargets = mcqItems.map((_, index) => letters[index % letters.length]);
+  const targetPositions = new Map();
+  mcqItems.slice().sort((a, b) => hash(a.id) - hash(b.id) || a.id.localeCompare(b.id)).forEach((question, index) => {
+    targetPositions.set(question.id, balancedTargets[index]);
+  });
+
   groups.flat().forEach((question) => {
     if (question.__azmQualityOverridesApplied === true) return;
     const patch = overrides[question.id];
     if (patch) Object.assign(question, patch);
     if (question.type !== 'spr' && Array.isArray(question.options) && question.options.length === 4) {
       const originalIndex = letters.indexOf(String(question.answer).toUpperCase());
-      if (originalIndex >= 0) {
-        const shift = hash(question.id) % 4;
+      const targetIndex = letters.indexOf(targetPositions.get(question.id));
+      if (originalIndex >= 0 && targetIndex >= 0) {
+        const shift = (targetIndex - originalIndex + letters.length) % letters.length;
         if (shift) {
           const original = question.options.slice();
-          question.options = original.map((_, nextIndex) => original[(nextIndex - shift + 4) % 4]);
-          question.answer = letters[(originalIndex + shift) % 4];
+          question.options = original.map((_, nextIndex) => original[(nextIndex - shift + letters.length) % letters.length]);
+          question.answer = letters[targetIndex];
         }
       }
     }
     Object.defineProperty(question, '__azmQualityOverridesApplied', { value: true, enumerable: false, configurable: false, writable: false });
-  });
-})();
+  });})();
