@@ -38,8 +38,8 @@
       const ticket = doc.querySelector('.admit-ticket');
       const ticketRect = ticket?.getBoundingClientRect();
       check('ticket is landscape at desktop width', !!ticketRect && ticketRect.width > ticketRect.height * 1.45);
-      check('ticket has three desktop columns', getComputedStyle(doc.querySelector('.ticket-main-head')).gridTemplateColumns.split(' ').length === 3);
-      check('QR is in the right ticket column', !!doc.querySelector('.ticket-right .ticket-qr-frame'));
+      check('ticket has compact top hero layout', !!doc.querySelector('.ticket-hero') && !!doc.querySelector('.ticket-title-block') && !!doc.querySelector('.ticket-code-block'));
+      check('QR is paired with the registration block', !!doc.querySelector('.ticket-code-block .ticket-registration') && !!doc.querySelector('.ticket-code-block .ticket-qr-frame'));
       check('runtime migrated to explicit ticket screen', JSON.parse(frame.contentWindow.localStorage.getItem(KEY) || '{}').screen === 'ticket');
       check('print action renders', !!doc.getElementById('printTicketBtn'));
       check('email action renders', !!doc.getElementById('emailTicketBtn'));
@@ -53,7 +53,8 @@
       const qr = doc.querySelector('.ticket-qr-frame .ticket-qr-img');
       check('QR has substantial matrix', qr?.querySelectorAll('rect')?.length > 500);
       check('QR has expected quiet-zone viewBox', qr?.getAttribute('viewBox') === '0 0 41 41');
-      check('ticket has comments', doc.body.textContent.includes('Thanks for participating in the Digital Exam!'));
+      check('ticket has comments field', doc.body.textContent.includes('Comments'));
+      check('ticket uses realistic empty-comments copy', doc.body.textContent.includes('No special instructions.'));
       out.textContent = checks.join('\\n') + '\\nADMISSION TICKET SMOKE COMPLETE';
     } catch (e) {
       out.textContent = 'FAIL ' + (e.message || e) + '\\n' + checks.join('\\n');
