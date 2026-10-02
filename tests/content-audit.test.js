@@ -23,7 +23,7 @@ const shortPassageIds = [];
 const forbiddenRwLabels = [];
 const genericRwPrompts = [];
 const terseRwPrompts = [];
-const genericRwPattern = /which choice best states the (main|central) idea\??|which choice best states the main point\??|which inference is best supported\??|which conclusion is best supported by the results\??|which conclusion can be reasonably drawn from the passage\??|which choice most accurately captures the passage’s central idea\??|which choice best summarizes the notes about the lecture\??/i;
+const genericRwPattern = /^(which choice best states the (main|central) idea|which choice best states the main point|which inference is best supported|which conclusion is best supported by the results|which conclusion can be reasonably drawn from the passage|which choice most accurately captures the passage’s central idea|which choice best summarizes the notes about the lecture)\??$/i;
 
 for (const [group, items] of groups) {
   assert(Array.isArray(items), `${group} is not an array`);
