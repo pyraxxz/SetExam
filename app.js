@@ -180,4 +180,4 @@ function ticketText(){return["SAT Admission Ticket","Name: "+(s.student||"Studen
 function printAdmissionTicket(){document.body.classList.add("printing-ticket");const done=()=>{document.body.classList.remove("printing-ticket");window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);window.print();setTimeout(()=>document.body.classList.remove("printing-ticket"),1200)}
 function emailAdmissionTicket(){const recipient=(s.email||"").trim();const subject="SAT Admission Ticket — "+C.testDate;const body=ticketText()+"\n\nPlease keep this ticket available for test day.";window.location.href="mailto:"+encodeURIComponent(recipient)+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body)}
 function reset(){stop();localStorage.removeItem(C.storageKey);location.reload()}
-render();window.AZAMAN_APP={getState:()=>s,save,render,scoreAll,same,navigateExamPage};})();
+render();window.AZAMAN_APP={getState:()=>s,save,render,scoreAll,same,navigateExamPage,skipToBreak};})();
